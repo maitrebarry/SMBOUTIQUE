@@ -118,6 +118,7 @@
                                                             <a class="dropdown-item" href="envoie_reception.php?reception=<?= $affiche->id_commande_fournisseur ?>">Reception</a>
                                                             <?php if ($som == 0 && $affiche->paie == 0) { ?>
                                                                 <a class="dropdown-item" href="modifier_commande_four.php?modifi=<?= $affiche->id_commande_fournisseur ?>">Modification</a>
+                                                                
                                                                 <a class="dropdown-item delete-button" href="#" data-liste-id="<?= $affiche->id_commande_fournisseur ?>">Suppression</a>
                                                             <?php } ?>
                                                         <?php } ?>

@@ -64,26 +64,22 @@ class Fonction{
         }
     }
 
-    public function telephone_numero_verification($valeur) {
+   public function telephone_numero_verification($valeur) {
     // Vérification de la longueur du numéro de téléphone
-        if (!is_numeric($valeur) || strlen($valeur) != 8) {
-            return "Veuillez revoir le numéro de téléphone donné";
-        }
-
-        // Vérification du premier chiffre
-        $premier_chiffre = substr($valeur, 0, 1);
-        if ($premier_chiffre == 0 || $premier_chiffre == 1 || $premier_chiffre == 2 || $premier_chiffre == 3) {
-            return "Le premier chiffre du numéro de téléphone ne peut pas être 0, 1, 2 ou 3";
-        }
-
-        // Vérification si le nombre est compris entre 3 et 10
-        if ($premier_chiffre < 3 || $premier_chiffre > 10) {
-            return "Le premier chiffre du numéro de téléphone doit être compris entre 3 et 10";
-        }
-
-        // Le numéro de téléphone semble valide
-        return "Numéro de téléphone valide";
+    if (!is_numeric($valeur) || strlen($valeur) != 8) {
+        return "Veuillez revoir le numéro de téléphone donné";
     }
+
+    // Vérification du premier chiffre
+    $premier_chiffre = substr($valeur, 0, 1);
+    if (!in_array($premier_chiffre, range(4, 10))) {
+        return "Le premier chiffre du numéro de téléphone doit être compris entre 4 et 10";
+    }
+
+    // Le numéro de téléphone semble valide
+    return "Numéro de téléphone valide";
+}
+
 
 
 //verification du code barre

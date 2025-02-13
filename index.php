@@ -4,11 +4,12 @@
 
     if (isset($_POST['envoyer'])) {
         if (!empty($_POST['user_pseudo']) && !empty($_POST['user_password'])) {
-            $pseudo = htmlspecialchars($_POST['user_pseudo']);
-            $mot_de_passe = ($_POST['user_password']);
+            $identifiant = htmlspecialchars($_POST['user_pseudo']); // Peut être un pseudo ou un email
+            $mot_de_passe = $_POST['user_password'];
 
-            $recepUsers = $bdd->prepare('SELECT * FROM utilisateur WHERE psedeau_utilisateur = ? AND mot_de_passe_utilisateur = ?');
-            $recepUsers->execute(array($pseudo, $mot_de_passe));
+            // Requête pour vérifier le pseudo ou l'email
+            $recepUsers = $bdd->prepare('SELECT * FROM utilisateur WHERE (psedeau_utilisateur = ? OR email = ?) AND mot_de_passe_utilisateur = ?');
+            $recepUsers->execute(array($identifiant, $identifiant, $mot_de_passe));
 
             if ($recepUsers->rowCount() > 0) {
                 $recup = $recepUsers->fetch();
@@ -31,12 +32,13 @@
                     header("Location:index1.php");
                 }
             } else {
-                afficher_message('Pseudo ou mot de passe incorrect');
+                afficher_message('Pseudo ou email ou mot de passe incorrect');
             }
         } else {
             afficher_message('Veuillez remplir tous les champs');
         }
     }
+
 
   
     
@@ -57,7 +59,7 @@
      body {
     background-color: #DCDCDC; /* Couleur de fond si l'image ne charge pas */
     margin-top: 60px;
-    background-image: url('assets/img/mouna2.jpg'); /* URL de l'image */
+    background-image: url('assets/img/mouna5.jpg'); /* URL de l'image */
     background-size: cover; /* Ajuste l'image pour couvrir toute la zone */
     background-repeat: no-repeat; /* Évite la répétition de l'image */
     background-position: center center; /* Centre l'image */
@@ -112,11 +114,11 @@
                                      class="img-fluid rounded-circle" width="132" height="132">
                              </div>
                              <form method="post" action="">
-                                 <div class="form-group">
-                                     <label>Username</label>
-                                     <input class="form-control form-control-lg" name="user_pseudo" type="text"
-                                         placeholder="Entrer votre pseudo">
-                                 </div>
+                                <div class="form-group">
+                                    <label>Pseudo ou Email</label>
+                                    <input class="form-control form-control-lg" name="user_pseudo" type="text" placeholder="Entrer votre pseudo ou email">
+                                </div>
+
                                 <div class="form-group">
                                     <label>Mot de passe</label>
                                     <div class="input-group">

@@ -1,4 +1,18 @@
-  <?php require_once ('partials/database.php') ?>
+  <?php 
+  require_once ('partials/database.php');
+
+    $alerte_article_query = "SELECT * FROM tbl_product WHERE stock <= alerte_article";
+    $alerte_articles = $bdd->query($alerte_article_query);
+    $stock_alerte = $alerte_articles->rowCount();
+  ?>
+<?php
+require_once('database.php');
+
+
+?>
+
+
+
  <!-- ======= Header ======= -->
  <style>
     .profile-picture {
@@ -27,12 +41,31 @@
   <ul class="d-flex align-items-center">
     
     <li class="nav-item dropdown">
+      <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+          <i class="bi bi-bell"></i>
+          <span class="badge bg-danger badge-number"><?= $stock_alerte ?></span>
+      </a><!-- Fin de l'icône de notification -->
 
-     
+      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+          <li class="dropdown-header">
+              Vous avez <?= $stock_alerte ?> nouvelles notifications
+              <a href="liste_produit.php?rupture=1"><span class="badge rounded-pill bg-danger p-2 ms-2">Tout voir</span></a>
+          </li>
+          <li>
+              <hr class="dropdown-divider">
+          </li>
 
-      
-    </li><!-- End Notification Nav -->
+          <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                  <h4>Rupture de stock</h4>
+                  <p>Vous avez <?= $stock_alerte ?> produits en rupture de stock.</p>
+              </div>
+          </li>
 
+         
+      </ul><!-- Fin des éléments du menu déroulant des notifications -->
+    </li><!-- Fin de la navigation des notifications -->
     <li class="nav-item dropdown">
 
         <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">

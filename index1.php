@@ -21,14 +21,20 @@
       $resultat_liv=$nbr_livs->rowCount();
      //commande non livree
       $comnd_non_livree=$resultat_cl-$resultat_liv;
-     // Nombre d'articles alertés
-        $alerte_article = "SELECT * FROM tbl_product WHERE  stock<=alerte_article ";
-        $alerte_articles = $bdd->query($alerte_article);
-        $stock_alerte = $alerte_articles->rowCount();
-        //nombre total articles
-        $tt_article= "SELECT * FROM tbl_product ";
-        $tt_articles=$bdd->query($tt_article) ;
-        $total_article=$tt_articles->rowCount();
+    // Requête pour obtenir les articles en alerte
+    $alerte_article_query = "SELECT * FROM tbl_product WHERE stock <= alerte_article";
+    $alerte_articles = $bdd->query($alerte_article_query);
+    $stock_alerte = $alerte_articles->rowCount();
+
+    // Requête pour obtenir le nombre total d'articles
+    $total_article_query = "SELECT * FROM tbl_product";
+    $total_articles = $bdd->query($total_article_query);
+    $total_article = $total_articles->rowCount();
+
+    // Calcul du pourcentage d'articles en alerte
+    $pourcentage_alerte = ($total_article > 0) ? ($stock_alerte / $total_article) * 100 : 0;
+       
+
 ?>
 
 <!--------header------->
@@ -153,24 +159,16 @@
                 <!-- Sales Card -->
                 <div class="col-xxl-4 col-md-6">
                     <div class="card info-card sales-card">
-
-                        <a href="liste_produit.php" class="btn btn-outline-white">
-                             
+                        <a href="liste_produit.php?rupture=1" class="btn btn-outline-white">
                             <div class="card-body">
                                 <h5 class="card-title">Alerte <span>| stock article</span></h5>
                                 <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-exclamation-triangle text-danger"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <?php
-                                           $total_attendu6 = $total_article; // a remplacer par la valeur totale du commande attendue
-
-                                             $pourcentage6 = ($stock_alerte / $total_attendu6) * 100;
-                                          ?>
-                                        <h6><?= $stock_alerte?></h6>
-                                        <span class="text-danger small pt-1 fw-bold"><?= round($pourcentage6, 2) ?>%</span>
+                                        <h6><?= $stock_alerte ?></h6>
+                                        <span class="text-danger small pt-1 fw-bold"><?= round($pourcentage_alerte, 2) ?>%</span>
                                         <span class="text-danger small pt-2 ps-1"> d'article sont en rupture de stock</span>
                                     </div>
                                 </div>

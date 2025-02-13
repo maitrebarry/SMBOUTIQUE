@@ -24,6 +24,7 @@
       font-weight: bolder;
     
 }
+
 </style>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +46,10 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <a class="btn btn-outline-primary"  href="stock_produit.php"><span>+ ARTICLE</span></a>
+                            <a class="btn btn-outline-primary" href="stock_produit.php"><span>+ ARTICLE</span></a>
+                            <label class="form-check-label">
+                                <input type="checkbox" id="ruptureCheck" onclick="filterRupture()"> Afficher uniquement les articles en rupture de stock
+                            </label>
                         </div>
                         <div class="card-body">
                            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Rechercher un produit.." class="form-control mb-3" style="border: 2px solid #007bff;">
@@ -53,8 +57,8 @@
                                 <thead>
                                     <tr>
                                         <th>NOM ARTICLE</th>
-                                        <th style="background-color: #007bff; color: white; border: 2px solid black;">PRIX D'ACHAT</th>
-                                        <th style="background-color: #17a2b8; color: white; border: 2px solid black;">PRIX DÉTAILLANT</th>
+                                        <th >PRIX D'ACHAT</th>
+                                        <th >PRIX DÉTAILLANT</th>
                                         <th>STOCK ARTICLE</th>
                                         <th>Action</th>
                                     </tr>
@@ -69,7 +73,7 @@
                                         $total_detail += $liste_prod->prix_detail * $liste_prod->stock;
                                         $total_stock += $liste_prod->stock;
                                     ?>
-                                    <tr>
+                                    <tr class="<?= $liste_prod->stock <= $liste_prod->alerte_article ? 'rupture' : '' ?>">
                                         <td><?= $liste_prod->name ?></td>
                                         <td style="background-color: #007bff; color: white; border: 2px solid black;"><?= number_format($liste_prod->price, 0, ',', ' ') ?> F CFA</td>
                                         <td style="background-color: #17a2b8; color: white; border: 2px solid black;"><?= number_format($liste_prod->prix_detail, 0, ',', ' ') ?> F CFA</td>
@@ -112,15 +116,13 @@
         <?php require_once('partials/foot.php') ?>
         <?php require_once('partials/footer.php') ?>
     </footer>
-    <?php
-        // Affichage de l'icône de suppression dans SweetAlert après une suppression réussie
-
-            if (isset($_SESSION['success_message'])) {
-                echo '<script>Swal.fire("'.$_SESSION['success_message'].'", "", "success");</script>';
-                unset($_SESSION['success_message']); 
-            }
-        ?>
-    <!-- Script pour la boîte de dialogue de confirmation de suppression -->
+    <!-- CSS pour masquer le champ de recherche -->
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <!-- Script pour la boîte de dialogue de confirmation de suppression et la gestion du filtre de rupture -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var deleteButtons = document.querySelectorAll('.delete-button');
@@ -129,10 +131,8 @@
                 button.addEventListener('click', function(event) {
                     event.preventDefault();
 
-                    // Obtenez l'ID à partir de l'attribut "id" du bouton
+                    // Obtenez l'ID à partir de l'attribut "data-listprod-id" du bouton
                     var listproduitId = button.getAttribute('data-listprod-id');
-
-                    //  console.log(listproduitId); // Vérifiez dans la console du navigateur
 
                     // Boîte de dialogue de confirmation avec SweetAlert
                     Swal.fire({
@@ -146,22 +146,28 @@
                         cancelButtonText: "Annuler"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            // Redirige vers la page supprimer_livraison.php avec l'ID de la livraison
-                            window.location.href = 'supprimer_produit.php?id=' +
-                                listproduitId + '&confirm=true';
+                            // Redirige vers la page supprimer_produit.php avec l'ID de la livraison
+                            window.location.href = 'supprimer_produit.php?id=' + listproduitId + '&confirm=true';
                         }
                     });
                 });
             });
+
+            // Vérifiez le paramètre dans l'URL et cochez automatiquement la case si nécessaire
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('rupture')) {
+                document.getElementById('ruptureCheck').checked = true;
+                filterRupture();
+            }
         });
-        
+
         function searchProduct() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("searchInput");
             filter = input.value.toUpperCase();
             table = document.getElementById("productTable");
             tr = table.getElementsByTagName("tr");
-        
+
             for (i = 1; i < tr.length; i++) {
                 tr[i].style.display = "none";
                 td = tr[i].getElementsByTagName("td")[0]; // Suppose the product name is in the first column
@@ -170,11 +176,40 @@
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         tr[i].style.display = "";
                     }
-                }       
+                }
             }
         }
 
+        function filterRupture() {
+            var checkBox = document.getElementById("ruptureCheck");
+            var searchInput = document.getElementById("searchInput");
+            var table = document.getElementById("productTable");
+            var tr = table.getElementsByTagName("tr");
+
+            if (checkBox.checked) {
+                // Masquer le champ de recherche
+                searchInput.classList.add('hidden');
+                // Afficher uniquement les articles en rupture de stock
+                for (var i = 1; i < tr.length; i++) {
+                    var stockTd = tr[i].getElementsByTagName("td")[3];
+                    if (stockTd && stockTd.classList.contains('bg-danger')) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            } else {
+                // Afficher tous les articles et réafficher le champ de recherche
+                searchInput.classList.remove('hidden');
+                for (var i = 1; i < tr.length; i++) {
+                    tr[i].style.display = "";
+                }
+            }
+        }
     </script>
+
 </body>
+
+
 
 </html>

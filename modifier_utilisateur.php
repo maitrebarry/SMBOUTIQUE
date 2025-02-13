@@ -1,74 +1,85 @@
 <?php 
-require_once('rentrer_anormal.php') ;
+require_once('rentrer_anormal.php');
 require_once('autoload.php');
-// Initialisation de la classe
+// Initialisation de la classe CommandeFour
 $update = new CommandeFour();
-// Récupération des données dans les champs
 $modifier = $update->recuperation_fonction("*", "utilisateur WHERE id_utilisateur=:id", [':id' => $_GET['id']]);
-// var_dump($modifier);exit;
+
 if (isset($_POST['modification'])) {
-        extract($_POST);
-        if ($update->user_verify("psedeau_utilisateur", "utilisateur", $psedeau_utilisateur)) {
-                  $update->errors[]="Ce pseudo existe déjà";
-                  $update->garder_valeur_input();
-            }
-         // Vérification du numéro de téléphone
-    $resultat_verification=$update->telephone_numero_verification($Contact_utilisateur);
-    if ($resultat_verification !== "Numéro de téléphone valide "){
-         $update->errors[] = $resultat_verification;
-    }else{
-        // Vérification si le nouveau numéro de téléphone est différent de l'ancien et s'il existe déjà dans la base de données
-        $ancien_contact = $modifier->Contact_utilisateur;
-        if ($Contact_utilisateur != $ancien_contact && $update->user_verify("Contact_utilisateur", "utilisateur", $Contact_utilisateur, $_GET['id'])) {
-            // Le nouveau numéro de téléphone existe déjà dans la base de données
-            $update->errors[] = "Ce contact existe déjà, veuillez choisir un autre.";
+    // Réinitialiser les erreurs
+    $update->errors = [];
+    extract($_POST);
+
+    // Vérification du pseudo uniquement si le pseudo est différent
+    if ($psedeau_utilisateur !== $modifier->psedeau_utilisateur) {
+        if ($update->user_verify("psedeau_utilisateur", "utilisateur", $psedeau_utilisateur, $_GET['id'])) {
+            $update->errors[] = "Ce pseudo existe déjà";
+            $update->garder_valeur_input();
+        }
+    }
+
+    // Vérification et mise à jour du numéro de téléphone uniquement si le numéro est différent
+    if ($Contact_utilisateur !== $modifier->Contact_utilisateur) {
+        $resultat_verification = $update->telephone_numero_verification($Contact_utilisateur);
+        if ($resultat_verification !== "Numéro de téléphone valide") {
+            $update->errors[] = $resultat_verification;
         } else {
-            // Le nouveau numéro de téléphone est valide, procéder à la modification
-            // Modification
-                $update->update_data('UPDATE utilisateur 
-                    SET nom_utilisateur=:nom_utilisateur,
-                        prenom_utilisateur=:prenom_utilisateur,
-                        psedeau_utilisateur=:psedeau_utilisateur,
-                        adresse=:adresse,
-                        Contact_utilisateur=:Contact_utilisateur,
-                        email=:email,
-                        type_utilisateur=:type_utilisateur
-                    WHERE id_utilisateur=:id',
-                    [
-                        ':nom_utilisateur' => $nom_utilisateur,
-                        ":prenom_utilisateur" => $prenom_utilisateur,
-                        ":psedeau_utilisateur" => $psedeau_utilisateur,
-                        ":adresse" => $adresse,
-                        ":Contact_utilisateur" => $Contact_utilisateur,
-                        ":email" => $email,
-                        "type_utilisateur"=>$type_utilisateur,
-                        ':id' => $_GET['id']
-                    ]);
-            // affichage du SweetAlert après la modification réussie
-            echo '<script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    Swal.fire("Modification effectuée avec succès!", "", "success").then(() => {
-                        window.location.href = "liste_utilisateur.php";
-                    });
-                });
-            </script>';
+            // Vérification si le contact existe déjà pour un autre utilisateur
+            if ($update->user_verify("Contact_utilisateur", "utilisateur", $Contact_utilisateur, $_GET['id'])) {
+                $update->errors[] = "Ce contact existe déjà, veuillez choisir un autre.";
             }
         }
-}
+    }
 
-// Affichage des erreurs s'il y en a
-if (!empty($update->errors)) {
-    echo '<script>
+    // Si aucune erreur, procéder à la modification
+    if (empty($update->errors)) {
+        $update->update_data('UPDATE utilisateur 
+            SET nom_utilisateur=:nom_utilisateur,
+                prenom_utilisateur=:prenom_utilisateur,
+                psedeau_utilisateur=:psedeau_utilisateur,
+                adresse=:adresse,
+                Contact_utilisateur=:Contact_utilisateur,
+                email=:email,
+                type_utilisateur=:type_utilisateur
+            WHERE id_utilisateur=:id',
+            [
+                ':nom_utilisateur' => $nom_utilisateur,
+                ":prenom_utilisateur" => $prenom_utilisateur,
+                ":psedeau_utilisateur" => $psedeau_utilisateur,
+                ":adresse" => $adresse,
+                ":Contact_utilisateur" => $Contact_utilisateur,
+                ":email" => $email,
+                "type_utilisateur" => $type_utilisateur,
+                ':id' => $_GET['id']
+            ]);
+        echo '<script>
             document.addEventListener("DOMContentLoaded", function () {
-                Swal.fire({
-                    icon: "error",
-                    title: "Erreur",
-                    text: "'.implode("<br>", $update->errors).'"
+                Swal.fire("Modification effectuée avec succès!", "", "success").then(() => {
+                    window.location.href = "liste_utilisateur.php";
                 });
             });
-          </script>';
+        </script>';
+    } 
+    // else {
+    //     // Déboguer les erreurs
+    //     var_dump($update->errors);
+    //     exit;
+    // }
+}
+
+if (!empty($update->errors)) {
+    echo '<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "'.implode("<br>", $update->errors).'"
+            });
+        });
+    </script>';
 }
 ?>
+
 <!--------header------->
 <?php require_once ('partials/header.php') ?>
 

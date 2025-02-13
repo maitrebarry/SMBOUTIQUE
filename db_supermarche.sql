@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 11 déc. 2024 à 19:59
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.2.12
+-- Généré le : ven. 14 fév. 2025 à 00:42
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,6 +55,13 @@ CREATE TABLE `caisse` (
   `Montant_total_caisse` int(255) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `caisse`
+--
+
+INSERT INTO `caisse` (`id_caisse`, `date_caisse`, `montant_initial`, `statut`, `reference_caisse`, `Montant_total_caisse`) VALUES
+(1, '2025-02-11', 500, 'on', 'CAISSE-02-2025-N°1', 17300);
+
 -- --------------------------------------------------------
 
 --
@@ -69,6 +76,18 @@ CREATE TABLE `client_grossiste` (
   `contact_client_grossiste` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `client_grossiste`
+--
+
+INSERT INTO `client_grossiste` (`id_client_gr`, `nom_client_grossiste`, `prenom_du_client_grossiste`, `ville_client_grossiste`, `contact_client_grossiste`) VALUES
+(1, 0x424148, 'Moussa', 'segou', '89765432'),
+(2, 0x4449414c4c4f, 'Adam', 'sebougou', 'lafia'),
+(3, 0x4241525259, 'Moustapha', 'segou', '74745669'),
+(4, 0x4241525259, 'Moustapha', 'segou', '74745669'),
+(5, 0x4241525259, 'Moustapha', 'segou', '74745669'),
+(6, 0x4241525259, 'Moustapha', 'segou', '74745669');
+
 -- --------------------------------------------------------
 
 --
@@ -77,7 +96,6 @@ CREATE TABLE `client_grossiste` (
 
 CREATE TABLE `commande_client` (
   `id_cmd_client` int(11) NOT NULL,
-  `client` varchar(50) NOT NULL DEFAULT 'client divers',
   `id_client_gr` int(11) NOT NULL,
   `date_cmd_client` datetime NOT NULL,
   `reference` varchar(255) NOT NULL,
@@ -85,6 +103,19 @@ CREATE TABLE `commande_client` (
   `paie` int(11) DEFAULT 0,
   `id_utilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `commande_client`
+--
+
+INSERT INTO `commande_client` (`id_cmd_client`, `id_client_gr`, `date_cmd_client`, `reference`, `total`, `paie`, `id_utilisateur`) VALUES
+(1, 2, '2025-02-11 09:27:00', 'CCC1102202501', 500, 0, 1),
+(2, 1, '2025-02-11 09:39:00', 'CCC1102202502', 500, 0, 1),
+(3, 3, '2025-02-11 09:47:00', 'CCC1102202503', 50000, 0, 1),
+(4, 4, '2025-02-11 09:52:00', 'CCC1102202504', 900, 0, 1),
+(5, 5, '2025-02-11 09:52:00', 'CCC1102202504', 900, 0, 1),
+(6, 5, '2025-02-11 10:55:00', 'CCC1102202506', 500, 0, 1),
+(7, 6, '2025-02-11 15:24:00', 'CCC1102202507', 500, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -101,6 +132,18 @@ CREATE TABLE `commande_fournisseur` (
   `paie` int(11) NOT NULL DEFAULT 0,
   `id_utilisateur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `commande_fournisseur`
+--
+
+INSERT INTO `commande_fournisseur` (`id_commande_fournisseur`, `id_fournisseur`, `date_de_commande`, `reference`, `total`, `paie`, `id_utilisateur`) VALUES
+(1, 1, '2025-02-11 08:01:00', 'CCF1102202504', 800, 0, 1),
+(2, 2, '2025-02-11 08:02:00', 'CCF1102202502', 125, 0, 1),
+(3, 2, '2025-02-11 15:15:00', 'CCF1102202503', 5000, 5000, 1),
+(4, 1, '2025-02-13 22:36:00', 'CCF1302202504', 400, 0, 1),
+(5, 4, '2025-02-13 23:11:00', 'CCF1302202505', 4800, 0, 1),
+(6, 3, '2025-02-13 22:43:00', 'CCF1302202506', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -131,6 +174,16 @@ CREATE TABLE `fournisseur` (
   `ville_fournisseur` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `fournisseur`
+--
+
+INSERT INTO `fournisseur` (`id_fournisseur`, `prenom_fournisseur`, `nom_fournisseur`, `contact_fournisseur`, `ville_fournisseur`) VALUES
+(1, 'ibrahima', 'Diakite', 74411001, 'Segou'),
+(2, 'Saliamatou', 'Sow', 89764567, 'segou'),
+(3, 'Fatoumata', 'Tangara', 91156734, 'segou'),
+(4, 'Moustapha', 'BARRY', 74745669, 'segou');
+
 -- --------------------------------------------------------
 
 --
@@ -146,6 +199,15 @@ CREATE TABLE `inventaire` (
   `regulariser` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `inventaire`
+--
+
+INSERT INTO `inventaire` (`id_inventaire`, `id_utilisateur`, `date_inventaire`, `boutique`, `reference_inventaire`, `regulariser`) VALUES
+(1, 1, '2025-02-05 21:59:00', '', 'R-IV-N°01', 'non'),
+(2, 1, '2025-02-05 22:04:00', NULL, 'R-IV-N°02', 'oui'),
+(3, 1, '2025-02-06 10:41:00', NULL, 'R-IV-N°03', 'oui');
+
 -- --------------------------------------------------------
 
 --
@@ -157,8 +219,22 @@ CREATE TABLE `ligne_commande` (
   `id` int(11) DEFAULT NULL,
   `id_commande_fournisseur` int(11) DEFAULT NULL,
   `quantite` int(255) DEFAULT NULL,
-  `qte_livre` int(11) NOT NULL DEFAULT 0
+  `qte_livre` int(11) NOT NULL DEFAULT 0,
+  `new_price_cmndFour` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ligne_commande`
+--
+
+INSERT INTO `ligne_commande` (`id_ligne`, `id`, `id_commande_fournisseur`, `quantite`, `qte_livre`, `new_price_cmndFour`) VALUES
+(1, 7, 3, 10, 10, 500),
+(2, 5, 4, 1, 0, NULL),
+(3, 7, 5, 1, 0, NULL),
+(4, 21, 5, 1, 0, NULL),
+(5, 37, 5, 1, 0, NULL),
+(6, 33, 6, 1, 0, NULL),
+(7, 34, 6, 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -171,8 +247,22 @@ CREATE TABLE `ligne_commande_client` (
   `id_produit` int(11) DEFAULT NULL,
   `id_cmd_client` int(11) DEFAULT NULL,
   `quantite` int(50) DEFAULT NULL,
-  `qte_livre` int(11) NOT NULL DEFAULT 0
+  `qte_livre` int(11) NOT NULL DEFAULT 0,
+  `new_price_cmndClient` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ligne_commande_client`
+--
+
+INSERT INTO `ligne_commande_client` (`id_ligne_cl`, `id_produit`, `id_cmd_client`, `quantite`, `qte_livre`, `new_price_cmndClient`) VALUES
+(1, 7, 1, 1, 0, NULL),
+(2, 7, 2, 1, 0, NULL),
+(3, 30, 3, 1, 0, NULL),
+(4, 10, 5, 1, 0, NULL),
+(5, 15, 5, 1, 0, NULL),
+(6, 7, 6, 1, 0, NULL),
+(7, 6, 7, 1, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -187,6 +277,41 @@ CREATE TABLE `ligne_inventaire` (
   `quantite_physique` int(255) NOT NULL,
   `ecart_stock` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ligne_inventaire`
+--
+
+INSERT INTO `ligne_inventaire` (`id_ligne_inventaire`, `id_produit`, `id_inventaire`, `quantite_physique`, `ecart_stock`) VALUES
+(1, 5, 1, 100, 100),
+(2, 4, 1, 100, 100),
+(3, 3, 1, 100, 100),
+(4, 35, 2, 100, 100),
+(5, 33, 2, 100, 100),
+(6, 32, 2, 104, 100),
+(7, 28, 2, 103, 100),
+(8, 26, 2, 102, 100),
+(9, 25, 2, 105, 100),
+(10, 24, 2, 100, 100),
+(11, 23, 2, 100, 100),
+(12, 22, 2, 100, 100),
+(13, 18, 2, 100, 83),
+(14, 17, 2, 105, 100),
+(15, 16, 2, 100, 100),
+(16, 15, 2, 100, 100),
+(17, 14, 2, 100, 100),
+(18, 13, 2, 100, 100),
+(19, 12, 2, 169, 100),
+(20, 11, 2, 100, 100),
+(21, 10, 2, 100, 100),
+(22, 8, 2, 100, 100),
+(23, 7, 2, 100, 100),
+(24, 6, 2, 100, 100),
+(25, 5, 2, 100, 100),
+(26, 4, 2, 100, 100),
+(27, 3, 2, 100, 100),
+(28, 37, 3, 100, 100),
+(29, 36, 3, 95, 95);
 
 -- --------------------------------------------------------
 
@@ -214,6 +339,13 @@ CREATE TABLE `ligne_reception` (
   `id_produit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `ligne_reception`
+--
+
+INSERT INTO `ligne_reception` (`id_ligne_re`, `id_reception`, `quantite_recu`, `id_produit`) VALUES
+(1, 1, 10, 7);
+
 -- --------------------------------------------------------
 
 --
@@ -224,8 +356,20 @@ CREATE TABLE `ligne_vente` (
   `id_ligne_vente` int(11) NOT NULL,
   `id_vente` int(11) NOT NULL,
   `id_produit` int(11) NOT NULL,
-  `quantite` int(100) NOT NULL
+  `quantite` int(100) NOT NULL,
+  `new_price_vente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `ligne_vente`
+--
+
+INSERT INTO `ligne_vente` (`id_ligne_vente`, `id_vente`, `id_produit`, `quantite`, `new_price_vente`) VALUES
+(1, 1, 4, 1, 500),
+(2, 2, 7, 3, 5000),
+(3, 2, 16, 1, 500),
+(4, 3, 7, 1, 500),
+(5, 3, 9, 1, 300);
 
 -- --------------------------------------------------------
 
@@ -239,6 +383,13 @@ CREATE TABLE `livraison` (
   `date_livraison` datetime DEFAULT NULL,
   `livraison_refer` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `livraison`
+--
+
+INSERT INTO `livraison` (`id_livraison`, `id_commande_client`, `date_livraison`, `livraison_refer`) VALUES
+(1, 7, '2025-01-01 23:24:00', 'L-CC-02012025-01');
 
 -- --------------------------------------------------------
 
@@ -271,6 +422,18 @@ CREATE TABLE `mouvement` (
   `date_mov` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Déchargement des données de la table `mouvement`
+--
+
+INSERT INTO `mouvement` (`id_mvnt`, `id_ligne_reception`, `id_ligne_livraison`, `id_ligne_vente`, `id_produit`, `quantite`, `type_mvnt`, `montant`, `date_mov`) VALUES
+(1, NULL, NULL, 1, 4, 1, 'vente_direct', 500, '2025-02-11 08:51:13'),
+(2, 1, NULL, NULL, 7, 10, 'reception', 4000, '2025-02-11 15:16:45'),
+(3, NULL, NULL, 2, 7, 3, 'vente_direct', 15000, '2025-02-11 15:22:27'),
+(4, NULL, NULL, 3, 16, 1, 'vente_direct', 500, '2025-02-11 15:22:27'),
+(5, NULL, NULL, 4, 7, 1, 'vente_direct', 500, '2025-02-11 15:24:14'),
+(6, NULL, NULL, 5, 9, 1, 'vente_direct', 300, '2025-02-11 15:24:14');
+
 -- --------------------------------------------------------
 
 --
@@ -284,6 +447,17 @@ CREATE TABLE `paiement` (
   `paie_referrence` varchar(255) NOT NULL,
   `id_commande_fournisseur` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `paiement`
+--
+
+INSERT INTO `paiement` (`id_paiement`, `montant_paye`, `date_paie`, `paie_referrence`, `id_commande_fournisseur`) VALUES
+(1, 100, '2024-12-23 00:31:00', 'P-CF-23122024-01', 1),
+(2, 50000, '2024-12-26 12:32:00', 'P-CF-26122024-02', 4),
+(3, 1120, '2025-02-06 11:07:00', 'P-CF-06022025-03', 8),
+(4, 265000, '2025-02-08 19:25:00', 'P-CF-08022025-04', 9),
+(5, 5000, '2025-02-11 15:16:00', 'P-CF-11022025-05', 3);
 
 -- --------------------------------------------------------
 
@@ -299,6 +473,17 @@ CREATE TABLE `paiement_client` (
   `id_comnd_client` int(11) NOT NULL,
   `reference_caisse` varchar(100) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `paiement_client`
+--
+
+INSERT INTO `paiement_client` (`id_paie_client`, `montant_paye`, `date_paie`, `paie_reference`, `id_comnd_client`, `reference_caisse`) VALUES
+(1, 500, '2024-12-25 22:14:00', 'P-CC-25122024-01', 3, 'CAISSE-12-2024-N°1'),
+(2, 500, '2024-12-25 22:14:00', 'P-CC-25122024-02', 2, 'CAISSE-12-2024-N°1'),
+(3, 1000, '2025-01-30 16:11:00', 'P-CC-30012025-03', 8, 'CAISSE-12-2024-N°1'),
+(4, 5500, '2025-01-30 16:19:00', 'P-CC-30012025-04', 9, 'CAISSE-12-2024-N°1'),
+(5, 500, '2025-02-08 19:35:00', 'P-CC-08022025-05', 10, 'CAISSE-12-2024-N°1');
 
 -- --------------------------------------------------------
 
@@ -323,6 +508,13 @@ CREATE TABLE `reception` (
   `date_reception` datetime NOT NULL,
   `recept_ref` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `reception`
+--
+
+INSERT INTO `reception` (`id_reception`, `id_commande_fournisseur`, `date_reception`, `recept_ref`) VALUES
+(1, 3, '2025-02-11 15:16:00', 'R-CF-11022025-01');
 
 -- --------------------------------------------------------
 
@@ -352,11 +544,52 @@ CREATE TABLE `tbl_product` (
   `prix_en_gros` int(50) NOT NULL,
   `prix_detail` int(50) NOT NULL,
   `price` int(50) NOT NULL,
-  `alerte_article` varchar(100) NOT NULL,
+  `alerte_article` int(100) NOT NULL,
   `id_boutique` int(11) NOT NULL,
   `stock` int(11) NOT NULL DEFAULT 0,
   `id_unite` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `tbl_product`
+--
+
+INSERT INTO `tbl_product` (`id`, `name`, `code`, `marque_produit`, `reference`, `prix_en_gros`, `prix_detail`, `price`, `alerte_article`, `id_boutique`, `stock`, `id_unite`) VALUES
+(3, 'Savon Santex', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 2, 1),
+(4, 'Savon Santex', '', 'mali', 'gyug', 500, 500, 1000, 5, 1, 2, 1),
+(5, 'Savon Santex', '', 'mali', 'gyug', 500, 300, 400, 5, 1, 4, 1),
+(6, 'OmoSantex', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 4, 1),
+(7, 'Alumette', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 1, 1),
+(8, 'Chocolat', '', 'mali', 'gyug', 500, 400, 400, 5, 1, 3, 1),
+(9, 'Bonbon', '', 'mali', 'gyug', 500, 300, 400, 5, 1, 3, 1),
+(10, 'Chuigomme', '', 'mali', 'gyug', 500, 400, 400, 5, 1, 0, 1),
+(11, 'Sac', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(12, 'Ordinateur', '', 'mali', 'gyug', 500, 50000, 400, 5, 1, 159, 1),
+(13, 'Gum', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(14, 'Ouolo', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 99, 1),
+(15, 'Ampoule', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 98, 1),
+(16, 'Chausseur', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 96, 1),
+(17, 'Huile', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(18, 'Sucre', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(19, 'Sel', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 199, 1),
+(20, 'riz', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 169, 1),
+(21, 'Mais', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 188, 1),
+(22, 'Fonio', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(23, 'Haricot', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 101, 1),
+(24, 'Zaban', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 100, 1),
+(25, 'Matellas', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 105, 1),
+(26, 'telepphone', '', 'mali', 'gyug', 500, 500, 400, 5, 1, 102, 1),
+(27, 'Tablette', '', 'mali', 'gyug', 5000, 50000, 400, 5, 1, 200, 1),
+(28, 'Chaise', '', 'mali', 'gyug', 5000, 50000, 400, 5, 1, 103, 1),
+(29, 'TV', '', 'mali', 'gyug', 5000, 50000, 400, 5, 1, 200, 1),
+(30, 'maison', '', 'mali', 'gyug', 5000, 50000, 400, 5, 1, 198, 1),
+(31, 'Diagoo', '', 'mali', 'gyug', 5000, 50000, 400, 5, 1, 5054, 1),
+(32, 'sandwish', '', 'mali', '', 0, 5000, 0, 10, 1, 104, 1),
+(33, 'ball', '', 'mali', '', 0, 100, 0, 5, 1, 100, 1),
+(34, 'Mon savon', '', 'mali', '', 0, 500, 0, 10, 1, 180, 1),
+(35, 'vivalait', '', 'mali', '', 0, 1000, 0, 10, 1, 99, 1),
+(36, 'Lait en poudre NIDO 2500g', '', 'holandais', '', 0, 17000, 15000, 20, 1, 99, 1),
+(37, 'Mayonnaise BAMA', '', 'holandais', '', 0, 3000, 4000, 20, 1, 86, 3);
 
 -- --------------------------------------------------------
 
@@ -375,7 +608,9 @@ CREATE TABLE `unite` (
 --
 
 INSERT INTO `unite` (`id_unite`, `libelle`, `symbole`) VALUES
-(1, 'Paque', 'pq');
+(1, 'Paque', 'pq'),
+(2, 'Cartons', 'crts'),
+(3, 'Boites', 'bts');
 
 -- --------------------------------------------------------
 
@@ -403,8 +638,10 @@ CREATE TABLE `utilisateur` (
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `nom_utilisateur`, `prenom_utilisateur`, `Contact_utilisateur`, `email`, `psedeau_utilisateur`, `mot_de_passe_utilisateur`, `adresse`, `avatar`, `type_utilisateur`, `statut`, `reset_token`) VALUES
-(1, 'Barry', 'Moustaphe', 92190993, 'guem7876@gmail.com', 'maitrebarry', '1990', 'segou-sebougou', '67562a82a699b_Capture d’écran (1).png', 'Superadmin', 'on', NULL),
-(7, 'Maiga', 'Sadou', 78765606, 'sadou@gmail.com', 'Maiga', 'ca3850b3c38a0cff299605c2d6aa3217bb18473c', 'sebougou', 'LD0001665507_2.jpg', 'Administrateur', 'on', NULL);
+(1, 'Barry', 'Moustaphe', 92190993, 'barrymoustapha908@gmail.com ', 'maitrebarry', '1990', 'segou-sebougou', '67562a82a699b_Capture d’écran (1).png', 'Superadmin', 'on', NULL),
+(7, 'Guem', 'Sadou', 78765606, 'sadou@gmail.com', 'guem', '0000', 'sebougou', 'LD0001665507_2.jpg', 'Superadmin', 'on', NULL),
+(8, 'DIALLO', 'Adama', 74745669, 'alimatasow@gmail.com', 'adame', '00ce629b2735ad8217f4d6947d65938269a9a46b', 'lafiabougou-segou', '', 'utilisateur', 'on', NULL),
+(9, 'Traore', 'Noe', 71730040, 'kekabaya97@gmail.com.org', 'noe', 'c22954bf5d1d4638575c2b0cc164979a2d836854', 'lafiabougou-segou', 'Annexe_Liste_Abreviations_1.jpg', 'Administrateur', 'on', NULL);
 
 -- --------------------------------------------------------
 
@@ -439,6 +676,15 @@ CREATE TABLE `vente` (
   `montant_recu` int(255) NOT NULL,
   `monnaie_rembourse` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `vente`
+--
+
+INSERT INTO `vente` (`id_vente`, `nom_client`, `date_vente`, `montant_total`, `reference_caisse`, `id_utilisateur`, `remise`, `net_a_payer`, `montant_recu`, `monnaie_rembourse`) VALUES
+(1, 'clients divers', '2025-02-11 08:51:00', 500, 'CAISSE-02-2025-N°1', 1, 0, 500, 500, 0),
+(2, 'clients divers', '2025-02-11 15:20:00', 15500, 'CAISSE-02-2025-N°1', 1, 0, 15500, 15500, 0),
+(3, 'clients divers', '2025-02-11 15:23:00', 800, 'CAISSE-02-2025-N°1', 1, 0, 800, 800, 0);
 
 --
 -- Index pour les tables déchargées
@@ -651,25 +897,25 @@ ALTER TABLE `boutique`
 -- AUTO_INCREMENT pour la table `caisse`
 --
 ALTER TABLE `caisse`
-  MODIFY `id_caisse` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_caisse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `client_grossiste`
 --
 ALTER TABLE `client_grossiste`
-  MODIFY `id_client_gr` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_client_gr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `commande_client`
 --
 ALTER TABLE `commande_client`
-  MODIFY `id_cmd_client` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_cmd_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `commande_fournisseur`
 --
 ALTER TABLE `commande_fournisseur`
-  MODIFY `id_commande_fournisseur` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_commande_fournisseur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `depense`
@@ -681,31 +927,31 @@ ALTER TABLE `depense`
 -- AUTO_INCREMENT pour la table `fournisseur`
 --
 ALTER TABLE `fournisseur`
-  MODIFY `id_fournisseur` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_fournisseur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `inventaire`
 --
 ALTER TABLE `inventaire`
-  MODIFY `id_inventaire` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inventaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `ligne_commande`
 --
 ALTER TABLE `ligne_commande`
-  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ligne` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `ligne_commande_client`
 --
 ALTER TABLE `ligne_commande_client`
-  MODIFY `id_ligne_cl` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ligne_cl` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `ligne_inventaire`
 --
 ALTER TABLE `ligne_inventaire`
-  MODIFY `id_ligne_inventaire` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ligne_inventaire` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT pour la table `ligne_livraison`
@@ -717,19 +963,19 @@ ALTER TABLE `ligne_livraison`
 -- AUTO_INCREMENT pour la table `ligne_reception`
 --
 ALTER TABLE `ligne_reception`
-  MODIFY `id_ligne_re` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ligne_re` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `ligne_vente`
 --
 ALTER TABLE `ligne_vente`
-  MODIFY `id_ligne_vente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ligne_vente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `livraison`
 --
 ALTER TABLE `livraison`
-  MODIFY `id_livraison` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_livraison` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `magasins`
@@ -741,19 +987,19 @@ ALTER TABLE `magasins`
 -- AUTO_INCREMENT pour la table `mouvement`
 --
 ALTER TABLE `mouvement`
-  MODIFY `id_mvnt` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mvnt` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `paiement`
 --
 ALTER TABLE `paiement`
-  MODIFY `id_paiement` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_paiement` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `paiement_client`
 --
 ALTER TABLE `paiement_client`
-  MODIFY `id_paie_client` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_paie_client` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `proprietaire`
@@ -765,7 +1011,7 @@ ALTER TABLE `proprietaire`
 -- AUTO_INCREMENT pour la table `reception`
 --
 ALTER TABLE `reception`
-  MODIFY `id_reception` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reception` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `stock`
@@ -777,19 +1023,19 @@ ALTER TABLE `stock`
 -- AUTO_INCREMENT pour la table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT pour la table `unite`
 --
 ALTER TABLE `unite`
-  MODIFY `id_unite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_unite` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `utilisation_pertes`
@@ -801,7 +1047,7 @@ ALTER TABLE `utilisation_pertes`
 -- AUTO_INCREMENT pour la table `vente`
 --
 ALTER TABLE `vente`
-  MODIFY `id_vente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_vente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
@@ -905,7 +1151,8 @@ ALTER TABLE `reception`
 -- Contraintes pour la table `tbl_product`
 --
 ALTER TABLE `tbl_product`
-  ADD CONSTRAINT `tbl_product_ibfk_2` FOREIGN KEY (`id_unite`) REFERENCES `unite` (`id_unite`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tbl_product_ibfk_2` FOREIGN KEY (`id_unite`) REFERENCES `unite` (`id_unite`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_product_ibfk_3` FOREIGN KEY (`id_boutique`) REFERENCES `boutique` (`id_boutique`);
 
 --
 -- Contraintes pour la table `utilisation_pertes`
