@@ -53,8 +53,14 @@ if (isset($_POST['valider'])) {
                 $insert_mouvement = $bdd->prepare('INSERT INTO mouvement(id_ligne_reception,id_ligne_livraison,id_ligne_vente,id_produit,quantite,type_mvnt,montant,date_mov)
                  VALUES(?,?,?,?,?,?,?,NOW())');
                 $insert_mouvement->execute(array($lastid_ligne,null,null,$id_produit,$quantite, 'reception', $montant));
-                    afficher_message('Reception effectuée avec succès' , 'success');
-            } else {
+                   $_SESSION['notification'] = [
+                            'message' => 'Reception effectuée avec succès',
+                            'type' => 'success'
+                        ];
+
+                        header('location:liste_commande_four.php');
+                        exit();
+                    } else {
                 // Affichage d'un message d'erreur si la quantité reçue n'est pas valide
                 afficher_message('La reception actuelle doit être inférieure ou égale à la quantité Commandée ');
             }

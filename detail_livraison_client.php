@@ -7,6 +7,7 @@
         $detail=$_GET['detail'];
         $livraison=$bdd->query("SELECT * FROM livraison INNER JOIN commande_client 
         ON commande_client.id_cmd_client=livraison.id_commande_client
+        JOIN client_grossiste  ON client_grossiste.id_client_gr=commande_client.id_client_gr
         WHERE id_livraison=$detail LIMIT 1");
         $livraisoninfo=$livraison->fetch();
         $id_commande=$livraisoninfo['id_cmd_client'];

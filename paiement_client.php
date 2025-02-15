@@ -5,7 +5,8 @@
 <?php  
     if (isset($_GET['paiement'])) {
         $paiement = $_GET['paiement'];
-        $commande = $bdd->query("SELECT * FROM commande_client 
+        $commande = $bdd->query("SELECT * FROM commande_client INNER JOIN client_grossiste 
+        ON client_grossiste.id_client_gr = commande_client.id_client_gr 
         WHERE id_cmd_client = $paiement LIMIT 1");
         $commandeinfo = $commande->fetch();
     }
@@ -44,7 +45,7 @@
                     </div>
                     <div class="col-4">
                         <h5 class="card-title">&emsp; Client:
-                            <?= $commandeinfo['client'] ?>
+                            <?= $commandeinfo['nom_client_grossiste'] . ' ' . $commandeinfo['prenom_du_client_grossiste'] ?>
                         </h5>
                     </div>
                     <div class="col-4">

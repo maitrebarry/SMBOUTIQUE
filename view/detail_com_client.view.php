@@ -96,7 +96,7 @@ require_once('partials/header.php') ?>
                                         <label for="">Client</label>
                                         <select name="four" id="" class="form-control" required>
                                             <option value="">
-                                                <?= $commandeinfo['client'] ?>
+                                                <?= $commandeinfo['prenom_du_client_grossiste'].' '.$commandeinfo['nom_client_grossiste'] ?>
                                             </option>
                                         </select>
                                     </div>

@@ -56,7 +56,7 @@
                                             <td><?= date_format(date_create($liste_paiement->date_paie), 'd-m-Y H:i:s') ?></td>
                                             <td><?= $liste_paiement->paie_reference ?></td>
                                             <td><?= $liste_paiement->paie_reference ?></td>
-                                            <td><?= $liste_paiement->client ?>
+                                            <td><?= $liste_paiement->prenom_du_client_grossiste.' '.$liste_paiement->nom_client_grossiste ?></td>
                                         </td>
                                             <td><?= number_format($liste_paiement->montant_paye, 2, ',', ' ') ?> F CFA</td>  
                                             <td>

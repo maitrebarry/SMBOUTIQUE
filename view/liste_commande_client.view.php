@@ -37,6 +37,7 @@
       </nav>
     </div><!-- End Page Title -->
         <section class="section">
+               <?php require_once('partials/afficher_message.php')?>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">

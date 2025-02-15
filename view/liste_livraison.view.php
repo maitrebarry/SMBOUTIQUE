@@ -57,7 +57,7 @@
                                             <td><?= date_format(date_create($liste_livrai->date_livraison), 'd-m-Y H:i:s') ?></td>
                                             <td><?= $liste_livrai->livraison_refer ?></td>
                                             <td><?= $liste_livrai->reference ?></td>
-                                            <td><?= $liste_livrai->client ?></td>
+                                            <td><?= $liste_livrai->prenom_du_client_grossiste.' '.$liste_livrai->nom_client_grossiste ?></td>
                                             <td>
                                                 <!-- Bouton de détail -->
                                                 <a href="detail_livraison_client.php?detail=<?= $liste_livrai->id_livraison ?>"

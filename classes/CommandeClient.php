@@ -4,10 +4,11 @@ class CommandeClient extends Fonction{
     //  recuperer et afficher la liste des livraisons
       public function list(){
             $recuperer_afficher=$this->recuperation_fonction("*","livraison JOIN commande_client ON commande_client.id_cmd_client=livraison.id_commande_client
-          ORDER BY id_livraison DESC",[],"all");
+            JOIN client_grossiste  ON client_grossiste.id_client_gr=commande_client.id_client_gr 
+            ORDER BY id_livraison DESC",[],"all");
             return $recuperer_afficher;
          }
-
+ 
 //  recuperer et afficher la liste des COMMANDES
       // public function list1(){
       //       $recuperer_afficher_list_cmcl=$this->recuperation_fonction("*","commande_client JOIN client_grossiste
@@ -28,6 +29,7 @@ class CommandeClient extends Fonction{
       public function list2(){
             $recuperer_afficher_list_paie=$this->recuperation_fonction("*","paiement_client JOIN commande_client
              ON commande_client.id_cmd_client=paiement_client.id_comnd_client
+             JOIN client_grossiste  ON client_grossiste.id_client_gr=commande_client.id_client_gr
            ORDER BY id_paie_client DESC",[],"all");
             return $recuperer_afficher_list_paie;
          }

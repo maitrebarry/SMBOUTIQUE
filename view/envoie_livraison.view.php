@@ -2,7 +2,8 @@
 // Récupération des données de livraison si le paramètre 'livraison' est défini
 if (isset($_GET['livraison'])) {
     $reception = $_GET['livraison'];
-    $commande = $bdd->query("SELECT * FROM commande_client WHERE id_cmd_client=$reception LIMIT 1");
+    $commande = $bdd->query("SELECT * FROM commande_client INNER JOIN client_grossiste
+    ON client_grossiste.id_client_gr=commande_client.id_client_gr WHERE id_cmd_client=$reception LIMIT 1");
     $commandeinfo = $commande->fetch();
     // Afficher la ligne de commande
     $ligen_commande = $bdd->query("SELECT * FROM ligne_commande_client INNER JOIN tbl_product
@@ -93,7 +94,7 @@ if (isset($_GET['livraison'])) {
                     </div>
                     <div class="col-4">
                         <h5 class="card-title">&emsp;Client:
-                            <?=$commandeinfo['client']?>
+                            <?=$commandeinfo['nom_client_grossiste'].' '.$commandeinfo['prenom_du_client_grossiste']?>
                         </h5>
                     </div>
                     <div class="col-4">
@@ -149,7 +150,7 @@ if (isset($_GET['livraison'])) {
                                                     <td><input class="form-control" type="number" name="qte_recu[]"
                                                             value="<?=$affiche->qte_livre;?>" readOnly></td>
                                                     <td><input class="form-control" type="number" name="recep_act[]"
-                                                            value="<?=$affiche->quantite - $affiche->qte_livre;?>"></td>
+                                                            value="<?=$affiche->quantite - $affiche->qte_livre;?>" min="0"></td>
                                             </tr>
                                             <?php
                                                     endif;

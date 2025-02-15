@@ -5,7 +5,9 @@
   <?php 
     if (isset($_GET['detail'])) {
         $detail=$_GET['detail'];
-        $commande=$bdd->query("SELECT * FROM commande_client  WHERE id_cmd_client=$detail LIMIT 1");
+        $commande=$bdd->query("SELECT * FROM commande_client   INNER JOIN client_grossiste  
+         ON commande_client.id_client_gr=commande_client.id_client_gr
+         WHERE id_cmd_client=$detail LIMIT 1");
         $commandeinfo=$commande->fetch();
         //afficher la ligne de commande
         $ligen_commande=$bdd->query("SELECT * FROM ligne_commande_client INNER JOIN tbl_product

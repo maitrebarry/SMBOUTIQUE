@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-4">
                         <h5 class="card-title"> Client:
-                            <?=  $livraisoninfo['client']?>
+                            <?=$livraisoninfo['prenom_du_client_grossiste'].' '.$livraisoninfo['nom_client_grossiste']?>
                     </div>
                     <div class="col-4">
                         <h5 class="card-title"> Date de commande:
