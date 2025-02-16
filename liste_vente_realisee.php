@@ -1,6 +1,5 @@
 <!-- lien  du base de donnee  -->
    <?php
-    require_once('rentrer_anormal.php') ;
     require_once ('partials/database.php');
     require_once('function/function.php');
     $errors=[];

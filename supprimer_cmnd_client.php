@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 session_start();
 
 if (isset($_GET["action"])) {

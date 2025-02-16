@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('partials/database.php');
 require_once('function/function.php');
 $produits = recuperation_fonction('*', 'client_grossiste', [], "ALL");

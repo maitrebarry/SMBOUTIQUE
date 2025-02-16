@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('autoload.php');
 $liste_client=new Client();
 $recuperer_afficher=$liste_client->list();

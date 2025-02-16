@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('autoload.php');
 $liste_utilisateur=new Fournisseur();
 $recuperer_superadmin=$liste_utilisateur->list1();

@@ -1,6 +1,5 @@
 
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('autoload.php');
 $delete = new CommandeClient();
 

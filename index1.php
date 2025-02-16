@@ -281,7 +281,7 @@
                     </div>
                     <div class="ps-3">
                         <?php
-                       echo "<h6>" . number_format($totaux, 2, ',', ' ') . " F CFA</h6>";
+                       echo "<h6>" . number_format($totaux, 0, ',', ' ') . " F CFA</h6>";
 
                         // if ($pourcentageAugmentation !== null) {
                         //     echo "<span class='text-success small pt-1 fw-bold'>" . number_format($pourcentageAugmentation, 2) . "%</span>";

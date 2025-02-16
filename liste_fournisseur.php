@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('autoload.php');
 $liste_fournisseur=new Fournisseur();
 $recuperer_afficher=$liste_fournisseur->list();

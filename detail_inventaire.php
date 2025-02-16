@@ -1,6 +1,5 @@
  
   <?php 
-    require_once('rentrer_anormal.php') ;
     require_once('partials/database.php');
     if (isset($_GET['detail'])) {
         $detail=$_GET['detail'];

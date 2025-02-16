@@ -1,48 +1,45 @@
 <?php
-
 require_once('partials/database.php');
 require_once('function/function.php');
 
-if (isset($_GET['email'], $_GET['token'])) {
-    $email = $_GET['email'];
-    $token = $_GET['token'];
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
 
-    $query = $bdd->prepare("SELECT * FROM utilisateur WHERE email = ? AND reset_token = ?");
-    $query->execute([$email, $token]);
+    $query = $bdd->prepare("SELECT * FROM utilisateur WHERE email = ?");
+    $query->execute([$email]);
     $user = $query->fetch(PDO::FETCH_ASSOC);
 
-    if (!$user || strtotime($user['reset_token_expire']) < time()) {
-        afficher_message('Lien invalide ou expiré.');
-        exit;
-    }
+    if ($user) {
+        $token = bin2hex(random_bytes(16));
+        $expire_time = date("Y-m-d H:i:s", strtotime('+1 hour'));
 
-    if (isset($_POST['submit'])) {
-        $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        
-        $update_query = $bdd->prepare("UPDATE utilisateur SET mot_de_passe_utilisateur = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?");
-        $update_query->execute([$new_password, $email]);
+        $query = $bdd->prepare("UPDATE utilisateur SET reset_token = ?, reset_token_expire = ? WHERE email = ?");
+        $query->execute([$token, $expire_time, $email]);
 
-        afficher_message('Mot de passe mis à jour avec succès. Vous pouvez vous connecter.');
+        $reset_link = "http://localhost/SMBOUTIQUE/reset_password.php?email=$email&token=$token";
         
-        // Pause to let the message display
-        sleep(3);
-        
-        header('Location: index.php');
-        exit;
+        $to = $email;
+        $subject = "Réinitialisation du mot de passe";
+        $message = "Bonjour,\n\nVous avez demandé une réinitialisation de mot de passe. Cliquez sur le lien suivant pour réinitialiser votre mot de passe (valide pendant 1 heure) :\n\n$reset_link\n\nCordialement,\nZaramarket";
+        $headers = "From: barrymoustapha908@gmail.com";
+        mail($to, $subject, $message, $headers);
+
+        afficher_message('Un e-mail de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.');
+    } else {
+        afficher_message('Aucun compte trouvé avec cet e-mail.');
     }
-} else {
-    afficher_message('Lien invalide.');
-    exit;
 }
 ?>
+
+
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Réinitialiser le mot de passe - Zaramarket</title>
+  <title>Réinitialisation de mot de passe - Zaramarket</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -79,12 +76,12 @@ if (isset($_GET['email'], $_GET['token'])) {
 
   <main>
     <div class="container">
-
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
           <div class="row justify-content-center">
+            
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
+               
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
@@ -95,21 +92,28 @@ if (isset($_GET['email'], $_GET['token'])) {
               <div class="card mb-3">
 
                 <div class="card-body">
+                
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Réinitialiser le mot de passe</h5>
-                    <p class="text-center small">Entrez votre nouveau mot de passe</p>
+                    <p class="text-center small">Entrez votre e-mail pour recevoir un lien de réinitialisation</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" method="post" action="" novalidate>
+                  <form class="row g-3 needs-validation" method="post" action="reset_password1.php" novalidate>
 
                     <div class="col-12">
-                      <label for="password" class="form-label">Nouveau mot de passe</label>
-                      <input type="password" name="password" class="form-control" id="password" required>
-                      <div class="invalid-feedback">Veuillez entrer votre nouveau mot de passe.</div>
+                      <label for="email" class="form-label">Adresse e-mail</label>
+                      <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input type="email" name="email" class="form-control" id="email" required>
+                        <div class="invalid-feedback">Veuillez entrer votre adresse e-mail.</div>
+                      </div>
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit" name="submit">Mettre à jour</button>
+                      <button class="btn btn-primary w-100" type="submit" name="submit">Envoyer</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Vous vous souvenez de votre mot de passe ? <a href="index.php">Se connecter</a></p>
                     </div>
                   </form>
 
@@ -152,3 +156,4 @@ if (isset($_GET['email'], $_GET['token'])) {
 </body>
 
 </html>
+

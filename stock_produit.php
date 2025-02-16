@@ -1,5 +1,4 @@
 <?php
-  require_once('rentrer_anormal.php') ;
 //unset($_SESSION['pseudo']);
  require_once('autoload.php');
 $produit=new Produit();

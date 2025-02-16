@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once ('partials/database.php');
 require_once('function/function.php');
 if (isset($_FILES['newAvatar']) && !empty($_FILES['newAvatar']['name'])) {

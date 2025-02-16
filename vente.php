@@ -1,5 +1,4 @@
 <?php
-    require_once('rentrer_anormal.php') ;
     require_once('partials/database.php');
     // Vérifiez si l'utilisateur est connecté et 'id_utilisateur' est défini
     if (!isset($_SESSION['id_utilisateur'])) {

@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 require_once('autoload.php');
 // $liste_cmnd_cl=new CommandeClient();
 $liste_cmnd_cl = new CommandeClient();

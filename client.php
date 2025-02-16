@@ -1,5 +1,5 @@
 <?php
- require_once('rentrer_anormal.php') ;
+ 
 require_once('autoload.php');
 $client=new Client();
 if(isset($_POST['Sauvegarder'])){

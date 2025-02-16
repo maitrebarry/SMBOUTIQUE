@@ -1,5 +1,4 @@
 <?php
-require_once('rentrer_anormal.php') ;
 // Inclusion des fichiers nécessaires
 require_once('partials/database.php');
 require_once('function/function.php');

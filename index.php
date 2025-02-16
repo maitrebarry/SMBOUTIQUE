@@ -1,22 +1,63 @@
  <?php
-     require_once ('partials/database.php');
-    require_once('function/function.php');
+    // require_once ('partials/database.php');
+    // require_once('function/function.php');
 
-    if (isset($_POST['envoyer'])) {
-        if (!empty($_POST['user_pseudo']) && !empty($_POST['user_password'])) {
-            $identifiant = htmlspecialchars($_POST['user_pseudo']); // Peut être un pseudo ou un email
-            $mot_de_passe = $_POST['user_password'];
+    // if (isset($_POST['envoyer'])) {
+    //     if (!empty($_POST['user_pseudo']) && !empty($_POST['user_password'])) {
+    //         $identifiant = htmlspecialchars($_POST['user_pseudo']); // Peut être un pseudo ou un email
+    //         $mot_de_passe = $_POST['user_password'];
 
-            // Requête pour vérifier le pseudo ou l'email
-            $recepUsers = $bdd->prepare('SELECT * FROM utilisateur WHERE (psedeau_utilisateur = ? OR email = ?) AND mot_de_passe_utilisateur = ?');
-            $recepUsers->execute(array($identifiant, $identifiant, $mot_de_passe));
+    //         // Requête pour vérifier le pseudo ou l'email
+    //         $recepUsers = $bdd->prepare('SELECT * FROM utilisateur WHERE (psedeau_utilisateur = ? OR email = ?) AND mot_de_passe_utilisateur = ?');
+    //         $recepUsers->execute(array($identifiant, $identifiant, $mot_de_passe));
 
-            if ($recepUsers->rowCount() > 0) {
-                $recup = $recepUsers->fetch();
+    //         if ($recepUsers->rowCount() > 0) {
+    //             $recup = $recepUsers->fetch();
+    //             if ($recup['statut'] == "off") {
+    //                 afficher_message('Votre compte est désactivé. Veuillez contacter l\'administrateur.');
+    //             } else {
+    //                 // Connecter l'utilisateur
+    //                 $_SESSION['is_logged_in'] = true;
+    //                 $_SESSION['id_utilisateur'] = $recup['id_utilisateur'];
+    //                 $_SESSION['nom_utilisateur'] = $recup['nom_utilisateur'];
+    //                 $_SESSION['prenom_utilisateur'] = $recup['prenom_utilisateur'];
+    //                 $_SESSION['Contact_utilisateur'] = $recup['Contact_utilisateur'];
+    //                 $_SESSION['psedeau_utilisateur'] = $recup['psedeau_utilisateur'];
+    //                 $_SESSION['email'] = $recup['email'];
+    //                 $_SESSION['mot_de_passe_utilisateur'] = $recup['mot_de_passe_utilisateur'];
+    //                 $_SESSION['type_utilisateur'] = $recup['type_utilisateur'];
+    //                 $_SESSION['adresse'] = $recup['adresse'];
+    //                 $_SESSION['avatar'] = $recup['avatar'];
+
+    //                 header("Location:index1.php");
+    //             }
+    //         } else {
+    //             afficher_message('Pseudo ou email ou mot de passe incorrect');
+    //         }
+    //     } else {
+    //         afficher_message('Veuillez remplir tous les champs');
+    //     }
+    // }
+
+session_start();
+require_once('partials/database.php');
+require_once('function/function.php');
+
+if (isset($_POST['envoyer'])) {
+    if (!empty($_POST['user_pseudo']) && !empty($_POST['user_password'])) {
+        $identifiant = htmlspecialchars($_POST['user_pseudo']);
+        $mot_de_passe = $_POST['user_password'];
+
+        $recepUsers = $bdd->prepare('SELECT * FROM utilisateur WHERE psedeau_utilisateur = ? OR email = ?');
+        $recepUsers->execute(array($identifiant, $identifiant));
+
+        if ($recepUsers->rowCount() > 0) {
+            $recup = $recepUsers->fetch();
+
+            if (password_verify($mot_de_passe, $recup['mot_de_passe_utilisateur'])) {
                 if ($recup['statut'] == "off") {
                     afficher_message('Votre compte est désactivé. Veuillez contacter l\'administrateur.');
                 } else {
-                    // Connecter l'utilisateur
                     $_SESSION['is_logged_in'] = true;
                     $_SESSION['id_utilisateur'] = $recup['id_utilisateur'];
                     $_SESSION['nom_utilisateur'] = $recup['nom_utilisateur'];
@@ -29,15 +70,19 @@
                     $_SESSION['adresse'] = $recup['adresse'];
                     $_SESSION['avatar'] = $recup['avatar'];
 
-                    header("Location:index1.php");
+                    header("Location: index1.php");
                 }
             } else {
                 afficher_message('Pseudo ou email ou mot de passe incorrect');
             }
         } else {
-            afficher_message('Veuillez remplir tous les champs');
+            afficher_message('Pseudo ou email ou mot de passe incorrect');
         }
+    } else {
+        afficher_message('Veuillez remplir tous les champs');
     }
+}
+
 
 
   
@@ -130,7 +175,7 @@
                                         </div>
                                     </div>
                                     <small>
-                                        <a href="reset_password.php">Mot de passe oublié?</a>
+                                        <a href="reset_password1.php">Mot de passe oublié?</a>
                                     </small>
                                 </div>
                                  

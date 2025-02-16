@@ -1,5 +1,4 @@
 <?php
-    require_once('rentrer_anormal.php') ;
     require_once('autoload.php');
     $liste_caisse_depense=new CommandeClient();
     $recuperer_afficher_depense=$liste_caisse_depense->list5();

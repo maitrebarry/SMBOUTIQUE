@@ -1,5 +1,4 @@
 <?php
-    require_once('rentrer_anormal.php') ;
     require_once('autoload.php');
     //initialisation de la classe Fournisseur
     $detail=new CommandeClient();

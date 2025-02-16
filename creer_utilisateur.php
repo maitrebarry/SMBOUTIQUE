@@ -1,5 +1,5 @@
 <?php
-    require_once('rentrer_anormal.php') ;
+  
     require_once('autoload.php');
     $utilisateur=new Fournisseur();
     require_once('function/function.php');
