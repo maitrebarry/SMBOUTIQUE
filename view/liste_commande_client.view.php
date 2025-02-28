@@ -50,100 +50,101 @@
                                 </div>
                             </form>
                             <!-- Table principale -->
-                            <table class="table  table-bordered table-striped search-table" id="main-table">
-                                <thead>
-                                    <tr>
-                                        <th>DATE</th>
-                                        <th>REFERENCES</th>
-                                        <th>Client</th>
-                                        <th>TOTAL</th>
-                                        <th>PAYER</th>
-                                        <th>STATUT</th>
-                                        <th width='3%'>ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $total_ventes =0;
-                                    $total_paie =0;
-                                    foreach ($liste_commandes_recentes as $affiche) {
-                                        // Calcul des sommes des quantités
-                                        $total_ventes += $affiche->total;
-                                        $total_paie += $affiche->paie;
-                                        $somme_qte = $bdd->prepare("SELECT SUM(quantite) as qte FROM ligne_commande_client 
-                                        WHERE id_cmd_client=$affiche->id_cmd_client");
-                                        $somme_qte->execute();
-                                        $ro = $somme_qte->fetch(PDO::FETCH_ASSOC);
-                                        $somme = $ro['qte'];
-
-                                        $somme_qte_liv = $bdd->prepare("SELECT SUM(qte_livre) as qli FROM ligne_commande_client 
-                                        WHERE id_cmd_client=$affiche->id_cmd_client");
-                                        $somme_qte_liv->execute();
-                                        $row = $somme_qte_liv->fetch(PDO::FETCH_ASSOC);
-                                        $som = $row['qli'];
-                                    ?>
-                                        <tr class="selectable-row">
-                                            <td><?= date_format(date_create($affiche->date_cmd_client), 'd-m-Y à H:i') ?></td>
-                                            <td><?= $affiche->reference ?></td>
-                                            <td><?= $affiche->prenom_du_client_grossiste.' '.$affiche->nom_client_grossiste ?></td>
-                                            <td class="total"><?= number_format($affiche->total, 0, ',', ' ') ?> F CFA</td>
-                                            <td class="paie"><?= number_format($affiche->paie, 0, ',', ' ') ?> F CFA</td>
-                                            <td>
-                                                <?php
-                                                // Affichage du statut de livraison et de paiement
-                                                if ($som == 0) {
-                                                    echo " <span class='text-danger'> Non livré </span>";
-                                                } elseif ($somme > $som && $som > 0) {
-                                                    echo " <span class='text-info'> Livraison partielle </span>";
-                                                } else {
-                                                    echo "<span class='text-success'> Livré </span>";
-                                                }
-                                                echo "|";
-                                                if ($affiche->paie == 0) {
-                                                    echo "<span class='text-danger'> Non payé </span>";
-                                                } elseif ($affiche->total > $affiche->paie && $affiche->paie > 0) {
-                                                    echo "<span class='text-info'> Payé partiellement </span>";
-                                                } else {
-                                                    echo "<span class='text-success'> Payé </span>";
-                                                }
-                                                ?>
-                                            </td>
-                                            <td scope="col">
-                                                <!-- Actions disponibles dans un menu déroulant -->
-                                               <div class="dropdown">
-                                                <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="bi bi-three-dots text-center"></i>
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <h6 class="dropdown-header">Veuillez faire un choix</h6>
-                                                    <a class="dropdown-item" href="detail_com_client.php?detail=<?= $affiche->id_cmd_client ?>">Voir la commande</a>
-                                                     <a class="dropdown-item" href="pdf_cmnd_client.php?detail=<?= $affiche->id_cmd_client ?>" target="_blank">imprimer</a>
-                                                    <?php if ($affiche->total > $affiche->paie) { ?>
-                                                        <a class="dropdown-item" href="paiement_client.php?paiement=<?= $affiche->id_cmd_client ?>">Paiement</a>
-                                                    <?php } ?>
-                                                    <?php if ($somme > $som) { ?>
-                                                        <a class="dropdown-item" href="envoie_livraison.php?livraison=<?= $affiche->id_cmd_client ?>">Livraison</a>
-                                                        <?php if ($som == 0 && $affiche->paie == 0) { ?>
-                                                            <a class="dropdown-item" href="modifier_commande_client.php?modifi=<?= $affiche->id_cmd_client ?>">Modification</a>
-                                                            <a class="dropdown-item delete-button" href="#" data-liste-id="<?= $affiche->id_cmd_client ?>">Suppression</a>
-                                                        <?php } ?>
-                                                    <?php } ?>
-                                                </div>
-                                               </div>
-
-                                            </td>
+                            <div class="table-responsive">                         
+                                <table class="table  table-bordered table-striped search-table" id="main-table">
+                                    <thead>
+                                        <tr>
+                                            <th>DATE</th>
+                                            <th>REFERENCES</th>
+                                            <th>Client</th>
+                                            <th>TOTAL</th>
+                                            <th>PAYER</th>
+                                            <th>STATUT</th>
+                                            <th width='3%'>ACTION</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                                 <tfoot>
-                                    <tr>
-                                        <th colspan="3" class="text-left">Total Sélectionné :</th>
-                                        <th id="selected-total" class="text-right">0 F CFA</th>
-                                        <th id="selected-paie" class="text-right">0 F CFA</th>
-                                    </tr>
-                                </tfoot>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $total_ventes =0;
+                                        $total_paie =0;
+                                        foreach ($liste_commandes_recentes as $affiche) {
+                                            // Calcul des sommes des quantités
+                                            $total_ventes += $affiche->total;
+                                            $total_paie += $affiche->paie;
+                                            $somme_qte = $bdd->prepare("SELECT SUM(quantite) as qte FROM ligne_commande_client 
+                                            WHERE id_cmd_client=$affiche->id_cmd_client");
+                                            $somme_qte->execute();
+                                            $ro = $somme_qte->fetch(PDO::FETCH_ASSOC);
+                                            $somme = $ro['qte'];
 
-                            </table>
+                                            $somme_qte_liv = $bdd->prepare("SELECT SUM(qte_livre) as qli FROM ligne_commande_client 
+                                            WHERE id_cmd_client=$affiche->id_cmd_client");
+                                            $somme_qte_liv->execute();
+                                            $row = $somme_qte_liv->fetch(PDO::FETCH_ASSOC);
+                                            $som = $row['qli'];
+                                        ?>
+                                            <tr class="selectable-row">
+                                                <td><?= date_format(date_create($affiche->date_cmd_client), 'd-m-Y à H:i') ?></td>
+                                                <td><?= $affiche->reference ?></td>
+                                                <td><?= $affiche->prenom_du_client_grossiste.' '.$affiche->nom_client_grossiste ?></td>
+                                                <td class="total"><?= number_format($affiche->total, 0, ',', ' ') ?> F CFA</td>
+                                                <td class="paie"><?= number_format($affiche->paie, 0, ',', ' ') ?> F CFA</td>
+                                                <td>
+                                                    <?php
+                                                    // Affichage du statut de livraison et de paiement
+                                                    if ($som == 0) {
+                                                        echo " <span class='text-danger'> Non livré </span>";
+                                                    } elseif ($somme > $som && $som > 0) {
+                                                        echo " <span class='text-info'> Livraison partielle </span>";
+                                                    } else {
+                                                        echo "<span class='text-success'> Livré </span>";
+                                                    }
+                                                    echo "|";
+                                                    if ($affiche->paie == 0) {
+                                                        echo "<span class='text-danger'> Non payé </span>";
+                                                    } elseif ($affiche->total > $affiche->paie && $affiche->paie > 0) {
+                                                        echo "<span class='text-info'> Payé partiellement </span>";
+                                                    } else {
+                                                        echo "<span class='text-success'> Payé </span>";
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td scope="col">
+                                                    <!-- Actions disponibles dans un menu déroulant -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="bi bi-three-dots text-center"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <h6 class="dropdown-header">Veuillez faire un choix</h6>
+                                                        <a class="dropdown-item" href="detail_com_client.php?detail=<?= $affiche->id_cmd_client ?>">Voir la commande</a>
+                                                        <a class="dropdown-item" href="pdf_cmnd_client.php?detail=<?= $affiche->id_cmd_client ?>" target="_blank">imprimer</a>
+                                                        <?php if ($affiche->total > $affiche->paie) { ?>
+                                                            <a class="dropdown-item" href="paiement_client.php?paiement=<?= $affiche->id_cmd_client ?>">Paiement</a>
+                                                        <?php } ?>
+                                                        <?php if ($somme > $som) { ?>
+                                                            <a class="dropdown-item" href="envoie_livraison.php?livraison=<?= $affiche->id_cmd_client ?>">Livraison</a>
+                                                            <?php if ($som == 0 && $affiche->paie == 0) { ?>
+                                                                <a class="dropdown-item" href="modifier_commande_client.php?modifi=<?= $affiche->id_cmd_client ?>">Modification</a>
+                                                                <a class="dropdown-item delete-button" href="#" data-liste-id="<?= $affiche->id_cmd_client ?>">Suppression</a>
+                                                            <?php } ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="3" class="text-left">Total Sélectionné :</th>
+                                            <th id="selected-total" class="text-right">0 F CFA</th>
+                                            <th id="selected-paie" class="text-right">0 F CFA</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                              <?php
                            if (isset($_POST['search']) && !empty($_POST['search'])) {
                                     $search = htmlspecialchars($_POST['search']);

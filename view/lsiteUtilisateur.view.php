@@ -86,114 +86,116 @@ $typ_utilisateur = $_SESSION['type_utilisateur'];
                             <h6>LISTE UTILISATEUR</h6>
                         </div>                                                              
                      <div class="card-body">
-                        <table class="table datatable table-bordered">
-                            <thead>
-                                <tr> 
-                                    <th>NOM et PRENOM</th>
-                                    <th>IDENTIFIANT</th>
-                                    <th>TYPE</th>
-                                    <th>ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php  
-                                if($typ_utilisateur=="Superadmin"){
-                                foreach ($recuperer_superadmin as $liste_utilisateur):?>
-                                    <tr>
-                                        <td><?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?></td>
-                                        <td><?= $liste_utilisateur->psedeau_utilisateur?></td>
-                                        <td><?= $liste_utilisateur->type_utilisateur ?></td>
-                                        <td>    
-                                            <?php if ($liste_utilisateur->statut == 'on') { ?>
-                                                <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
-                                                    <i class="bi bi-person-check"></i>
-                                                </button>
-                                            <?php } else { ?>
-                                                <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
-                                                    <i class="bi bi-person-x"></i>
-                                                </button>
-                                            <?php } ?>
-                                            <a href="modifier_utilisateur.php?id=<?=$liste_utilisateur->id_utilisateur?>" 
-                                                class="btn btn-info btn-sm" title="modifier">
-                                                <i class="bx bxs-edit"></i>
-                                            </a>&emsp;
-                                            <div class="modal fade" id="basicModal<?= $liste_utilisateur->id_utilisateur ?>" tabindex="-1">  
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <form action="" method="post">
-                                                            <div class="modal-body">
-                                                                <p class="text-center"><i class="bi bi-exclamation-triangle text-danger"></i></p>
-                                                                <h5 class="text-center text-danger"> Avertissement !</h5>
-                                                                <p class="text-center"> Voulez-vous vraiment <?php if ($liste_utilisateur->statut == 'on') { ?>désactiver<?php } else { ?> activer <?php } ?> <?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?> ?</p>
-                                                            </div>
-                                                            <input type="hidden" value=" <?= $liste_utilisateur->id_utilisateur ?>" name="Id_users">
-                                                            <?php if ($liste_utilisateur->statut == 'on') { ?>
-                                                                <input type="hidden" value="off" name="statut">
-                                                            <?php } else { ?>
-                                                                <input type="hidden" value="on" name="statut">
-                                                            <?php } ?>
-                                                            <div class="modal-footer d-flex justify-content-center">
-                                                                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Annuler</button>
-                                                                <button type="submit" class="btn btn-primary" name="valider"><?php if ($liste_utilisateur->statut == 'on') { ?> Oui Désactiver<?php } else { ?>Oui Activer <?php } ?></button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div> 
-                                            </div>
-                                        </td>
+                         <div class="table-responsive">
+                            <table class="table datatable table-bordered">
+                                <thead>
+                                    <tr> 
+                                        <th>NOM et PRENOM</th>
+                                        <th>IDENTIFIANT</th>
+                                        <th>TYPE</th>
+                                        <th>ACTION</th>
                                     </tr>
-                                <?php endforeach; }?>
-                                                                    
-                                <?php if($typ_utilisateur=="Administrateur"){
-                                foreach ($recuperer_admin as $liste_utilisateur):?>
-                                    <tr>
-                                        <td><?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?></td>
-                                        <td><?= $liste_utilisateur->psedeau_utilisateur?></td>
-                                        <td><?= $liste_utilisateur->type_utilisateur ?></td>
-                                        <td>       
-                                            <?php if($liste_utilisateur->type_utilisateur != 'Administrateur') { ?>
+                                </thead>
+                                <tbody>
+                                    <?php  
+                                    if($typ_utilisateur=="Superadmin"){
+                                    foreach ($recuperer_superadmin as $liste_utilisateur):?>
+                                        <tr>
+                                            <td><?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?></td>
+                                            <td><?= $liste_utilisateur->psedeau_utilisateur?></td>
+                                            <td><?= $liste_utilisateur->type_utilisateur ?></td>
+                                            <td>    
                                                 <?php if ($liste_utilisateur->statut == 'on') { ?>
                                                     <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
                                                         <i class="bi bi-person-check"></i>
                                                     </button>
                                                 <?php } else { ?>
                                                     <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
-                                                        <i class="bi bi-person-check"></i>
+                                                        <i class="bi bi-person-x"></i>
                                                     </button>
                                                 <?php } ?>
                                                 <a href="modifier_utilisateur.php?id=<?=$liste_utilisateur->id_utilisateur?>" 
-                                                    class="btn btn-info btn-sm">
+                                                    class="btn btn-info btn-sm" title="modifier">
                                                     <i class="bx bxs-edit"></i>
                                                 </a>&emsp;
-                                            <?php } ?>
-                                            <div class="modal fade" id="basicModal<?= $liste_utilisateur->id_utilisateur ?>" tabindex="-1">  
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <form action="" method="post">
-                                                            <div class="modal-body">
-                                                                <p class="text-center"><i class="bi bi-exclamation-triangle text-primary"></i></p>
-                                                                <h5 class="text-center text-primary"> Avertissement !</h5>
-                                                                <p class="text-center"> Voulez-vous vraiment <?php if ($liste_utilisateur->statut == 'on') { ?>désactiver<?php } else { ?> activer <?php } ?> <?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?> ?</p>
-                                                            </div>
-                                                            <input type="hidden" value=" <?= $liste_utilisateur->id_utilisateur ?>" name="Id_users">
-                                                            <?php if ($liste_utilisateur->statut == 'on') { ?>
-                                                                <input type="hidden" value="off" name="statut">
-                                                            <?php } else { ?>
-                                                                <input type="hidden" value="on" name="statut">
-                                                            <?php } ?>
-                                                            <div class="modal-footer d-flex justify-content-center">
-                                                                <button type="button" class="btn btn-info" data-bs-dismiss="modal">Annuler</button>
-                                                                <button type="submit" class="btn btn-primary" name="valider"><?php if ($liste_utilisateur->statut == 'on') { ?> Oui Désactiver<?php } else { ?>Oui Activer <?php } ?></button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div> 
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; }?>
-                            </tbody>
-                        </table>
+                                                <div class="modal fade" id="basicModal<?= $liste_utilisateur->id_utilisateur ?>" tabindex="-1">  
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form action="" method="post">
+                                                                <div class="modal-body">
+                                                                    <p class="text-center"><i class="bi bi-exclamation-triangle text-danger"></i></p>
+                                                                    <h5 class="text-center text-danger"> Avertissement !</h5>
+                                                                    <p class="text-center"> Voulez-vous vraiment <?php if ($liste_utilisateur->statut == 'on') { ?>désactiver<?php } else { ?> activer <?php } ?> <?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?> ?</p>
+                                                                </div>
+                                                                <input type="hidden" value=" <?= $liste_utilisateur->id_utilisateur ?>" name="Id_users">
+                                                                <?php if ($liste_utilisateur->statut == 'on') { ?>
+                                                                    <input type="hidden" value="off" name="statut">
+                                                                <?php } else { ?>
+                                                                    <input type="hidden" value="on" name="statut">
+                                                                <?php } ?>
+                                                                <div class="modal-footer d-flex justify-content-center">
+                                                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Annuler</button>
+                                                                    <button type="submit" class="btn btn-primary" name="valider"><?php if ($liste_utilisateur->statut == 'on') { ?> Oui Désactiver<?php } else { ?>Oui Activer <?php } ?></button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; }?>
+                                                                        
+                                    <?php if($typ_utilisateur=="Administrateur"){
+                                    foreach ($recuperer_admin as $liste_utilisateur):?>
+                                        <tr>
+                                            <td><?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?></td>
+                                            <td><?= $liste_utilisateur->psedeau_utilisateur?></td>
+                                            <td><?= $liste_utilisateur->type_utilisateur ?></td>
+                                            <td>       
+                                                <?php if($liste_utilisateur->type_utilisateur != 'Administrateur') { ?>
+                                                    <?php if ($liste_utilisateur->statut == 'on') { ?>
+                                                        <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
+                                                            <i class="bi bi-person-check"></i>
+                                                        </button>
+                                                    <?php } else { ?>
+                                                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#basicModal<?= $liste_utilisateur->id_utilisateur ?>">
+                                                            <i class="bi bi-person-check"></i>
+                                                        </button>
+                                                    <?php } ?>
+                                                    <a href="modifier_utilisateur.php?id=<?=$liste_utilisateur->id_utilisateur?>" 
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>&emsp;
+                                                <?php } ?>
+                                                <div class="modal fade" id="basicModal<?= $liste_utilisateur->id_utilisateur ?>" tabindex="-1">  
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form action="" method="post">
+                                                                <div class="modal-body">
+                                                                    <p class="text-center"><i class="bi bi-exclamation-triangle text-primary"></i></p>
+                                                                    <h5 class="text-center text-primary"> Avertissement !</h5>
+                                                                    <p class="text-center"> Voulez-vous vraiment <?php if ($liste_utilisateur->statut == 'on') { ?>désactiver<?php } else { ?> activer <?php } ?> <?= $liste_utilisateur->nom_utilisateur ?> <?= $liste_utilisateur->prenom_utilisateur ?> ?</p>
+                                                                </div>
+                                                                <input type="hidden" value=" <?= $liste_utilisateur->id_utilisateur ?>" name="Id_users">
+                                                                <?php if ($liste_utilisateur->statut == 'on') { ?>
+                                                                    <input type="hidden" value="off" name="statut">
+                                                                <?php } else { ?>
+                                                                    <input type="hidden" value="on" name="statut">
+                                                                <?php } ?>
+                                                                <div class="modal-footer d-flex justify-content-center">
+                                                                    <button type="button" class="btn btn-info" data-bs-dismiss="modal">Annuler</button>
+                                                                    <button type="submit" class="btn btn-primary" name="valider"><?php if ($liste_utilisateur->statut == 'on') { ?> Oui Désactiver<?php } else { ?>Oui Activer <?php } ?></button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; }?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     </div>
                     

@@ -34,38 +34,40 @@
                         <div class="card-body">
                              <?php require_once('partials/afficher_message.php')?>
                             <!-- Table with stripped rows -->
-                            <table class="table datatable table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Designation</th>
-                                        <th>Quantité</th>
-                                        <th>Montant</th>
-                                        <th width='1%'>type de <br> mouvement</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                     <?php  foreach ($recuperer_afficher_mvent as $liste_mvnt):?>
-                                        <tr>
-                                            <td><?=date_format(date_create($liste_mvnt->date_mov), 'd-m-Y H:i:s')?></td>
-                                            <td><?= $liste_mvnt->name?></td>
-                                            <td><?= $liste_mvnt-> quantite?></td> 
-                                            <td><?= number_format($liste_mvnt-> montant, 2, ',', ' ') ?> F CFA</td>
-                                            <td>
-                                              <?php
-                                            if ($liste_mvnt->type_mvnt=='reception') {
-                                              echo " <span class='badge bg-success'>Réception</span>";
-                                            }elseif($liste_mvnt->type_mvnt=='livraison') {
-                                               echo " <span class='badge bg-primary'>Livraison</span>";
-                                            }else{
-                                               echo " <span class='badge bg-info'>vente_direct</span>";
-                                            }
-                                               ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach?>
-                                </tbody>
-                          </table>
+                             <div class="table-responsive">             
+                              <table class="table datatable table-bordered table-striped">
+                                  <thead>
+                                      <tr>
+                                          <th>Date</th>
+                                          <th>Designation</th>
+                                          <th>Quantité</th>
+                                          <th>Montant</th>
+                                          <th width='1%'>type de <br> mouvement</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <?php  foreach ($recuperer_afficher_mvent as $liste_mvnt):?>
+                                          <tr>
+                                              <td><?=date_format(date_create($liste_mvnt->date_mov), 'd-m-Y H:i:s')?></td>
+                                              <td><?= $liste_mvnt->name?></td>
+                                              <td><?= $liste_mvnt-> quantite?></td> 
+                                              <td><?= number_format($liste_mvnt-> montant, 2, ',', ' ') ?> F CFA</td>
+                                              <td>
+                                                <?php
+                                              if ($liste_mvnt->type_mvnt=='reception') {
+                                                echo " <span class='badge bg-success'>Réception</span>";
+                                              }elseif($liste_mvnt->type_mvnt=='livraison') {
+                                                echo " <span class='badge bg-primary'>Livraison</span>";
+                                              }else{
+                                                echo " <span class='badge bg-info'>vente_direct</span>";
+                                              }
+                                                ?>
+                                              </td>
+                                          </tr>
+                                      <?php endforeach?>
+                                  </tbody>
+                              </table>
+                             </div>
                         </div>
                      </div>
                 </div>

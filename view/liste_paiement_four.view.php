@@ -37,45 +37,48 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- Table with stripped rows   -->
-                            <table class="table datatable table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date-paiement</th>
-                                        <th>Référence-paiement</th>
-                                        <th>Référence-Commande</th>
-                                        <th>Client</th>
-                                        <th>Montant payé</th>
-                                        <th>Action</th>   
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <?php foreach( $recuperer_afficher_list_paie as $affiche )
-                                        {?>
-                                        <td><?=date_format(date_create($affiche->date_paie), 'd-m-Y H:i:s') ?></td>
-                                        <td><?=$affiche->paie_referrence?></td>
-                                        <td><?= $affiche->reference?></td>
-                                        <td><?= $affiche->nom_fournisseur?> <?= $affiche->prenom_fournisseur?></td>
-                                         <td><?= number_format($affiche->montant_paye, 2, ',', ' ') ?> F CFA</td>                                 
-                                        <td>
-                                            <a href="detail_paiement_four.php?detail=<?=$affiche->id_paiement ?>"
-                                                class="btn btn-primary btn-sm">
-                                                <i class="ri-eye-fill"></i>
-                                            </a>&emsp;
-                                              <!-- Bouton pour le pdf -->
-                                                <a href="pdf_paiement_four.php?detail=<?=$affiche->id_paiement?>"
-                                                    class="btn btn-danger btn-sm"target="_blank">
-                                                   <i class="bi bi-printer-fill"></i>
+
+                            <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Date-paiement</th>
+                                            <th>Référence-paiement</th>
+                                            <th>Référence-Commande</th>
+                                            <th>Client</th>
+                                            <th>Montant payé</th>
+                                            <th>Action</th>   
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <?php foreach( $recuperer_afficher_list_paie as $affiche )
+                                            {?>
+                                            <td><?=date_format(date_create($affiche->date_paie), 'd-m-Y H:i:s') ?></td>
+                                            <td><?=$affiche->paie_referrence?></td>
+                                            <td><?= $affiche->reference?></td>
+                                            <td><?= $affiche->nom_fournisseur?> <?= $affiche->prenom_fournisseur?></td>
+                                            <td><?= number_format($affiche->montant_paye, 2, ',', ' ') ?> F CFA</td>                                 
+                                            <td>
+                                                <a href="detail_paiement_four.php?detail=<?=$affiche->id_paiement ?>"
+                                                    class="btn btn-primary btn-sm">
+                                                    <i class="ri-eye-fill"></i>
                                                 </a>&emsp;
-                                            <!-- Bouton de suppression -->
-                                               <a class="btn btn-danger btn-sm delete-button" 
-                                                    data-paiefour-id="<?= $affiche->id_paiement ?>">
-                                                    <i class="ri-delete-bin-5-fill "></i>
-                                                </a>
-                                        </td>
-                                    </tr>
-                                    <?php } ?>
-                            </table>
+                                                <!-- Bouton pour le pdf -->
+                                                    <a href="pdf_paiement_four.php?detail=<?=$affiche->id_paiement?>"
+                                                        class="btn btn-danger btn-sm"target="_blank">
+                                                    <i class="bi bi-printer-fill"></i>
+                                                    </a>&emsp;
+                                                <!-- Bouton de suppression -->
+                                                <a class="btn btn-danger btn-sm delete-button" 
+                                                        data-paiefour-id="<?= $affiche->id_paiement ?>">
+                                                        <i class="ri-delete-bin-5-fill "></i>
+                                                    </a>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                </table>
+                            </div>
                             <!-- End Table with stripped rows -->
                         </div>
                     </div>

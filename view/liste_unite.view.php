@@ -112,6 +112,7 @@
                             <a class="btn btn-primary btn-lg " href="unite.php">+</a>
                         </div>
                         <div class="card-body">
+                            <div class="table-responsive">
                             <table class="table datatable table-bordered">
                                 <thead>
                                     <tr>
@@ -143,6 +144,7 @@
                                     <?php endforeach?>
                                 </tbody>
                             </table>
+                          </div>  
                         </div>
                     </div>
                 </div>

@@ -53,57 +53,59 @@
                         </div>
                         <div class="card-body">
                            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Rechercher un produit.." class="form-control mb-3" style="border: 2px solid #007bff;">
-                            <table class="table table-bordered table-striped" id="productTable">
-                                <thead>
-                                    <tr>
-                                        <th>NOM ARTICLE</th>
-                                        <th >PRIX D'ACHAT</th>
-                                        <th >PRIX DÉTAILLANT</th>
-                                        <th>STOCK ARTICLE</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                    $total_achat = 0;
-                                    $total_detail = 0;
-                                    $total_stock = 0;
-                                    foreach ($recuperer_afficher as $liste_prod): 
-                                        $total_achat += $liste_prod->price * $liste_prod->stock;
-                                        $total_detail += $liste_prod->prix_detail * $liste_prod->stock;
-                                        $total_stock += $liste_prod->stock;
-                                    ?>
-                                    <tr class="<?= $liste_prod->stock <= $liste_prod->alerte_article ? 'rupture' : '' ?>">
-                                        <td><?= $liste_prod->name ?></td>
-                                        <td style="background-color: #007bff; color: white; border: 2px solid black;"><?= number_format($liste_prod->price, 0, ',', ' ') ?> F CFA</td>
-                                        <td style="background-color: #17a2b8; color: white; border: 2px solid black;"><?= number_format($liste_prod->prix_detail, 0, ',', ' ') ?> F CFA</td>
-                                        <td class="<?= $liste_prod->stock <= $liste_prod->alerte_article ? 'bg-danger' : '' ?>">
-                                            <?= $liste_prod->stock ?>
-                                        </td>
-                                        <td>
-                                            <a href="modifier_produit.php?id=<?= $liste_prod->id ?>" class="btn btn-info btn-sm">
-                                                <i class="bx bxs-edit"></i>
-                                            </a>&emsp;
-                                            <a class="btn btn-danger btn-sm delete-button" href="supprimer_produit.php?id=<?= $liste_prod->id ?>" data-listprod-id="<?= $liste_prod->id ?>">
-                                                <i class="ri-delete-bin-5-fill"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach ?>
-                                </tbody>
-                                <tfoot>
-                                    <tr style="background-color: #28a745; color: white; font-weight: bold;">
-                                        <th style="background-color: #28a745; color: white; font-weight: bold;">Total</th>
-                                        <td style="background-color: #28a745; color: white; font-weight: bold;"><?= number_format($total_achat, 0, ',', ' ') ?> F CFA</td>
-                                        <td style="background-color: #28a745; color: white; font-weight: bold;"><?= number_format($total_detail, 0, ',', ' ') ?> F CFA</td>
-                                        <td style="background-color: #28a745; color: white; font-weight: bold;" colspan="2"><?= number_format($total_stock, 0, ',', ' ') ?></td>
-                                    </tr>
-                                    <tr style="background-color: #28a745; color: white; font-weight: bold;">
-                                        <th style="background-color: #28a745; color: white; font-weight: bold;">Bénéfice global</th>
-                                        <td style="background-color: #28a745; color: white; font-weight: bold;" colspan="4"><?= number_format($total_detail - $total_achat, 0, ',', ' ') ?> F CFA</td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="productTable">
+                                    <thead>
+                                        <tr>
+                                            <th>NOM ARTICLE</th>
+                                            <th >PRIX D'ACHAT</th>
+                                            <th >PRIX DÉTAILLANT</th>
+                                            <th>STOCK ARTICLE</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $total_achat = 0;
+                                        $total_detail = 0;
+                                        $total_stock = 0;
+                                        foreach ($recuperer_afficher as $liste_prod): 
+                                            $total_achat += $liste_prod->price * $liste_prod->stock;
+                                            $total_detail += $liste_prod->prix_detail * $liste_prod->stock;
+                                            $total_stock += $liste_prod->stock;
+                                        ?>
+                                        <tr class="<?= $liste_prod->stock <= $liste_prod->alerte_article ? 'rupture' : '' ?>">
+                                            <td><?= $liste_prod->name ?></td>
+                                            <td style="background-color: #007bff; color: white; border: 2px solid black;"><?= number_format($liste_prod->price, 0, ',', ' ') ?> F CFA</td>
+                                            <td style="background-color: #17a2b8; color: white; border: 2px solid black;"><?= number_format($liste_prod->prix_detail, 0, ',', ' ') ?> F CFA</td>
+                                            <td class="<?= $liste_prod->stock <= $liste_prod->alerte_article ? 'bg-danger' : '' ?>">
+                                                <?= $liste_prod->stock ?>
+                                            </td>
+                                            <td>
+                                                <a href="modifier_produit.php?id=<?= $liste_prod->id ?>" class="btn btn-info btn-sm">
+                                                    <i class="bx bxs-edit"></i>
+                                                </a>&emsp;
+                                                <a class="btn btn-danger btn-sm delete-button" href="supprimer_produit.php?id=<?= $liste_prod->id ?>" data-listprod-id="<?= $liste_prod->id ?>">
+                                                    <i class="ri-delete-bin-5-fill"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach ?>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr style="background-color: #28a745; color: white; font-weight: bold;">
+                                            <th style="background-color: #28a745; color: white; font-weight: bold;">Total</th>
+                                            <td style="background-color: #28a745; color: white; font-weight: bold;"><?= number_format($total_achat, 0, ',', ' ') ?> F CFA</td>
+                                            <td style="background-color: #28a745; color: white; font-weight: bold;"><?= number_format($total_detail, 0, ',', ' ') ?> F CFA</td>
+                                            <td style="background-color: #28a745; color: white; font-weight: bold;" colspan="2"><?= number_format($total_stock, 0, ',', ' ') ?></td>
+                                        </tr>
+                                        <tr style="background-color: #28a745; color: white; font-weight: bold;">
+                                            <th style="background-color: #28a745; color: white; font-weight: bold;">Bénéfice global</th>
+                                            <td style="background-color: #28a745; color: white; font-weight: bold;" colspan="4"><?= number_format($total_detail - $total_achat, 0, ',', ' ') ?> F CFA</td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

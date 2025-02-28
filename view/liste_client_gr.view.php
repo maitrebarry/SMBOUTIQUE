@@ -44,42 +44,44 @@
                         <div class="card-body">
                             <?php require_once('partials/afficher_message.php')?>
                             <!-- Table with stripped rows -->
-                            <table class="table datatable table-bordered">
-                                <thead>
-                                    <tr>
+                            <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">
+                                    <thead>
+                                        <tr>
 
-                                        <th>Prénom</th>
-                                        <th>Nom </th>
-                                        <th>Contact </th>
-                                        <th>Ville ou<br>Quartier</th>
-                                        <th>Operation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php  foreach ($recuperer_afficher as $liste_cli):?>
-                                    <tr>
+                                            <th>Prénom</th>
+                                            <th>Nom </th>
+                                            <th>Contact </th>
+                                            <th>Ville ou<br>Quartier</th>
+                                            <th>Operation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php  foreach ($recuperer_afficher as $liste_cli):?>
+                                        <tr>
 
-                                        <td><?= $liste_cli-> prenom_du_client_grossiste?></td>
-                                        <td><?= $liste_cli-> nom_client_grossiste?></td>
-                                        <td><?= $liste_cli->contact_client_grossiste ?></td>
-                                        <td><?= $liste_cli->ville_client_grossiste ?></td>
+                                            <td><?= $liste_cli-> prenom_du_client_grossiste?></td>
+                                            <td><?= $liste_cli-> nom_client_grossiste?></td>
+                                            <td><?= $liste_cli->contact_client_grossiste ?></td>
+                                            <td><?= $liste_cli->ville_client_grossiste ?></td>
 
-                                        <td>
-                                            <a href="modifier_client.php?id=<?=$liste_cli->id_client_gr?>"
-                                                class="btn btn-info btn-sm">
-                                                <i class="bx bxs-edit"></i></a>&emsp;
+                                            <td>
+                                                <a href="modifier_client.php?id=<?=$liste_cli->id_client_gr?>"
+                                                    class="btn btn-info btn-sm">
+                                                    <i class="bx bxs-edit"></i></a>&emsp;
 
-                                            <!-- Bouton de suppression -->
-                                            <a class="btn btn-danger btn-sm delete-button"
-                                                href="supprimer_client.php?id=<?= $liste_cli->id_client_gr ?>"
-                                                data-listclient-id="<?= $liste_cli->id_client_gr ?>">
-                                                <i class="ri-delete-bin-5-fill "></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach?>
-                                </tbody>
-                            </table>
+                                                <!-- Bouton de suppression -->
+                                                <a class="btn btn-danger btn-sm delete-button"
+                                                    href="supprimer_client.php?id=<?= $liste_cli->id_client_gr ?>"
+                                                    data-listclient-id="<?= $liste_cli->id_client_gr ?>">
+                                                    <i class="ri-delete-bin-5-fill "></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

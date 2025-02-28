@@ -33,6 +33,7 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- Table with stripped rows   -->
+                        <div class="table-responsive">
                             <table class="table datatable table-bordered table-striped">
                                 <thead>
                                     <tr>
@@ -76,6 +77,7 @@
                                         </tr>
                              <?php } ?>
                             </table>
+                         </div>   
                             <!-- End Table with stripped rows -->
                         </div>
                     </div>

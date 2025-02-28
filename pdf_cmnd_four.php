@@ -93,8 +93,8 @@ class PDF extends FPDF
         $this->SetFillcolor(192,192,192);
         $this->Rect(10, $this->GetY(),130,10, 'F'); // Ajuster la largeur du rectangle
         $this->Cell(60,10,'DESIGNATION',1,0,'C');
-        $this->Cell(20,10,'QUANTITE',1,0,'C'); // Augmenter la largeur de la cellule
-        $this->Cell(25,10,'PRIX ',1,0,'C');
+        $this->Cell(25,10,'QUANTITE',1,0,'C'); // Augmenter la largeur de la cellule
+        $this->Cell(20,10,'PRIX ',1,0,'C');
         $this->Cell(25,10,'MONTANT ',1,0,'C'); // Augmenter la largeur de la cellule
         $this->Ln();
     }

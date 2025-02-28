@@ -39,47 +39,49 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- Table with stripped rows -->
-                            <table class="table datatable table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date-Livraison</th>
-                                        <th>Référence-Livraison</th>
-                                        <th>Référence-Commande</th>
-                                        <th>Client</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Boucle sur les livraisons -->
-                                    <?php foreach ($recuperer_afficher as $liste_livrai) { ?>
+                             <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">
+                                    <thead>
                                         <tr>
-                                            <!-- Affichage des données de livraison -->
-                                            <td><?= date_format(date_create($liste_livrai->date_livraison), 'd-m-Y H:i:s') ?></td>
-                                            <td><?= $liste_livrai->livraison_refer ?></td>
-                                            <td><?= $liste_livrai->reference ?></td>
-                                            <td><?= $liste_livrai->prenom_du_client_grossiste.' '.$liste_livrai->nom_client_grossiste ?></td>
-                                            <td>
-                                                <!-- Bouton de détail -->
-                                                <a href="detail_livraison_client.php?detail=<?= $liste_livrai->id_livraison ?>"
-                                                    class="btn btn-primary btn-sm" >
-                                                    <i class="ri-eye-fill"></i>
-                                                </a>&emsp;
-                                                 <!-- Bouton pour le pdf -->
-                                                <a href="pdf_livraison.php?detail=<?=$liste_livrai->id_livraison?>"
-                                                    class="btn btn-danger btn-sm" target="_blank">
-                                                   <i class="bi bi-printer-fill"></i>
-                                                </a>&emsp;
-                                                <!-- Bouton de suppression -->
-                                                <a href=""
-                                                    class="btn btn-danger btn-sm delete-button"
-                                                    data-livraison-id="<?= $liste_livrai->id_livraison ?>">
-                                                    <i class="ri-delete-bin-5-fill "></i>
-                                                </a>
-                                            </td>
+                                            <th>Date-Livraison</th>
+                                            <th>Référence-Livraison</th>
+                                            <th>Référence-Commande</th>
+                                            <th>Client</th>
+                                            <th>Action</th>
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Boucle sur les livraisons -->
+                                        <?php foreach ($recuperer_afficher as $liste_livrai) { ?>
+                                            <tr>
+                                                <!-- Affichage des données de livraison -->
+                                                <td><?= date_format(date_create($liste_livrai->date_livraison), 'd-m-Y H:i:s') ?></td>
+                                                <td><?= $liste_livrai->livraison_refer ?></td>
+                                                <td><?= $liste_livrai->reference ?></td>
+                                                <td><?= $liste_livrai->prenom_du_client_grossiste.' '.$liste_livrai->nom_client_grossiste ?></td>
+                                                <td>
+                                                    <!-- Bouton de détail -->
+                                                    <a href="detail_livraison_client.php?detail=<?= $liste_livrai->id_livraison ?>"
+                                                        class="btn btn-primary btn-sm" >
+                                                        <i class="ri-eye-fill"></i>
+                                                    </a>&emsp;
+                                                    <!-- Bouton pour le pdf -->
+                                                    <a href="pdf_livraison.php?detail=<?=$liste_livrai->id_livraison?>"
+                                                        class="btn btn-danger btn-sm" target="_blank">
+                                                    <i class="bi bi-printer-fill"></i>
+                                                    </a>&emsp;
+                                                    <!-- Bouton de suppression -->
+                                                    <a href=""
+                                                        class="btn btn-danger btn-sm delete-button"
+                                                        data-livraison-id="<?= $liste_livrai->id_livraison ?>">
+                                                        <i class="ri-delete-bin-5-fill "></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                             <!-- End Table with stripped rows -->
                         </div>
                     </div>

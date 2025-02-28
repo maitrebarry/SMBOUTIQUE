@@ -51,6 +51,7 @@
                                 </div>
                             </form>
                           <!-- Table principale -->
+                            <div class="table-responsive">
                             <table class="table  table-bordered table-striped search-table" id="main-table">
                                 <thead>
                                     <tr>
@@ -98,7 +99,7 @@
                                 </tfoot>
                              
                             </table>
-                            
+                            </div>
                         <!-- End Table with stripped rows -->
                             <?php
                                 if (isset($_POST['search']) && !empty($_POST['search'])) {

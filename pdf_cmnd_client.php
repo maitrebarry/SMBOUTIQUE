@@ -22,7 +22,7 @@ class PDF extends FPDF
         // Affichage du texte "S M MARKET" 
         $this->SetTextColor(139, 69, 19); // Couleur maron
         $this->SetFont('Arial', 'B', 30);
-        $textWidth1 = $this->GetStringWidth('S M MARKET  ' );
+        $textWidth1 = $this->GetStringWidth('SM BOUTIQUE   ' );
 
         // Déterminez la position Y du rectangle et ajustez-la en conséquence
         $rectangleY = $this->GetY() + 4; 
@@ -35,7 +35,7 @@ class PDF extends FPDF
 
         // Affichez le texte à l'intérieur du rectangle avec la nouvelle position Y
         $this->SetXY(($this->w - $textWidth1) / 4, $textY);
-        $this->Cell(0, 8, 'S M MARKET ', 0, 1, 'C');
+        $this->Cell(0, 8, 'SM BOUTIQUE ', 0, 1, 'C');
 
         $this->SetTextColor(0, 0, 0); // Couleur noire
         $this->SetFont('Arial', 'B', 15); 
@@ -61,6 +61,8 @@ class PDF extends FPDF
             $detail = $_GET['detail'];
             $commande = $bdd->query("SELECT * FROM commande_client
                 INNER JOIN utilisateur  ON utilisateur.id_utilisateur=commande_client.id_utilisateur
+                INNER JOIN client_grossiste  
+                ON commande_client.id_client_gr=commande_client.id_client_gr
                 WHERE id_cmd_client=$detail LIMIT 1");
             $commandeinfo = $commande->fetch();
             $formatted_date = date('d/m/Y \a H:i', strtotime($commandeinfo['date_cmd_client']));
@@ -75,7 +77,8 @@ class PDF extends FPDF
             $this->Cell(0, 10, 'FACTURE DE COMMANDE N : ' . strtoupper($commandeinfo['reference']), 0, 1, 'C');
             $this->SetX(0);
             $this->SetFont('Arial', 'B', 10);
-            $this->Cell(0, 10, 'CLIENT: ' . $commandeinfo['client'] .  '   SEGOU le: ' . $formatted_date, 0, 1, 'C');
+            $this->Cell(0, 10, 'CLIENT: ' . $commandeinfo['prenom_du_client_grossiste'].' '.$commandeinfo['nom_client_grossiste'] .  '   SEGOU le: ' . $formatted_date, 0, 1, 'C');
+            
         }
     }
 

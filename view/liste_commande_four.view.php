@@ -48,6 +48,7 @@
                                 </div>
                             </form>
                             <!-- Table principale -->
+                        <div class="table-responsive">
                             <table class="table  table-bordered table-striped search-table" id="main-table">
                                 <thead>
                                     <tr>
@@ -137,6 +138,7 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                        </div> 
                         <?php
                             if (isset($_POST['search']) && !empty($_POST['search'])) {
                                 $search = htmlspecialchars($_POST['search']);

@@ -113,36 +113,38 @@
                             <a class="btn btn-primary btn-lg " href="boutique.php">+ </a>
                         </div>
                         <div class="card-body">
-                            <table class="table datatable table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Nom</th>
-                                        <th>Quartier</th>
-                                        <th>Operation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php  foreach ($recuperer_afficher_boutique as $liste_boutique):?>
-                                    <tr>
+                            <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Quartier</th>
+                                            <th>Operation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php  foreach ($recuperer_afficher_boutique as $liste_boutique):?>
+                                        <tr>
 
-                                        <td><?= $liste_boutique-> nom?></td>
-                                        <td><?= $liste_boutique-> quartier?></td>
-                                        <td>
-                                            <a href="modifier_boutique.php?id=<?=$liste_boutique->id_boutique?>"
-                                                class="btn btn-info btn-sm">
-                                                <i class="bx bxs-edit"></i></a>&emsp;
+                                            <td><?= $liste_boutique-> nom?></td>
+                                            <td><?= $liste_boutique-> quartier?></td>
+                                            <td>
+                                                <a href="modifier_boutique.php?id=<?=$liste_boutique->id_boutique?>"
+                                                    class="btn btn-info btn-sm">
+                                                    <i class="bx bxs-edit"></i></a>&emsp;
 
-                                            <!-- Bouton de suppression -->
-                                            <a class="btn btn-danger btn-sm delete-button"
-                                                href="supprimer_boutique.php?id=<?= $liste_boutique->id_boutique ?>"
-                                                data-listclient-id="<?= $liste_boutique->id_boutique ?>">
-                                                <i class="ri-delete-bin-5-fill "></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <?php endforeach?>
-                                </tbody>
-                            </table>
+                                                <!-- Bouton de suppression -->
+                                                <a class="btn btn-danger btn-sm delete-button"
+                                                    href="supprimer_boutique.php?id=<?= $liste_boutique->id_boutique ?>"
+                                                    data-listclient-id="<?= $liste_boutique->id_boutique ?>">
+                                                    <i class="ri-delete-bin-5-fill "></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

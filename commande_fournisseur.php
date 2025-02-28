@@ -162,21 +162,23 @@ unset($_SESSION['shopping_cart']);
                                     <div class="col-xl-8 col-md-10 col-xs-12">
                                         <div class="card">
                                             <div class="card-body">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Produits</th>
-                                                            <th>Quantité</th>
-                                                            <th>Prix</th>
-                                                            <th>Montant</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="ajout_tbody">
-                                                    </tbody>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Produits</th>
+                                                                <th>Quantité</th>
+                                                                <th>Prix</th>
+                                                                <th>Montant</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="ajout_tbody">
+                                                        </tbody>
 
 
-                                                     </table>
+                                                    </table>
+                                                </div>   
                                             </div>
                                         </div>
                                     </div>

@@ -88,101 +88,103 @@
                                         <div id="tableContainer"></div>
                                     </div>
 
-                                        <script>// Exemple de données - Remplacez par vos données PHP
-const products = <?= json_encode($recuperer_afficher) ?>;
+                                    <script>// Exemple de données - Remplacez par vos données PHP
+                                        const products = <?= json_encode($recuperer_afficher) ?>;
 
-const rowsPerPage = 1000; // Nombre de lignes par page
-let currentPage = 1; // Page actuelle
-let filteredProducts = [...products]; // Produits filtrés pour la recherche
-let temporaryValues = {}; // Stock temporaire pour valeurs calculées
+                                        const rowsPerPage = 1000; // Nombre de lignes par page
+                                        let currentPage = 1; // Page actuelle
+                                        let filteredProducts = [...products]; // Produits filtrés pour la recherche
+                                        let temporaryValues = {}; // Stock temporaire pour valeurs calculées
 
-// Fonction pour afficher la table
-function renderTable(page) {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const items = filteredProducts.slice(start, end); // Produits pour cette page
+                                        // Fonction pour afficher la table
+                                        function renderTable(page) {
+                                            const start = (page - 1) * rowsPerPage;
+                                            const end = start + rowsPerPage;
+                                            const items = filteredProducts.slice(start, end); // Produits pour cette page
 
-    const tableHTML = `
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>DESIGNATION</th>
-                    <th>QTE VIRTUELLE</th>
-                    <th>QTE PHYSIQUE</th>
-                    <th>ECART STOCK</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${items.map((prod) => {
-                    const cache = temporaryValues[prod.id] || {};
-                    return `
-                        <tr>
-                            <td>${prod.name}</td>
-                            <td><input class="form-control" type="number" name="stock_${prod.id}" id="stock_${prod.id}" value="${prod.stock}" readOnly></td>
-                            <td>
-                                <input class="form-control" type="number" name="qte_physique_${prod.id}" id="qte_physique_${prod.id}" 
-                                    value="${cache.qte_physique || ''}" 
-                                    oninput="calculerEcart(${prod.id})">
-                            </td>
-                            <td>
-                                <input class="form-control" type="number" name="qte_recu_${prod.id}" id="qte_recu_${prod.id}" 
-                                    value="${cache.ecart || ''}" readOnly>
-                            </td>
-                        </tr>
-                    `;
-                }).join('')}
-            </tbody>
-        </table>
+                                            const tableHTML = `
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>DESIGNATION</th>
+                                                                <th>QTE VIRTUELLE</th>
+                                                                <th>QTE PHYSIQUE</th>
+                                                                <th>ECART STOCK</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            ${items.map((prod) => {
+                                                                const cache = temporaryValues[prod.id] || {};
+                                                                return `
+                                                                    <tr>
+                                                                        <td>${prod.name}</td>
+                                                                        <td><input class="form-control" type="number" name="stock_${prod.id}" id="stock_${prod.id}" value="${prod.stock}" readOnly></td>
+                                                                        <td>
+                                                                            <input class="form-control" type="number" name="qte_physique_${prod.id}" id="qte_physique_${prod.id}" 
+                                                                                value="${cache.qte_physique || ''}" 
+                                                                                oninput="calculerEcart(${prod.id})">
+                                                                        </td>
+                                                                        <td>
+                                                                            <input class="form-control" type="number" name="qte_recu_${prod.id}" id="qte_recu_${prod.id}" 
+                                                                                value="${cache.ecart || ''}" readOnly>
+                                                                        </td>
+                                                                    </tr>
+                                                                `;
+                                                            }).join('')}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
 
-        <!-- Pagination -->
-        <div class="d-flex justify-content-between">
-            <button class="btn btn-secondary" onclick="changePage(${page - 1})" ${page === 1 ? 'disabled' : ''}>
-                Précédent
-            </button>
-            <span>Page ${page} de ${Math.ceil(filteredProducts.length / rowsPerPage)}</span>
-            <button class="btn btn-secondary" onclick="changePage(${page + 1})" ${end >= filteredProducts.length ? 'disabled' : ''}>
-                Suivant
-            </button>
-        </div>
-    `;
+                                                <!-- Pagination -->
+                                                <div class="d-flex justify-content-between">
+                                                    <button class="btn btn-secondary" onclick="changePage(${page - 1})" ${page === 1 ? 'disabled' : ''}>
+                                                        Précédent
+                                                    </button>
+                                                    <span>Page ${page} de ${Math.ceil(filteredProducts.length / rowsPerPage)}</span>
+                                                    <button class="btn btn-secondary" onclick="changePage(${page + 1})" ${end >= filteredProducts.length ? 'disabled' : ''}>
+                                                        Suivant
+                                                    </button>
+                                                </div>
+                                            `;
 
-    // Insérer le tableau dans le conteneur
-    document.getElementById('tableContainer').innerHTML = tableHTML;
-}
-document.getElementById('searchInput').addEventListener('input', function () {
-    const query = this.value.toLowerCase(); // Récupère la valeur saisie en minuscules
-    filteredProducts = products.filter(prod => prod.name.toLowerCase().includes(query)); // Filtre les produits
+                                            // Insérer le tableau dans le conteneur
+                                            document.getElementById('tableContainer').innerHTML = tableHTML;
+                                        }
+                                        document.getElementById('searchInput').addEventListener('input', function () {
+                                            const query = this.value.toLowerCase(); // Récupère la valeur saisie en minuscules
+                                            filteredProducts = products.filter(prod => prod.name.toLowerCase().includes(query)); // Filtre les produits
 
-    // Réinitialise la pagination et recharge la table avec les résultats filtrés
-    currentPage = 1;
-    renderTable(currentPage);
-});
+                                            // Réinitialise la pagination et recharge la table avec les résultats filtrés
+                                            currentPage = 1;
+                                            renderTable(currentPage);
+                                        });
 
-// Fonction pour calculer l'écart entre quantite physique et virtuelle
-function calculerEcart(prodId) {
-    const qtePhysique = parseInt(document.getElementById(`qte_physique_${prodId}`).value) || 0;
-    const qteVirtuelle = parseInt(document.getElementById(`stock_${prodId}`).value) || 0;
+                                        // Fonction pour calculer l'écart entre quantite physique et virtuelle
+                                        function calculerEcart(prodId) {
+                                            const qtePhysique = parseInt(document.getElementById(`qte_physique_${prodId}`).value) || 0;
+                                            const qteVirtuelle = parseInt(document.getElementById(`stock_${prodId}`).value) || 0;
 
-    const ecart = qtePhysique - qteVirtuelle;
-    document.getElementById(`qte_recu_${prodId}`).value = ecart;
+                                            const ecart = qtePhysique - qteVirtuelle;
+                                            document.getElementById(`qte_recu_${prodId}`).value = ecart;
 
-    // Stocker la valeur temporairement
-    temporaryValues[prodId] = {
-        qte_physique: qtePhysique,
-        ecart: ecart
-    };
-}
+                                            // Stocker la valeur temporairement
+                                            temporaryValues[prodId] = {
+                                                qte_physique: qtePhysique,
+                                                ecart: ecart
+                                            };
+                                        }
 
-// Fonction pour changer de page
-function changePage(page) {
-    if (page < 1 || page > Math.ceil(filteredProducts.length / rowsPerPage)) return;
-    currentPage = page;
-    renderTable(page);
-}
+                                        // Fonction pour changer de page
+                                        function changePage(page) {
+                                            if (page < 1 || page > Math.ceil(filteredProducts.length / rowsPerPage)) return;
+                                            currentPage = page;
+                                            renderTable(page);
+                                        }
 
-// Initialiser la table
-renderTable(currentPage);
-</script>
+                                        // Initialiser la table
+                                        renderTable(currentPage);
+                                    </script>
 
                                 </div>
                             </div>

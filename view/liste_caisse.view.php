@@ -45,7 +45,8 @@
                                 <div class="card-body">
                                     <?php require_once('partials/afficher_message.php')?>
                                     <!-- Table with stripped rows -->
-                                    <table class="table">
+                                   <div class="table-responsive">
+                                    <table class="table ">
                                         <thead>
                                             <tr>
                                                 <th>DATE</th>
@@ -107,6 +108,7 @@
                                             <?php endforeach ?>
                                         </tbody>
                                     </table>
+                            </div>
                                 </div>
                             </div>
                         </div>

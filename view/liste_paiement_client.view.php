@@ -37,50 +37,52 @@
                     <div class="card">
                         <div class="card-body">
                             <!-- Table with stripped rows -->
-                            <table class="table datatable table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Date-paiement</th>
-                                        <th>Référence-paiement</th>
-                                        <th>Référence-Commande</th>
-                                        <th>Client</th>
-                                        <th>Montant payé</th>
-                                        <th>Action</th>   
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Boucle sur les livraisons -->
-                                    <?php foreach ($recuperer_afficher_list_paie as $liste_paiement) { ?>
+                             <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">
+                                    <thead>
                                         <tr>
-                                            <!-- Affichage des données de livraison -->
-                                            <td><?= date_format(date_create($liste_paiement->date_paie), 'd-m-Y H:i:s') ?></td>
-                                            <td><?= $liste_paiement->paie_reference ?></td>
-                                            <td><?= $liste_paiement->paie_reference ?></td>
-                                            <td><?= $liste_paiement->prenom_du_client_grossiste.' '.$liste_paiement->nom_client_grossiste ?></td>
-                                        </td>
-                                            <td><?= number_format($liste_paiement->montant_paye, 2, ',', ' ') ?> F CFA</td>  
-                                            <td>
-                                                <!-- Bouton de détail -->
-                                                <a href="detail_paiement_client.php?detail=<?= $liste_paiement->id_paie_client ?>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="ri-eye-fill"></i>
-                                                </a>&emsp;
-                                          <!-- Bouton pour le pdf -->
-                                                <a href="pdf_paiement_client.php?detail=<?=$liste_paiement->id_paie_client?>"
-                                                    class="btn btn-danger btn-sm" target="_blank">
-                                                   <i class="bi bi-printer-fill"></i>
-                                                </a>&emsp;
-                                                <!-- Bouton de suppression -->
-                                               <a class="btn btn-danger btn-sm delete-button" 
-                                                    data-paiecl-id="<?= $liste_paiement->id_paie_client ?>">
-                                                    <i class="ri-delete-bin-5-fill "></i>
-                                                </a>
-
-                                            </td>
+                                            <th>Date-paiement</th>
+                                            <th>Référence-paiement</th>
+                                            <th>Référence-Commande</th>
+                                            <th>Client</th>
+                                            <th>Montant payé</th>
+                                            <th>Action</th>   
                                         </tr>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Boucle sur les livraisons -->
+                                        <?php foreach ($recuperer_afficher_list_paie as $liste_paiement) { ?>
+                                            <tr>
+                                                <!-- Affichage des données de livraison -->
+                                                <td><?= date_format(date_create($liste_paiement->date_paie), 'd-m-Y H:i:s') ?></td>
+                                                <td><?= $liste_paiement->paie_reference ?></td>
+                                                <td><?= $liste_paiement->paie_reference ?></td>
+                                                <td><?= $liste_paiement->prenom_du_client_grossiste.' '.$liste_paiement->nom_client_grossiste ?></td>
+                                            </td>
+                                                <td><?= number_format($liste_paiement->montant_paye, 2, ',', ' ') ?> F CFA</td>  
+                                                <td>
+                                                    <!-- Bouton de détail -->
+                                                    <a href="detail_paiement_client.php?detail=<?= $liste_paiement->id_paie_client ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="ri-eye-fill"></i>
+                                                    </a>&emsp;
+                                            <!-- Bouton pour le pdf -->
+                                                    <a href="pdf_paiement_client.php?detail=<?=$liste_paiement->id_paie_client?>"
+                                                        class="btn btn-danger btn-sm" target="_blank">
+                                                    <i class="bi bi-printer-fill"></i>
+                                                    </a>&emsp;
+                                                    <!-- Bouton de suppression -->
+                                                <a class="btn btn-danger btn-sm delete-button" 
+                                                        data-paiecl-id="<?= $liste_paiement->id_paie_client ?>">
+                                                        <i class="ri-delete-bin-5-fill "></i>
+                                                    </a>
+
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
                             <!-- End Table with stripped rows -->
                         </div>
                     </div>

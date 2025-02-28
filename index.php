@@ -104,7 +104,7 @@ if (isset($_POST['envoyer'])) {
      body {
     background-color: #DCDCDC; /* Couleur de fond si l'image ne charge pas */
     margin-top: 60px;
-    background-image: url('assets/img/mouna5.jpg'); /* URL de l'image */
+    background-image: url('assets/img/maiga.jpg'); /* URL de l'image */
     background-size: cover; /* Ajuste l'image pour couvrir toute la zone */
     background-repeat: no-repeat; /* Évite la répétition de l'image */
     background-position: center center; /* Centre l'image */

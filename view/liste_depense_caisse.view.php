@@ -35,44 +35,46 @@
                         <div class="card-body">
                              <?php require_once('partials/afficher_message.php')?>
                             <!-- Table with stripped rows -->
-                            <table class="table datatable table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>DATE</th>
-                                        <th>RÉFÉRENCE CAISSE</th>
-                                        <th>LIBELLÉ</th>
-                                        <th>MONTANT</th>
-                                        <th>ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                     <?php  foreach($recuperer_afficher_depense as $liste_depense):?>
+                            <div class="table-responsive">
+                                <table class="table datatable table-bordered table-striped">      
+                                    <thead>
                                         <tr>
-                                            <td><?= date_format(date_create($liste_depense->date),'d-m-Y') ?></td>
-                                            <td><?= $liste_depense->reference_caisse ?></td>
-                                            <td><?= $liste_depense->libelle ?></td>
-                                            <td><?= $liste_depense->montant ?></td>
-                                            <td>
-                                                 <!-- Bouton de détail -->
-                                                <a href="detail_depense.php?detail=<?= $liste_depense->id_depense ?>"
-                                                    class="btn btn-primary btn-sm">
-                                                    <i class="ri-eye-fill"></i>
-                                                </a>&emsp;
-                                                <a href="modifier_depense.php?id=<?=$liste_depense->id_depense?>" 
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="bx bxs-edit"></i>
-                                                </a>&emsp;
-                                                
-                                                <!-- Bouton de suppression -->
-                                               <a class="btn btn-danger btn-sm delete-button" href="id=<?= $liste_depense->id_depense ?>"
-                                                   data-depense-id="<?= $liste_depense->id_depense ?>">
-                                                    <i class="ri-delete-bin-5-fill "></i>
-                                                </a>
-                                            </td>
+                                            <th>DATE</th>
+                                            <th>RÉFÉRENCE CAISSE</th>
+                                            <th>LIBELLÉ</th>
+                                            <th>MONTANT</th>
+                                            <th>ACTION</th>
                                         </tr>
-                                    <?php endforeach?>
-                                </tbody>
-                          </table>
+                                    </thead>
+                                    <tbody>
+                                        <?php  foreach($recuperer_afficher_depense as $liste_depense):?>
+                                            <tr>
+                                                <td><?= date_format(date_create($liste_depense->date),'d-m-Y') ?></td>
+                                                <td><?= $liste_depense->reference_caisse ?></td>
+                                                <td><?= $liste_depense->libelle ?></td>
+                                                <td><?= $liste_depense->montant ?></td>
+                                                <td>
+                                                    <!-- Bouton de détail -->
+                                                    <a href="detail_depense.php?detail=<?= $liste_depense->id_depense ?>"
+                                                        class="btn btn-primary btn-sm">
+                                                        <i class="ri-eye-fill"></i>
+                                                    </a>&emsp;
+                                                    <a href="modifier_depense.php?id=<?=$liste_depense->id_depense?>" 
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="bx bxs-edit"></i>
+                                                    </a>&emsp;
+                                                    
+                                                    <!-- Bouton de suppression -->
+                                                <a class="btn btn-danger btn-sm delete-button" href="id=<?= $liste_depense->id_depense ?>"
+                                                    data-depense-id="<?= $liste_depense->id_depense ?>">
+                                                        <i class="ri-delete-bin-5-fill "></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach?>
+                                    </tbody>
+                                </table>  
+                            </div>
                         </div>
                      </div>
                 </div>
