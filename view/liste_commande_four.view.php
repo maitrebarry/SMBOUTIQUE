@@ -16,13 +16,35 @@
             height: 50px; /* Hauteur du pied de page */
             background-color: #f5f5f5; /* Ajoutez la couleur de fond souhaitée */
         }
+        .table-bordered .selectable-row.selected td {
+                background-color: #d3f9d8 !important;
+            }
+              .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            text-transform: uppercase;
+        }
+        .badge-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .badge-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
     </style>
-      <style>
-  
-  .table-bordered .selectable-row.selected td {
-    background-color: #d3f9d8 !important;
-}
-</style>
+
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>Dashboard</h1>
@@ -83,26 +105,29 @@
                                             <td><?= $affiche->nom_fournisseur ?> <?= $affiche->prenom_fournisseur ?></td>
                                             <td class="total"><?= number_format($affiche->total, 0, ',', ' ') ?> F CFA</td>
                                             <td class="paie"><?= number_format($affiche->paie, 0, ',', ' ') ?> F CFA</td>
+                                           
+
                                             <td>
                                                 <?php
                                                 // Affichage du statut de livraison et de paiement
                                                 if ($som == 0) {
-                                                    echo " <span class='text-danger'> Non reçue </span>";
+                                                    echo " <span class='badge badge-danger'>Non reçue</span>";
                                                 } elseif ($somme > $som && $som > 0) {
-                                                    echo " <span class='text-info'> Reception partielle </span>";
+                                                    echo " <span class='badge badge-info'>Réception partielle</span>";
                                                 } else {
-                                                    echo "<span class='text-success'> reçue </span>";
+                                                    echo "<span class='badge badge-success'>Réçue</span>";
                                                 }
-                                                echo "|";
+                                                echo " | ";
                                                 if ($affiche->paie == 0) {
-                                                    echo "<span class='text-danger'> Non payé </span>";
+                                                    echo "<span class='badge badge-danger'>Non payé</span>";
                                                 } elseif ($affiche->total > $affiche->paie && $affiche->paie > 0) {
-                                                    echo "<span class='text-info'> Payé partiellement </span>";
+                                                    echo "<span class='badge badge-info'>Payé partiellement</span>";
                                                 } else {
-                                                    echo "<span class='text-success'> Payé </span>";
+                                                    echo "<span class='badge badge-success'>Payé</span>";
                                                 }
                                                 ?>
                                             </td>
+
                                             <td scope="col">
                                                 <!-- Actions disponibles dans un menu déroulant -->
                                                 <div class="dropdown">

@@ -181,6 +181,124 @@
                                 </div><!-- End password Tabs -->
                               </div><!-- End Bordered Tabs -->
         </section>
+        <div class="card mb-4">
+                        <h5 class="card-header">La liste de mes activites</h5>
+                        <div class="card-body">
+                            <form id="formAccountSettings" method="post" action="modifier_password.php">
+
+                                <!--end row-->
+                                <div class="row col-12">
+                                    <div class="col">
+                                        <div class="card radius-10">
+                                            <div class="card-body">
+                                                <div class="">
+                                                    <div class=" text-primary mb-3">
+                                                        <center>Journalier</center>
+                                                    </div>
+
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>enregistre :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
+                                                        </span>
+                                                    </p>
+                                                    <!-- <p style="display:flex;justify-content:space-between;">
+                                                        <span>Annuler :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
+                                                        </span>
+                                                    </p> -->
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>Report :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="card radius-10">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <div class=" text-info mb-3">
+                                                        <center>semaine</center>
+                                                    </div>
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>enregistre :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-info ">1
+                                                        </span>
+                                                    </p>
+                                                    <!-- <p style="display:flex;justify-content:space-between;">
+                                                        <span>Annuler :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-info ">1
+                                                        </span>
+                                                    </p> -->
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>Report :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-info ">1
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card radius-10">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <div class=" text-success mb-3">
+                                                        <center>mensuelle</center>
+                                                    </div>
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>enregistre :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-success ">1
+                                                        </span>
+                                                    </p>
+                                                    <!-- <p style="display:flex;justify-content:space-between;">
+                                                        <span>Annuler :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-success ">1
+                                                        </span>
+                                                    </p> -->
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>Report :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-success ">1
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="card radius-10">
+                                            <div class="card-body">
+                                                <div class="text-center">
+                                                    <div class="text-warning mb-3">
+                                                        <center>Annuelle</center>
+                                                    </div>
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>enregistre :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
+                                                        </span>
+                                                    </p>
+                                                    <!-- <p style="display:flex;justify-content:space-between;">
+                                                        <span>Annuler :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
+                                                        </span>
+                                                    </p> -->
+                                                    <p style="display:flex;justify-content:space-between;">
+                                                        <span>Report :</span>
+                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end row-->
+                            </form>
+                        </div>
+                    </div>
     </main><!-- End #main -->
     <?php require_once ('partials/foot.php')?>
     <?php require_once ('partials/footer.php')?>

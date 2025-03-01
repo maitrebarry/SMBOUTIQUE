@@ -40,89 +40,89 @@
     }
 
 
-if (isset($_POST['passe'])) {
-    // Vérifier si les champs requis sont fournis
-    if (!empty($_POST['dat']) && !empty($_POST['refe']) && isset($_POST['total']) && !empty($_POST['id_article']) 
-          && !empty($_POST['netpayer']) && !empty($_POST['montantrecu'])){
-        extract($_POST);
-        $reference_caisse = $_POST['refe'];
-        $date = $_POST['dat'];
-        $remise = !empty($_POST['remise']) ? $_POST['remise'] : 0;
-        $netpayer=$_POST['netpayer'];
-        $montantrecu=$_POST['montantrecu'];
-        $monnaierembourser=$_POST['monnaierembourser'];
-        $nom_client = !empty($_POST['nom_client']) ? $_POST['nom_client'] : 'clients divers';
-        $total = isset($_POST['total']) ? $_POST['total'] : null;
+    if (isset($_POST['passe'])) {
+        // Vérifier si les champs requis sont fournis
+        if (!empty($_POST['dat']) && !empty($_POST['refe']) && isset($_POST['total']) && !empty($_POST['id_article']) 
+            && !empty($_POST['netpayer']) && !empty($_POST['montantrecu'])){
+            extract($_POST);
+            $reference_caisse = $_POST['refe'];
+            $date = $_POST['dat'];
+            $remise = !empty($_POST['remise']) ? $_POST['remise'] : 0;
+            $netpayer=$_POST['netpayer'];
+            $montantrecu=$_POST['montantrecu'];
+            $monnaierembourser=$_POST['monnaierembourser'];
+            $nom_client = !empty($_POST['nom_client']) ? $_POST['nom_client'] : 'clients divers';
+            $total = isset($_POST['total']) ? $_POST['total'] : null;
 
-        if($total !== null) {
-            $montant_total.= intval($total);
-            $insert_vente = 'INSERT INTO vente(date_vente, nom_client, montant_total, reference_caisse,id_utilisateur,remise,net_a_payer,montant_recu,monnaie_rembourse) VALUES(?,?,?,?,?,?,?,?,?)';
-            $lastid = Insertion_and_update($insert_vente, [$date, $nom_client, $total, $reference_caisse,$utilisateur,$remise,$netpayer,$montantrecu,$monnaierembourser], true);
-            $id_vente = $bdd->lastInsertId();
+            if($total !== null) {
+                $montant_total.= intval($total);
+                $insert_vente = 'INSERT INTO vente(date_vente, nom_client, montant_total, reference_caisse,id_utilisateur,remise,net_a_payer,montant_recu,monnaie_rembourse) VALUES(?,?,?,?,?,?,?,?,?)';
+                $lastid = Insertion_and_update($insert_vente, [$date, $nom_client, $total, $reference_caisse,$utilisateur,$remise,$netpayer,$montantrecu,$monnaierembourser], true);
+                $id_vente = $bdd->lastInsertId();
 
-            $caisse_query = "SELECT Montant_total_caisse FROM caisse WHERE reference_caisse = :reference_caisse AND statut = 'on'";
-            $caisse_statement = $bdd->prepare($caisse_query);
-            $caisse_statement->bindParam(':reference_caisse', $reference_caisse, PDO::PARAM_STR);
-            $caisse_statement->execute();
-            $caisse_result = $caisse_statement->fetch(PDO::FETCH_ASSOC);
-            $montant_caisse_actuel = $caisse_result['Montant_total_caisse'];
+                $caisse_query = "SELECT Montant_total_caisse FROM caisse WHERE reference_caisse = :reference_caisse AND statut = 'on'";
+                $caisse_statement = $bdd->prepare($caisse_query);
+                $caisse_statement->bindParam(':reference_caisse', $reference_caisse, PDO::PARAM_STR);
+                $caisse_statement->execute();
+                $caisse_result = $caisse_statement->fetch(PDO::FETCH_ASSOC);
+                $montant_caisse_actuel = $caisse_result['Montant_total_caisse'];
 
-            $nouveau_montant_caisse = $montant_caisse_actuel + $total;
-            $updateCaisseCommandeQuery = "UPDATE caisse SET Montant_total_caisse = :nouveau_montant_caisse WHERE reference_caisse = :reference_caisse AND statut = 'on'";
-            $updateCaisseCommandeStatement = $bdd->prepare($updateCaisseCommandeQuery);
-            $updateCaisseCommandeStatement->bindParam(':nouveau_montant_caisse', $nouveau_montant_caisse, PDO::PARAM_INT);
-            $updateCaisseCommandeStatement->bindParam(':reference_caisse', $reference_caisse, PDO::PARAM_STR);
-            $updateCaisseCommandeStatement->execute();
+                $nouveau_montant_caisse = $montant_caisse_actuel + $total;
+                $updateCaisseCommandeQuery = "UPDATE caisse SET Montant_total_caisse = :nouveau_montant_caisse WHERE reference_caisse = :reference_caisse AND statut = 'on'";
+                $updateCaisseCommandeStatement = $bdd->prepare($updateCaisseCommandeQuery);
+                $updateCaisseCommandeStatement->bindParam(':nouveau_montant_caisse', $nouveau_montant_caisse, PDO::PARAM_INT);
+                $updateCaisseCommandeStatement->bindParam(':reference_caisse', $reference_caisse, PDO::PARAM_STR);
+                $updateCaisseCommandeStatement->execute();
 
-            for ($i = 0; $i < count($_POST['id_article']); $i++) {
-                $articles = $_POST['id_article'][$i];
-                $quantite = $_POST['quantite'][$i];
-                $prix = $_POST['prix'][$i];
-                $montant = $quantite * $prix;
-                $stockt = isset($_POST['stock'][$i]) ? $_POST['stock'][$i] : 0;
+                for ($i = 0; $i < count($_POST['id_article']); $i++) {
+                    $articles = $_POST['id_article'][$i];
+                    $quantite = $_POST['quantite'][$i];
+                    $prix = $_POST['prix'][$i];
+                    $montant = $quantite * $prix;
+                    $stockt = isset($_POST['stock'][$i]) ? $_POST['stock'][$i] : 0;
 
-                // Insérer le nouveau prix dans la colonne new_price_vente de la table ligne_vente
-                $insertDetails = 'INSERT INTO ligne_vente(id_produit, id_vente, quantite, new_price_vente) VALUES(?,?,?,?)';
-                Insertion_and_update($insertDetails, [$articles, $lastid, $quantite, $prix]);
-                $lastid_ligne = $bdd->lastInsertId();
+                    // Insérer le nouveau prix dans la colonne new_price_vente de la table ligne_vente
+                    $insertDetails = 'INSERT INTO ligne_vente(id_produit, id_vente, quantite, new_price_vente) VALUES(?,?,?,?)';
+                    Insertion_and_update($insertDetails, [$articles, $lastid, $quantite, $prix]);
+                    $lastid_ligne = $bdd->lastInsertId();
 
-                $insert_mouvement = $bdd->prepare('INSERT INTO mouvement(id_ligne_vente,id_ligne_livraison,id_ligne_reception,id_produit,quantite, type_mvnt, montant,date_mov) VALUES(?,?,?,?,?,?,?,NOW())');
-                $insert_mouvement->execute(array($lastid_ligne, null, null, $articles, $quantite, 'vente_direct', $montant));
-                $stock_suffisant = true;
-            }
-            for ($i = 0; $i < count($_POST['id_article']); $i++) {
-                $articles = $_POST['id_article'][$i];
-                $quantite = $_POST['quantite'][$i];
-
-                $sqlStock = "SELECT stock FROM tbl_product WHERE id=?";
-                $stockStmt = $bdd->prepare($sqlStock);
-                $stockStmt->execute([$articles]);
-                $actuelStock = $stockStmt->fetchColumn();
-
-                if ($actuelStock >= $quantite) {
-                    $new_stock = $actuelStock - $quantite;
-                    $update_prod_stock = $bdd->prepare("UPDATE tbl_product SET stock=? WHERE id=?");
-                    $update_prod_stock->execute([$new_stock, $articles]);
-                } else {
-                    $stock_suffisant = false;
-                    break;
+                    $insert_mouvement = $bdd->prepare('INSERT INTO mouvement(id_ligne_vente,id_ligne_livraison,id_ligne_reception,id_produit,quantite, type_mvnt, montant,date_mov) VALUES(?,?,?,?,?,?,?,NOW())');
+                    $insert_mouvement->execute(array($lastid_ligne, null, null, $articles, $quantite, 'vente_direct', $montant));
+                    $stock_suffisant = true;
                 }
-            }
+                for ($i = 0; $i < count($_POST['id_article']); $i++) {
+                    $articles = $_POST['id_article'][$i];
+                    $quantite = $_POST['quantite'][$i];
 
-            if ($stock_suffisant) {           
-                afficher_message('Vente faite avec succès', 'success');
-                header('Location: vente.php');
-                exit;
+                    $sqlStock = "SELECT stock FROM tbl_product WHERE id=?";
+                    $stockStmt = $bdd->prepare($sqlStock);
+                    $stockStmt->execute([$articles]);
+                    $actuelStock = $stockStmt->fetchColumn();
+
+                    if ($actuelStock >= $quantite) {
+                        $new_stock = $actuelStock - $quantite;
+                        $update_prod_stock = $bdd->prepare("UPDATE tbl_product SET stock=? WHERE id=?");
+                        $update_prod_stock->execute([$new_stock, $articles]);
+                    } else {
+                        $stock_suffisant = false;
+                        break;
+                    }
+                }
+
+                if ($stock_suffisant) {           
+                    afficher_message('Vente faite avec succès', 'success');
+                    header('Location: vente.php');
+                    exit;
+                } else {
+                    afficher_message('Stock insuffisant pour au moins un article', 'danger');
+                }
             } else {
-                afficher_message('Stock insuffisant pour au moins un article', 'danger');
+                afficher_message('Erreur: Total non défini ou nul', 'danger');
             }
         } else {
-            afficher_message('Erreur: Total non défini ou nul', 'danger');
+            afficher_message('certains champs sont vides', 'danger');
         }
-    } else {
-        afficher_message('certains champs sont vides', 'danger');
     }
-}
 
 
     ?>
@@ -140,6 +140,10 @@ if (isset($_POST['passe'])) {
                 height: 50px;
                 background-color: #f5f5f5;
             }
+            .hidden {
+                display: none;
+            }
+
         </style>
         <main id="main" class="main">
             <div class="pagetitle">
@@ -153,125 +157,109 @@ if (isset($_POST['passe'])) {
                 </nav>
             </div>
 
-            <div class="card info-card sales-card ">
-                <div class="container-fluid">
-                    <?php require_once('partials/afficher_message.php') ?>
-                    <div class="content">
-                        <div class="container col">
-                            <div class="form-group">
-                                <div class="card info-card sales-card ">
-                                    <select class="form-control produit form-select p-4" name="produit" id="produit">
-                                        <option value="">Veuillez sélectionner un produit</option>
-                                        <?php foreach ($produits as $value) : ?>
-                                            <option value="<?= $value->id ?>">
-                                            <?= $value->name ?>&emsp;| Stock: <?= $value->stock ?>
-                                        </option>
-                                        <?php endforeach ?>
-                                    </select>
+           <div class="card info-card sales-card">
+            <div class="container-fluid">
+                <?php require_once('partials/afficher_message.php') ?>
+                <div class="container">
+                    <form action="" method="post">
+                    <section class="section mt-2">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-10 col-sm-12 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <select class="form-control produit form-select p-4 w-100" name="produit" id="produit">
+                                                <option value="">Veuillez sélectionner un produit</option>
+                                                <?php foreach ($produits as $value) : ?>
+                                                    <option value="<?= $value->id ?>">
+                                                    <?= $value->name ?>&emsp;| Stock: <?= $value->stock ?>
+                                                    </option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>   
+                                        <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-condensed">
+                                            <thead>
+                                            <tr>
+                                                <th>Produit</th>
+                                                <th>Quantité</th>
+                                                <th>Prix</th>
+                                                <th>Montant</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="ajout_tbody"></tbody>
+                                        </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="card">
+                                    <div class="card-body">
+                                        <div id="montant_total_section" class="row">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                            <label for="">Montant total</label>
+                                            <input type="number" name="montant_total" class="form-control montant_total" id="montant_total" value="<?=$montant_total ?>" readOnly>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                            <label for="">Rémise</label>
+                                            <input type="number" value="" name="remise" class="form-control remise" id="remise">
+                                        </div>
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                            <label for="">Net à payer</label>
+                                            <input type="number" name="netpayer" class="form-control netpayer" id="netpayer" readOnly>
+                                        </div>
+                                        </div>
+                                        <div id="montant_recu_section" class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                                            <label for="">Montant reçu</label>
+                                            <input type="number" name="montantrecu" class="form-control montantrecu" id="montantrecu">
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
+                                            <label for="">Monnaie à rembourser</label>
+                                            <input type="number" name="monnaierembourser" class="form-control monnaierembourser text-danger" id="monnaierembourser" readOnly>
+                                        </div>
+                                        </div>
+                                   </div>
+                                </div>            
+                            </div>
+                            <div class="col-lg-4 col-md-10 col-sm-12 mb-4">
+                                <div class="card text-left">
+                                <div class="card-body">
+                                    <div class="form-group mt-3">
+                                    <label>Référence <span class="text-danger">*</span></label>
+                                    <?php $reference_caisse = recuperation_fonction('reference_caisse', "caisse WHERE statut = 'on'", [], "ONE"); ?>
+                                    <input type="text" name="refe" id="refe" class="form-control" value="<?php echo $reference_caisse->reference_caisse; ?>" readonly>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                    <label>Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="dat" class="form-control" id="currentDateTime" required>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                    <label for="">Client</label>
+                                    <input type="text" name="nom_client" class="form-control" id="nom_client">
+                                    </div>
+                                </div>
                                 </div>
                             </div>
-                            <form action="" method="post">
-                                <section class="section mt-5">
-                                    <div class="row">
-                                        <div class="col-xl-8 col-md-10 col-xs-12">
-                                            <div class="card">
-                                                <div class="card-body ">
-                                                    <div class="table-responsive">
-                                                        <table class="table table-bordered table-striped table-condensed">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>Produit</th>
-                                                                    <th>Quantité</th>
-                                                                    <th>Prix</th>
-                                                                    <th>Montant</th>
-                                                                    <th>Action</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="ajout_tbody">
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="card text-left">
-                                                <div class="card-body ">
-                                                    <div class="form-group">
-                                                        <div class="form-group mt-3">
-                                                            <label>Référence <span class="text-danger">*</span></label>
-                                                            <?php
-                                                            // Récupérer la référence de la caisse associée
-                                                                $reference_caisse = recuperation_fonction('reference_caisse', "caisse WHERE statut = 'on'", [], "ONE");
-                                                            ?>
-                                                            <input type="text" name="refe" id="refe" class="form-control" value="<?php echo $reference_caisse->reference_caisse; ?>" readonly>
-                                                        </div>
-
-                                                        <div class="form-group mt-3">
-                                                            <label>Date <span class="text-danger">*</span></label>
-                                                            <input type="datetime-local" name="dat" class="form-control" id="currentDateTime" required>
-                                                        </div>
-                                                        <div class="form-group mt-3">
-                                                            <label for="">Client</label>
-                                                            <input type="text" name="nom_client" class="form-control" id="nom_client">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-4 col-md-10 col-xs-12">
-                                                <div class="form-group mt-3">
-                                                    <label for="">Montant total</label>
-                                                    <input type="number" name="montant_total" class="form-control montant_total" id="montant_total"
-                                                    value="<?=$montant_total ?>"readOnly>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-md-10 col-xs-12">
-                                                <div class="form-group mt-3">
-                                                    <label for="">Rémise</label>
-                                                    <input type="number" value="" name="remise" class="form-control remise" id="remise">
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-md-10 col-xs-12">
-                                                <div class="form-group mt-3">
-                                                    <label for="">Net à payer</label>
-                                                    <input type="number" name="netpayer" class="form-control netpayer" id="netpayer"readOnly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-xl-6 col-md-10 col-xs-12">
-                                                <label for="">Montant reçu</label>
-                                                <input type="number" name="montantrecu" class="form-control montantrecu" id="montantrecu">
-                                            </div>
-                                            <div class="col-xl-6 col-md-10 col-xs-12">
-                                                <label for="">Monnaie à rembourser</label>
-                                                <input type="number" name="monnaierembourser" class="form-control monnaierembourser text-danger" id="monnaierembourser"readOnly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl-6 col-md-10 col-xs-12 mt-3">
-                                            <div class="form-group">
-                                                <button  type="submit" name="passe" class="btn btn-primary form-control submit-modal confirm-button" 
-                                                    data-bs-toggle="modal" data-bs-target="#basicModal">Valider
-                                                </button> 
-                                                    <?php require_once('partials/confirmerEnregistrement.php');?>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-6 col-md-10 col-xs-12 mt-3">
-                                            <div class="form-group">
-                                                <a href="liste_vente.php" class="btn btn-info form-control ">Liste des ventes réalisées</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </form>
                         </div>
-                    </div>
+
+                       
+
+                        <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12 mt-3">
+                            <button type="submit" name="passe" class="btn btn-primary form-control submit-modal confirm-button" data-bs-toggle="modal" data-bs-target="#basicModal">Valider</button>
+                            <?php require_once('partials/confirmerEnregistrement.php');?>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-12 mt-3">
+                            <a href="liste_vente.php" class="btn btn-info form-control">Liste des ventes réalisées</a>
+                        </div>
+                        </div>
+                    </section>
+                    </form>
                 </div>
             </div>
+        </div>
+
         </main>
         <footer class="footer">
             <?php require_once('partials/foot.php') ?>
@@ -487,5 +475,39 @@ if (isset($_POST['passe'])) {
                 });
             });
         </script>
+        <script>
+            // Fonction pour afficher ou masquer les sections basées sur une condition
+function afficherMasquerChamps(condition) {
+    if (condition) {
+        $('#montant_total_section').removeClass('hidden');
+        $('#remise_section').removeClass('hidden');
+        $('#netpayer_section').removeClass('hidden');
+        $('#montant_recu_section').removeClass('hidden');
+    } else {
+        $('#montant_total_section').addClass('hidden');
+        $('#remise_section').addClass('hidden');
+        $('#netpayer_section').addClass('hidden');
+        $('#montant_recu_section').addClass('hidden');
+    }
+}
+
+// Exemple d'utilisation de la fonction
+$(document).ready(function() {
+    // Par exemple, pour afficher/masquer en fonction de la valeur d'un champ
+    $('#produit').change(function() {
+        var produit_id = $(this).val();
+        if (produit_id !== "") {
+            afficherMasquerChamps(true);
+        } else {
+            afficherMasquerChamps(false);
+        }
+    });
+
+    // Initialement masquer les champs
+    afficherMasquerChamps(false);
+});
+
+        </script>
     </body>
 </html>
+

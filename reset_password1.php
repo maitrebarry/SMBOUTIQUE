@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
         $query = $bdd->prepare("UPDATE utilisateur SET reset_token = ?, reset_token_expire = ? WHERE email = ?");
         $query->execute([$token, $expire_time, $email]);
 
-        $reset_link = "http://localhost/SMBOUTIQUE/reset_password.php?email=$email&token=$token";
+        $reset_link = "  https://8e8c-217-64-97-58.ngrok-free.app/SMBOUTIQUE/reset_password.php?email=$email&token=$token";
         
         $to = $email;
         $subject = "Réinitialisation du mot de passe";
@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
         $headers = "From: barrymoustapha908@gmail.com";
         mail($to, $subject, $message, $headers);
 
-        afficher_message('Un e-mail de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.');
+        afficher_message('Un e-mail de réinitialisation de mot de passe a été envoyé à votre adresse e-mail.','success');
     } else {
         afficher_message('Aucun compte trouvé avec cet e-mail.');
     }

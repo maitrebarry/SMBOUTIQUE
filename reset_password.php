@@ -17,23 +17,52 @@ if (isset($_GET['email'], $_GET['token'])) {
     }
 
     if (isset($_POST['submit'])) {
-        $new_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        
-        $update_query = $bdd->prepare("UPDATE utilisateur SET mot_de_passe_utilisateur = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?");
-        $update_query->execute([$new_password, $email]);
+        $new_password = $_POST['password'];
+        $erreurs = [];
 
-        afficher_message('Mot de passe mis à jour avec succès. Vous pouvez vous connecter.');
-        
-        // Pause to let the message display
-        sleep(3);
-        
-        header('Location: index.php');
-        exit;
+        // Vérification de la longueur du mot de passe
+        if (strlen($new_password) < 8) {
+            $erreurs[] = "Le mot de passe doit contenir au moins 8 caractères.";
+        }
+
+        // Vérification de la présence de majuscules
+        if (!preg_match('/[A-Z]/', $new_password)) {
+            $erreurs[] = "Le mot de passe doit contenir au moins une majuscule.";
+        }
+
+        // Vérification de la présence de chiffres
+        if (!preg_match('/[0-9]/', $new_password)) {
+            $erreurs[] = "Le mot de passe doit contenir au moins un chiffre.";
+        }
+
+        // Vérification des caractères spéciaux
+        if (!preg_match('/[^A-Za-z0-9]/', $new_password)) {
+            $erreurs[] = "Le mot de passe doit contenir au moins un caractère spécial.";
+        }
+
+        if (!empty($erreurs)) {
+            foreach ($erreurs as $erreur) {
+                afficher_message($erreur);
+            }
+        } else {
+            $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $update_query = $bdd->prepare("UPDATE utilisateur SET mot_de_passe_utilisateur = ?, reset_token = NULL, reset_token_expire = NULL WHERE email = ?");
+            $update_query->execute([$hashed_password, $email]);
+
+            afficher_message('Mot de passe mis à jour avec succès. Vous pouvez vous connecter.', 'success');
+
+            // Pause to let the message display
+            sleep(3);
+
+            header('Location: index.php');
+            exit;
+        }
     }
 } else {
     afficher_message('Lien invalide.');
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

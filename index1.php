@@ -92,7 +92,7 @@
 
                         <a href="liste_fournisseur.php" class="btn btn-outline-white">
                             <div class="card-body">
-                                <h5 class="card-title">Etat <span>|Fournisseurs<span>|Clients</span></h5>
+                                <h5 class="card-title">Etat <span>|Fournisseurs</span></h5>
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -109,7 +109,7 @@
                                         <span class="text-success small pt-1 fw-bold"></span>
                                         <span class="text-info small pt-2 ps-1">fournisseurs enregistrés</span>
                                     </div>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                    <div class="ps-5">
+                                    <!-- <div class="ps-5">
                                          <?php
                                         // nobre de  client
                                         $nbre_client="SELECT * FROM commande_client";
@@ -119,7 +119,7 @@
                                         <h6><?=$resultat_client?></h6>
                                         <span class="text-success small pt-1 fw-bold ps-5"></span>
                                         <span class="text-success small">clients enregistrés</span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </a>

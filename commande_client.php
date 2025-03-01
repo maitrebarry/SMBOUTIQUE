@@ -183,26 +183,24 @@ function getPrixDetail($articleId) {
         <div class="container-fluid">
            <?php require_once('partials/afficher_message.php') ?>
             <div class="content">
-                <div class="container col">
-                    <div class="form-group">
-                        <div class="card info-card sales-card ">
-                            <select class="form-control produit form-select p-4" name="produit" id="produit">
-                                <option value="">Veuillez sélectionner un produit</option>
-                                <?php foreach ($produits as $value) : ?>
-                                    <option value="<?= $value->id ?>">
-                                    <?= $value->name ?>&emsp;| Stock: <?= $value->stock ?>
-                                    </option>
-                                </option>
-                                <?php endforeach ?>
-                            </select>
-                        </div>
-                    </div>
+                <div class="container col">                  
                         <form action="" method="post">
-                            <section class="section mt-5">
+                            <section class="section mt-2">
                                 <div class="row">
                                     <div class="col-xl-8 col-md-10 col-xs-12">
                                         <div class="card">
                                             <div class="card-body">
+                                                 <div class="form-group">                  
+                                                        <select class="form-control produit form-select p-4" name="produit" id="produit">
+                                                            <option value="">Veuillez sélectionner un produit</option>
+                                                            <?php foreach ($produits as $value) : ?>
+                                                                <option value="<?= $value->id ?>">
+                                                                <?= $value->name ?>&emsp;| Stock: <?= $value->stock ?>
+                                                                </option>
+                                                            </option>
+                                                            <?php endforeach ?>
+                                                        </select>          
+                                                    </div>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered">
                                                         <thead>
