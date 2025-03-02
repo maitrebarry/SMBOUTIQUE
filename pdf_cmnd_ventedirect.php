@@ -19,10 +19,10 @@ class PDF extends FPDF
         // Décalage vers le haut de la page
         $this->SetY(0);
 
-        // Affichage du texte "S M MARKET" 
+        // Affichage du texte "S M BOUTIQUE" 
         $this->SetTextColor(139, 69, 19); // Couleur maron
         $this->SetFont('Arial', 'B', 30);
-        $textWidth1 = $this->GetStringWidth('S M MARKET  ' );
+        $textWidth1 = $this->GetStringWidth('SMBOUTIQUE  ' );
 
         // Déterminez la position Y du rectangle et ajustez-la en conséquence
         $rectangleY = $this->GetY() + 4; 
@@ -35,7 +35,7 @@ class PDF extends FPDF
 
         // Affichez le texte à l'intérieur du rectangle avec la nouvelle position Y
         $this->SetXY(($this->w - $textWidth1) / 4, $textY);
-        $this->Cell(0, 8, 'S M MARKET ', 0, 1, 'C');
+        $this->Cell(0, 8, 'SMBOUTIQUE ', 0, 1, 'C');
 
         $this->SetTextColor(0, 0, 0); // Couleur noire
         $this->SetFont('Arial', 'B', 15); 

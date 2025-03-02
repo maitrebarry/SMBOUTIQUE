@@ -98,17 +98,17 @@
             <ul id="vente-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="commande_client.php">
-                        <span>Ajouter Vente Credit</span>
+                        <span>Ajouter Vente Crédit</span>
                     </a>
                 </li>
                 <li>
                     <a href="liste_livraison.php">
-                        <span>Liste des ventes livrés</span>
+                        <span>Liste des Ventes Crédits</span>
                     </a>
                 </li>
                 <li>
                     <a href="liste_paiement_client.php">
-                        <span>Liste des paiements Credits</span>
+                        <span>Liste des Paiements Crédits</span>
                     </a>
                 </li>
 

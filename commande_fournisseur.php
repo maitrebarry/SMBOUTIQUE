@@ -1,16 +1,15 @@
 <?php
     require_once ('partials/database.php');
-// Vérifiez si l'utilisateur est connecté et 'id_utilisateur' est défini
-if (!isset($_SESSION['id_utilisateur'])) {
-    // Gérez le cas où 'id_utilisateur' n'est pas défini 
-         header('Location:index.php');
-}else{
-   
-      $utilisateur= $_SESSION['id_utilisateur'];
-}
-unset($_SESSION['shopping_cart']);
-?>
-<?php require_once ('function/function.php') ;
+    require_once ('function/function.php') ;
+    // Vérifiez si l'utilisateur est connecté et 'id_utilisateur' est défini
+    if (!isset($_SESSION['id_utilisateur'])) {
+        // Gérez le cas où 'id_utilisateur' n'est pas défini 
+            header('Location:index.php');
+    }else{
+    
+        $utilisateur= $_SESSION['id_utilisateur'];
+    }
+    unset($_SESSION['shopping_cart']);
     $produits=recuperation_fonction('*','tbl_product',[],"ALL");
     $fournissuer=recuperation_fonction('*','fournisseur',[],"ALL");
      // pour la reference

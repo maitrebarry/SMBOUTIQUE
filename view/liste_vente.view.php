@@ -22,9 +22,34 @@
                 background-color: #f5f5f5; /* Ajoutez la couleur de fond souhaitée */
             }
   
-  .table-bordered .selectable-row.selected td {
-    background-color: #d3f9d8 !important;
-}
+            .table-bordered .selectable-row.selected td {
+                background-color: #d3f9d8 !important;
+            }
+             .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 75%;
+            font-weight: 700;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+            text-transform: uppercase;
+            font-size: xx-small;
+        }
+        .badge-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .badge-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .badge-success {
+            background-color: #28a745;
+            color: white;
+        }
         </style>
         
     <main id="main" class="main">
@@ -42,6 +67,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                         <div class="ms-auto mb-3 mr-2 mt-2">
+    						<div class="btn-group">
+    							<div class="">
+									<a href="vente.php" class="btn btn-dark mb-3 mb-lg-0">
+										<i class='bx bxs-plus-square'></i> Vente
+									</a>
+								</div>
+    						</div>
+    					</div>
                         <div class="card-body">
                               <!-- Ajout du formulaire de recherche -->
                             <form action="" method="POST" class="mb-3" onsubmit="hideMainTable(event)">
@@ -55,10 +89,11 @@
                             <table class="table  table-bordered table-striped search-table" id="main-table">
                                 <thead>
                                     <tr>
-                                        <th>Date de la vente</th>
+                                        <th>DATE</th>
                                         <th>Client</th>
-                                        <th>Montant total</th>
-                                        <th>Action</th>
+                                        <th>RESPONSABLE</th>
+                                        <th>MONTANT TOTAL</th>
+                                        <th>ACTION</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +106,8 @@
                                         <tr class="selectable-row">
                                             <!-- Affichage des données de vente -->
                                             <td><?= date_format(date_create($liste_vente_reali->date_vente), 'd-m-Y à H:i') ?></td>
-                                            <td><?= $liste_vente_reali->nom_client ?></td>
+                                             <td><span class='badge badge-dark' style="font-size: xx-small; font-weight: bold; font-style: italic;"><?= strtoupper($liste_vente_reali->nom_client) ?> </span></td>
+                                            <td><span class='badge badge-success' style="font-size: xx-small; font-weight: bold; font-style: italic;"><?= strtoupper($liste_vente_reali->nom_utilisateur) ?> <?= strtoupper($liste_vente_reali->prenom_utilisateur) ?></span></td>
                                             <td class="montant_total"><?= number_format($liste_vente_reali->montant_total, 0, ',', ' ') ?> F CFA</td> 
                                             <td>
                                                 <!-- Bouton de détail -->

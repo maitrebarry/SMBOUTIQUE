@@ -173,8 +173,8 @@ function getPrixDetail($articleId) {
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index1.php">Home</a></li>
-          <li class="breadcrumb-item">Commande client</li>
-          <li class="breadcrumb-item active">exécution de la commande</li>
+          <li class="breadcrumb-item">Vente en Crédit</li>
+          <li class="breadcrumb-item active">exécution de la vente</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->

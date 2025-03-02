@@ -9,20 +9,12 @@ class CommandeClient extends Fonction{
             return $recuperer_afficher;
          }
  
-//  recuperer et afficher la liste des COMMANDES
-      // public function list1(){
-      //       $recuperer_afficher_list_cmcl=$this->recuperation_fonction("*","commande_client JOIN client_grossiste
-      //        ON client_grossiste.id_client_gr=commande_client.id_client_gr ORDER BY id_cmd_client DESC",[],"all");
-      //       return $recuperer_afficher_list_cmcl;
-      //    }
-//recuperer et afficher la liste des commandes par tri
+
       public function listRecentCommands($limit){
-      // Convertit la valeur de $limit en entier
-      // $limit = (int)$limit;
-      //     $recuperer_afficher_cmnd_recentes = $this->recuperation_fonction_tri("*", "commande_client ORDER BY date_cmd_client DESC LIMIT $limit", [], "all");
-      //     return $recuperer_afficher_cmnd_recentes;
       $recuperer_afficher_cmnd_recentes = $this->recuperation_fonction_tri("*", "commande_client JOIN client_grossiste 
-                  ON client_grossiste.id_client_gr=commande_client.id_client_gr ORDER BY date_cmd_client DESC LIMIT $limit", [], "all");
+       ON client_grossiste.id_client_gr=commande_client.id_client_gr
+        JOIN utilisateur ON utilisateur.id_utilisateur=commande_client.id_utilisateur
+        ORDER BY date_cmd_client DESC LIMIT $limit", [], "all");
       return $recuperer_afficher_cmnd_recentes;
       }
 //  recuperer et afficher la liste des paiements
@@ -33,14 +25,12 @@ class CommandeClient extends Fonction{
            ORDER BY id_paie_client DESC",[],"all");
             return $recuperer_afficher_list_paie;
          }
-   //  recuperer et afficher la liste des ventes realisees
-      // public function list3(){
-      //       $recuperer_afficher_vente=$this->recuperation_fonction("*","vente  ORDER BY id_vente DESC",[],"all");
-      //       return $recuperer_afficher_vente;
-      //    }
+  
          //recuperer et afficher la liste des ventes realisees par tri
       public function listRecentVente($limit){
-            $recuperer_afficher_vente = $this->recuperation_fonction_tri("*", "vente  ORDER BY id_vente DESC LIMIT $limit", [], "all");
+            $recuperer_afficher_vente = $this->recuperation_fonction_tri("*", "vente  
+            JOIN utilisateur ON utilisateur.id_utilisateur=vente.id_utilisateur
+            ORDER BY id_vente DESC LIMIT $limit", [], "all");
             return $recuperer_afficher_vente;
             }
       //  recuperer et afficher la liste des caisses

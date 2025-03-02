@@ -76,12 +76,16 @@ class CommandeFour extends Fonction {
 
     // Méthode pour récupérer et afficher la liste des réceptions
     public function list() {
-        return $this->recuperation_fonction("*", "reception JOIN commande_fournisseur ON commande_fournisseur.id_commande_fournisseur=reception.id_commande_fournisseur JOIN fournisseur ON fournisseur.id_fournisseur=commande_fournisseur.id_fournisseur ORDER BY id_reception DESC", [], "all");
+        return $this->recuperation_fonction("*", "reception JOIN commande_fournisseur ON commande_fournisseur.id_commande_fournisseur=reception.id_commande_fournisseur
+         JOIN fournisseur ON fournisseur.id_fournisseur=commande_fournisseur.id_fournisseur ORDER BY id_reception DESC", [], "all");
     }
 
     // Méthode pour récupérer et afficher la liste des commandes récentes par tri
     public function listRecentCommands($limit) {
-        return $this->recuperation_fonction_tri("*", "commande_fournisseur JOIN fournisseur ON fournisseur.id_fournisseur=commande_fournisseur.id_fournisseur ORDER BY date_de_commande DESC LIMIT $limit", [], "all");
+        return $this->recuperation_fonction_tri("*", "commande_fournisseur 
+        JOIN fournisseur ON fournisseur.id_fournisseur=commande_fournisseur.id_fournisseur
+        JOIN utilisateur ON utilisateur.id_utilisateur=commande_fournisseur.id_utilisateur
+         ORDER BY date_de_commande DESC LIMIT $limit", [], "all");
     }
 
     // Méthode pour récupérer et afficher la liste des paiements

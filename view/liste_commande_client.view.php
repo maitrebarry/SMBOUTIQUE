@@ -29,6 +29,7 @@
             vertical-align: baseline;
             border-radius: 0.375rem;
             text-transform: uppercase;
+            font-size: xx-small;
         }
         .badge-danger {
             background-color: #dc3545;
@@ -63,6 +64,15 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                         <div class="ms-auto mb-3 mr-2 mt-2">
+    						<div class="btn-group">
+    							<div class="">
+									<a href="commande_client.php" class="btn btn-dark mb-3 mb-lg-0">
+										<i class='bx bxs-plus-square'></i> Commande
+									</a>
+								</div>
+    						</div>
+    					</div>
                         <div class="card-body">
                              <!-- Ajout du formulaire de recherche -->
                             <form action="" method="POST" class="mb-3" onsubmit="hideMainTable(event)">
@@ -79,6 +89,7 @@
                                             <th>DATE</th>
                                             <th>REFERENCES</th>
                                             <th>Client</th>
+                                            <th>RESPONSBLE</th>
                                             <th>TOTAL</th>
                                             <th>PAYER</th>
                                             <th>STATUT</th>
@@ -106,8 +117,9 @@
                                         ?>
                                             <tr class="selectable-row">
                                                 <td><?= date_format(date_create($affiche->date_cmd_client), 'd-m-Y à H:i') ?></td>
-                                                <td><?= $affiche->reference ?></td>
-                                                <td><?= $affiche->prenom_du_client_grossiste.' '.$affiche->nom_client_grossiste ?></td>
+                                                <td><?= $affiche->reference ?></td>                                             
+                                                <td><span class='badge badge-dark' style="font-size: xx-small; font-weight: bold; font-style: italic;"><?= strtoupper($affiche->prenom_du_client_grossiste) ?> <?= strtoupper($affiche->nom_client_grossiste) ?></span></td>
+                                                <td><span class='badge badge-success' style="font-size: xx-small; font-weight: bold; font-style: italic;"><?= strtoupper($affiche->nom_utilisateur) ?> <?= strtoupper($affiche->prenom_utilisateur) ?></span></td>
                                                 <td class="total"><?= number_format($affiche->total, 0, ',', ' ') ?> F CFA</td>
                                                 <td class="paie"><?= number_format($affiche->paie, 0, ',', ' ') ?> F CFA</td>
                                                <td>
@@ -159,7 +171,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3" class="text-left">Total Sélectionné :</th>
+                                            <th colspan="4" class="text-left">Total Sélectionné :</th>
                                             <th id="selected-total" class="text-right">0 F CFA</th>
                                             <th id="selected-paie" class="text-right">0 F CFA</th>
                                         </tr>
