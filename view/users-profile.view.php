@@ -39,7 +39,7 @@
                 <div class="col-xl-4">
                     <div class="card">
                         
-                       <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                       <div class=" profile-card pt-4 d-flex flex-column align-items-center">
                             <img src="user/<?=$modifier->avatar?>" alt="Profile" class="rounded-circle profile-picture">
 
                             <div class="social-links mt-2">
@@ -56,7 +56,7 @@
 
                 <div class="col-xl-8">
                     <div class="card">
-                        <div class="card-body pt-3">
+                        <div class=" pt-3">
                             <!-- Bordered Tabs -->
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
@@ -182,123 +182,145 @@
                               </div><!-- End Bordered Tabs -->
         </section>
         <div class="card mb-4">
-                        <h5 class="card-header">La liste de mes activites</h5>
-                        <div class="card-body">
-                            <form id="formAccountSettings" method="post" action="modifier_password.php">
+            <h5 class="card-header">La liste de mes activités</h5>
+            <div class="">
+                <form id="formAccountSettings" method="post" action="modifier_password.php">
+                    <!--end row-->
+                    <div class="row col-12">
+                        <div class="col">
+                            <div class="card radius-10">
+                                <div class="">
+                                    <div class="">
+                                        <div class="text-primary mb-3">
+                                            <center>Journalier</center>
+                                        </div>
 
-                                <!--end row-->
-                                <div class="row col-12">
-                                    <div class="col">
-                                        <div class="card radius-10">
-                                            <div class="card-body">
-                                                <div class="">
-                                                    <div class=" text-primary mb-3">
-                                                        <center>Journalier</center>
-                                                    </div>
-
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>enregistre :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
-                                                        </span>
-                                                    </p>
-                                                    <!-- <p style="display:flex;justify-content:space-between;">
-                                                        <span>Annuler :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
-                                                        </span>
-                                                    </p> -->
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>Report :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-primary ">1
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="card radius-10">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <div class=" text-info mb-3">
-                                                        <center>semaine</center>
-                                                    </div>
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>enregistre :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-info ">1
-                                                        </span>
-                                                    </p>
-                                                    <!-- <p style="display:flex;justify-content:space-between;">
-                                                        <span>Annuler :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-info ">1
-                                                        </span>
-                                                    </p> -->
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>Report :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-info ">1
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card radius-10">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <div class=" text-success mb-3">
-                                                        <center>mensuelle</center>
-                                                    </div>
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>enregistre :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-success ">1
-                                                        </span>
-                                                    </p>
-                                                    <!-- <p style="display:flex;justify-content:space-between;">
-                                                        <span>Annuler :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-success ">1
-                                                        </span>
-                                                    </p> -->
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>Report :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-success ">1
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card radius-10">
-                                            <div class="card-body">
-                                                <div class="text-center">
-                                                    <div class="text-warning mb-3">
-                                                        <center>Annuelle</center>
-                                                    </div>
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>enregistre :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
-                                                        </span>
-                                                    </p>
-                                                    <!-- <p style="display:flex;justify-content:space-between;">
-                                                        <span>Annuler :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
-                                                        </span>
-                                                    </p> -->
-                                                    <p style="display:flex;justify-content:space-between;">
-                                                        <span>Report :</span>
-                                                        <span class=" rounded-circle bg-light-primary text-warning ">1
-                                                        </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Commandes fournisseurs :</span>
+                                            <span class="rounded-circle bg-light-primary text-primary"><?= $commandesFournisseur ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en crédit :</span>
+                                            <span class="rounded-circle bg-light-primary text-primary"><?= $ventesCredit ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en direct :</span>
+                                            <span class="rounded-circle bg-light-primary text-primary"><?= $ventesDirect ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Inventaire :</span>
+                                            <span class="rounded-circle bg-light-primary text-primary"><?= $inventaire ?></span>
+                                        </p>
+                                        <!-- <p style="display:flex;justify-content:space-between;">
+                                            <span>Enregistrements de produits :</span>
+                                            <span class="rounded-circle bg-light-primary text-primary"><?= $enregistrementProduits ?></span>
+                                        </p> -->
                                     </div>
                                 </div>
-                                <!--end row-->
-                            </form>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card radius-10">
+                                <div class="">
+                                    <div class="text-center">
+                                        <div class="text-info mb-3">
+                                            <center>Hebdomadaire</center>
+                                        </div>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Commandes fournisseurs :</span>
+                                            <span class="rounded-circle bg-light-primary text-info"><?= $commandesFournisseur ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en crédit :</span>
+                                            <span class="rounded-circle bg-light-primary text-info"><?= $ventesCredit ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en direct :</span>
+                                            <span class="rounded-circle bg-light-primary text-info"><?= $ventesDirect ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Inventaire :</span>
+                                            <span class="rounded-circle bg-light-primary text-info"><?= $inventaire ?></span>
+                                        </p>
+                                        <!-- <p style="display:flex;justify-content:space-between;">
+                                            <span>Enregistrements de produits :</span>
+                                            <span class="rounded-circle bg-light-primary text-info"><?= $enregistrementProduits ?></span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card radius-10">
+                                <div class="">
+                                    <div class="text-center">
+                                        <div class="text-success mb-3">
+                                            <center>Mensuelle</center>
+                                        </div>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Commandes fournisseurs :</span>
+                                            <span class="rounded-circle bg-light-primary text-success"><?= $commandesFournisseur ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en crédit :</span>
+                                            <span class="rounded-circle bg-light-primary text-success"><?= $ventesCredit ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en direct :</span>
+                                            <span class="rounded-circle bg-light-primary text-success"><?= $ventesDirect ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Inventaire :</span>
+                                            <span class="rounded-circle bg-light-primary text-success"><?= $inventaire ?></span>
+                                        </p>
+                                        <!-- <p style="display:flex;justify-content:space-between;">
+                                            <span>Enregistrements de produits :</span>
+                                            <span class="rounded-circle bg-light-primary text-success"><?= $enregistrementProduits ?></span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="card radius-10">
+                                <div class="">
+                                    <div class="text-center">
+                                        <div class="text-warning mb-3">
+                                            <center>Annuelle</center>
+                                        </div>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Commandes fournisseurs :</span>
+                                            <span class="rounded-circle bg-light-primary text-warning"><?= $commandesFournisseur ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en crédit :</span>
+                                            <span class="rounded-circle bg-light-primary text-warning"><?= $ventesCredit ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Ventes en direct :</span>
+                                            <span class="rounded-circle bg-light-primary text-warning"><?= $ventesDirect ?></span>
+                                        </p>
+                                        <p style="display:flex;justify-content:space-between;">
+                                            <span>Inventaire :</span>
+                                            <span class="rounded-circle bg-light-primary text-warning"><?= $inventaire ?></span>
+                                        </p>
+                                        <!-- <p style="display:flex;justify-content:space-between;">
+                                            <span>Enregistrements de produits :</span>
+                                            <span class="rounded-circle bg-light-primary text-warning"><?= $enregistrementProduits ?></span>
+                                        </p> -->
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!--end row-->
+                </form>
+            </div>
+        </div>
+
     </main><!-- End #main -->
     <?php require_once ('partials/foot.php')?>
     <?php require_once ('partials/footer.php')?>

@@ -37,10 +37,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-header">
-                           
-                             <a class="btn btn-light btn-sm " href="utilisat_pert.php">+Utilisations/pertes</a>
-                        </div>
+                       
+                        <div class="ms-auto mb-3 mr-2 mt-2">
+    						<div class="btn-group">
+    							<div class="">
+									<a href="utilisat_pert.php" class="btn btn-dark mb-3 mb-lg-0">
+										<i class='bx bxs-plus-square'></i> Utilisations/pertes
+									</a>
+								</div>
+    						</div>
+    					  </div>
                         <div class="card-body">
                              <?php require_once('partials/afficher_message.php')?>
                             <!-- Table with stripped rows -->

@@ -103,7 +103,7 @@
                 </li>
                 <li>
                     <a href="liste_livraison.php">
-                        <span>Liste des Ventes Crédits</span>
+                        <span>Liste des Livraisons Crédits</span>
                     </a>
                 </li>
                 <li>

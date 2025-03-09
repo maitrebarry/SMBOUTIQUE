@@ -38,59 +38,55 @@
     </div><!-- End Page Title -->
     <section class="section">
        <?php require_once('partials/afficher_message.php'); ?>
-      <form action="" method="post">
+     <form action="" method="post">
+  <div class="row">
+    <?php if (isset($fournisseur->errors) and !empty($fournisseur->errors)) : ?>
+      <div class='alert alert-danger'>
+        <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+        <?php foreach ($fournisseur->errors as $error) : ?>
+          <?= $error ?> <br>
+        <?php endforeach ?>
+      </div>
+    <?php endif ?>
+
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Fournisseur</h5>
           <div class="row">
-                       <?php
-                        if (isset($fournisseur->errors) and !empty($fournisseur->errors)) : ?>
-                            <div class='alert alert-danger'>
-                                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                <?php foreach ($fournisseur->errors as $error) : ?>
-                                    <?= $error ?> <br>
-                                <?php endforeach ?>
-                            </div>
-                        <?php endif ?>
-              <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Fournisseur</h5>
-                      <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Prenom<span class="text-danger">*</span></label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputText"name="nom"value="<?= $fournisseur->get_valeur_input('nom') ?>">
-                        </div>
-                      </div> 
-                      <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">Nom <span class="text-danger">*</span></label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputText"name="prenom"value="<?= $fournisseur->get_valeur_input('prenom') ?>">
-                        </div>
-                      </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="card">
-                  <div class="card-body">
-                    <h5 class="card-title">Adresse</h5>
-                     <div class="row mb-3">
-                          <label for="inputText" class="col-sm-2 col-form-label">Contact<span class="text-danger">*</span></label>
-                          <div class="col-sm-10">
-                              <input type="text" class="form-control" id="inputText" name="contact" value="<?= $fournisseur->get_valeur_input('contact') ?>" oninput="formatPhoneNumber(this)">
-                          </div>
-                      </div>
-                      <div class="row mb-3">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">ville <span class="text-danger">*</span></label>
-                        <div class="col-sm-10">
-                          <input type="text" class="form-control" id="inputEmail"name="ville_ou_quartier"value="<?= $fournisseur->get_valeur_input('ville_ou_quartier') ?>">
-                        </div>
-                      </div> 
-                  </div>
-                </div>
-              </div>
+            <div class="col-lg-6 mb-3">
+              <label for="inputNom" class="col-sm-4 col-form-label">Prénom<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="inputNom" name="nom" value="<?= $fournisseur->get_valeur_input('nom') ?>">
+            </div>
+            <div class="col-lg-6 mb-3">
+              <label for="inputPrenom" class="col-sm-4 col-form-label">Nom<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="inputPrenom" name="prenom" value="<?= $fournisseur->get_valeur_input('prenom') ?>">
+            </div>
           </div>
-          <button type="button"class="btn btn-primary" name="Sauvegarder" data-bs-toggle="modal" data-bs-target="#basicModal">Sauvegarder </button>
-             <?php require_once('partials/confirmerEnregistrement.php');?>
-    </form>
+
+          <h5 class="card-title">Adresse</h5>
+          <div class="row">
+            <div class="col-lg-6 mb-3">
+              <label for="inputContact" class="col-sm-4 col-form-label">Contact<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="inputContact" name="contact" value="<?= $fournisseur->get_valeur_input('contact') ?>" oninput="formatPhoneNumber(this)">
+            </div>
+            <div class="col-lg-6 mb-3">
+              <label for="inputVille" class="col-sm-4 col-form-label">Ville<span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="inputVille" name="ville_ou_quartier" value="<?= $fournisseur->get_valeur_input('ville_ou_quartier') ?>">
+            </div>
+          </div>
+
+          <div class="text-end mt-3">
+            <button type="button" class="btn btn-primary" name="Sauvegarder" data-bs-toggle="modal" data-bs-target="#basicModal">Sauvegarder</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <?php require_once('partials/confirmerEnregistrement.php'); ?>
+</form>
+
   </section>
 </main><!-- End #main -->
 

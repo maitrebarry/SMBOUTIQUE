@@ -35,6 +35,58 @@
     $pourcentage_alerte = ($total_article > 0) ? ($stock_alerte / $total_article) * 100 : 0;
        
 
+
+
+  
+
+    // Ventes journalières
+    $dailySalesCashQuery = "SELECT SUM(montant_total) AS total_ventes FROM vente WHERE DATE(date_vente) = CURDATE()";
+    $dailySalesCashResult = $bdd->query($dailySalesCashQuery);
+    $dailySalesCash = $dailySalesCashResult->fetch(PDO::FETCH_OBJ);
+
+    $dailySalesCreditQuery = "SELECT SUM(total) AS total_ventes, SUM(total - paie) AS total_creance FROM commande_client WHERE DATE(date_cmd_client) = CURDATE()";
+    $dailySalesCreditResult = $bdd->query($dailySalesCreditQuery);
+    $dailySalesCredit = $dailySalesCreditResult->fetch(PDO::FETCH_OBJ);
+
+    $dailyCashQuery = "SELECT SUM(Montant_total_caisse) AS total_caisse FROM caisse WHERE DATE(date_caisse) = CURDATE()";
+    $dailyCashResult = $bdd->query($dailyCashQuery);
+    $dailyCash = $dailyCashResult->fetch(PDO::FETCH_OBJ)->total_caisse;
+
+    $dailyTotal = $dailySalesCash->total_ventes + $dailySalesCredit->total_ventes;
+    $dailyCredit = $dailySalesCredit->total_creance;
+
+    // Ventes mensuelles
+    $monthlySalesCashQuery = "SELECT SUM(montant_total) AS total_ventes FROM vente WHERE MONTH(date_vente) = MONTH(CURDATE()) AND YEAR(date_vente) = YEAR(CURDATE())";
+    $monthlySalesCashResult = $bdd->query($monthlySalesCashQuery);
+    $monthlySalesCash = $monthlySalesCashResult->fetch(PDO::FETCH_OBJ);
+
+    $monthlySalesCreditQuery = "SELECT SUM(total) AS total_ventes, SUM(total - paie) AS total_creance FROM commande_client WHERE MONTH(date_cmd_client) = MONTH(CURDATE()) AND YEAR(date_cmd_client) = YEAR(CURDATE())";
+    $monthlySalesCreditResult = $bdd->query($monthlySalesCreditQuery);
+    $monthlySalesCredit = $monthlySalesCreditResult->fetch(PDO::FETCH_OBJ);
+
+    $monthlyCashQuery = "SELECT SUM(Montant_total_caisse) AS total_caisse FROM caisse WHERE MONTH(date_caisse) = MONTH(CURDATE()) AND YEAR(date_caisse) = YEAR(CURDATE())";
+    $monthlyCashResult = $bdd->query($monthlyCashQuery);
+    $monthlyCash = $monthlyCashResult->fetch(PDO::FETCH_OBJ)->total_caisse;
+
+    $monthlyTotal = $monthlySalesCash->total_ventes + $monthlySalesCredit->total_ventes;
+    $monthlyCredit = $monthlySalesCredit->total_creance;
+
+    // Ventes annuelles
+    $annualSalesCashQuery = "SELECT SUM(montant_total) AS total_ventes FROM vente WHERE YEAR(date_vente) = YEAR(CURDATE())";
+    $annualSalesCashResult = $bdd->query($annualSalesCashQuery);
+    $annualSalesCash = $annualSalesCashResult->fetch(PDO::FETCH_OBJ);
+
+    $annualSalesCreditQuery = "SELECT SUM(total) AS total_ventes, SUM(total - paie) AS total_creance FROM commande_client WHERE YEAR(date_cmd_client) = YEAR(CURDATE())";
+    $annualSalesCreditResult = $bdd->query($annualSalesCreditQuery);
+    $annualSalesCredit = $annualSalesCreditResult->fetch(PDO::FETCH_OBJ);
+
+    $annualCashQuery = "SELECT SUM(Montant_total_caisse) AS total_caisse FROM caisse WHERE YEAR(date_caisse) = YEAR(CURDATE())";
+    $annualCashResult = $bdd->query($annualCashQuery);
+    $annualCash = $annualCashResult->fetch(PDO::FETCH_OBJ)->total_caisse;
+
+    $annualTotal = $annualSalesCash->total_ventes + $annualSalesCredit->total_ventes;
+    $annualCredit = $annualSalesCredit->total_creance;
+
 ?>
 
 <!--------header------->
@@ -87,44 +139,7 @@
           <div class="row"> -->
 
                 <!-- Sales Card -->
-                <div class="col-xxl-4 col-md-6">
-                    <div class="card info-card sales-card">
-
-                        <a href="liste_fournisseur.php" class="btn btn-outline-white">
-                            <div class="card-body">
-                                <h5 class="card-title">Etat <span>|Fournisseurs</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                         <i class="bi bi-person-fill"></i></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <?php
-                                        // nobre de  fournisseur
-                                        $nbre_four="SELECT * FROM fournisseur";
-                                        $nbre_fours=$bdd->query($nbre_four);
-                                        $resultat_four=$nbre_fours->rowCount();
-                                        ?>
-                                        <h6><?=$resultat_four?></h6>
-                                        <span class="text-success small pt-1 fw-bold"></span>
-                                        <span class="text-info small pt-2 ps-1">fournisseurs enregistrés</span>
-                                    </div>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-                                    <!-- <div class="ps-5">
-                                         <?php
-                                        // nobre de  client
-                                        $nbre_client="SELECT * FROM commande_client";
-                                        $nbre_clients=$bdd->query($nbre_client);
-                                        $resultat_client=$nbre_clients->rowCount();
-                                        ?>
-                                        <h6><?=$resultat_client?></h6>
-                                        <span class="text-success small pt-1 fw-bold ps-5"></span>
-                                        <span class="text-success small">clients enregistrés</span>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+               
                 <!-- End Sales Card -->
 
                 <!-- Sales Card -->
@@ -146,8 +161,8 @@
                                              $pourcentage5 = ($total_article / $total_attendu5) * 100;
                                           ?>
                                         <h6><?=$total_article?></h6>
-                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage5, 2) ?>%</span>
-                                        <span class="text-muted small pt-2 ps-1">articles</span>
+                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage5, 0) ?>%</span>
+                                        <span class="text-muted small pt-0 ps-1">articles</span>
                                     </div>
                                 </div>
                             </div>
@@ -168,8 +183,8 @@
                                     </div>
                                     <div class="ps-3">
                                         <h6><?= $stock_alerte ?></h6>
-                                        <span class="text-danger small pt-1 fw-bold"><?= round($pourcentage_alerte, 2) ?>%</span>
-                                        <span class="text-danger small pt-2 ps-1"> d'article sont en rupture de stock</span>
+                                        <span class="text-danger small pt-1 fw-bold"><?= round($pourcentage_alerte, 0) ?>%</span>
+                                        <span class="text-danger small pt-0 ps-1"> d'article sont en rupture de stock</span>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +195,6 @@
                 <!-- Sales Card -->
                 <div class="col-xxl-4 col-md-6">
                     <div class="card info-card sales-card">
-
                         <a href="liste_commande_four.php" class="btn btn-outline-white">
                             <div class="card-body">
                                 <h5 class="card-title">Commande <span>| Fournisseur</span></h5>
@@ -196,8 +210,8 @@
                                              $pourcentage = ($resultat / $total_attendu) * 100;
                                           ?>
                                                         <h6><?= $resultat ?></h6>
-                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage, 2) ?>%</span>
-                                        <span class="text-muted small pt-2 ps-1">commande</span>
+                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage, 0) ?>%</span>
+                                        <span class="text-muted small pt-0 ps-1">commande</span>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +227,7 @@
 
                         <a href="liste_commande_client.php" class="btn btn-outline-white">
                             <div class="card-body">
-                                <h5 class="card-title">Commande <span>| Client</span></h5>
+                                <h5 class="card-title">Vente en <span>| Credit</span></h5>
                                 <div class="d-flex align-items-center">
                                     <div
                                         class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -226,8 +240,8 @@
                                              $pourcentage3 = ($resultat_cl / $total_attendu3) * 100;
                                           ?>
                                         <h6><h6><?= $resultat_cl ?></h6></h6>
-                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage3, 2) ?>%</span>
-                                        <span class="text-muted small pt-2 ps-1">commande</span>
+                                        <span class="text-success small pt-1 fw-bold"><?= round($pourcentage3, 0) ?>%</span>
+                                        <span class="text-muted small pt-0 ps-1">commande</span>
                                     </div>
                                 </div>
                             </div>
@@ -238,155 +252,143 @@
 
               
                 <!-- Revenue Card -->
-    <div class="col-xxl-4 col-md-6">
-        <div class="card info-card revenue-card">
-            <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown">
-                    <!-- <i class="bi bi-three-dots"></i> -->
-                </a>
-                <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                        <h6>Bilan des Ventes</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">vente journalière </a></li>
-                    <li><a class="dropdown-item" href="#">Vente Mensuelle</a></li>
-                    <li><a class="dropdown-item" href="#">Vente annuelle</a></li>
-                </ul> -->
-            </div>
+                <div class="col-lg col-md-6 col-sm-10">
+                   <div class="card info-card revenue-card">
+                        <div class="card-header bg-primary text-white text-center">
+                            <h7>Bilan des ventes</h7>
+                        </div>
+                        <div class="card-body d-flex justify-content-around mt-3">
+                            <div class="text-center">
+                                <p>Ventes journalières</p>
+                                <i class="bi bi-camera"></i>
+                                <p><a href="#" class="text-primary">Vente totale</a></p>
+                                <p><?php echo number_format($dailyTotal, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Créance totale</a></p>
+                                <p><?php echo number_format($dailyCredit, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Montant en caisse</a></p>
+                                <p><?php echo number_format($dailyCash, 0, ',', ' ') . ' F CFA'; ?></p>
+                                
+                                <p class="text-primary"><?php echo date('d/m/Y'); ?></p>
+                            </div>
+                            <div class="text-center">
+                                <p>Ventes mensuelles</p>
+                                <i class="bi bi-camera"></i>
+                                <p><a href="#" class="text-primary">Vente totale</a></p>
+                                <p><?php echo number_format($monthlyTotal, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Créance totale</a></p>
+                                <p><?php echo number_format($monthlyCredit, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Montant en caisse</a></p>
+                                <p><?php echo number_format($monthlyCash, 0, ',', ' ') . ' F CFA'; ?></p>
+                                
+                                <p class="text-primary"><?php echo date('m/Y'); ?></p>
+                            </div>
+                            <div class="text-center">
+                                <p>Ventes annuelles</p>
+                                <i class="bi bi-camera"></i>
+                                <p><a href="#" class="text-primary">Vente totale</a></p>
+                                <p><?php echo number_format($annualTotal, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Créance totale</a></p>
+                                <p><?php echo number_format($annualCredit, 0, ',', ' ') . ' F CFA'; ?></p>
+                                <p><a href="#" class="text-primary">Montant en caisse</a></p>
+                                <p><?php echo number_format($annualCash, 0, ',', ' ') . ' F CFA'; ?></p>
+                                
+                                <p class="text-primary"><?php echo date('Y'); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <!-- End Revenue Card -->
                 <?php
-                // Requête pour calculer la somme des montants payés dans la table paiement_client
-                $sumMontantPayeQuery = "SELECT SUM(montant_paye) AS total_montant_paye FROM paiement_client";
-                $sumMontantPayeResult = $bdd->query($sumMontantPayeQuery);
-                $sumMontantPaye = $sumMontantPayeResult->fetch(PDO::FETCH_OBJ);
-                // Requête pour calculer la somme des montants total dans la table vente
-                $sumMontantPayeQuery1 = "SELECT SUM(montant_total) AS total_montant FROM vente";
-                $sumMontantPayeResult1 = $bdd->query($sumMontantPayeQuery1);
-                $sumMontantPaye1 = $sumMontantPayeResult1->fetch(PDO::FETCH_OBJ);
-                // Totaux des montants payés
-                $totalMontantPaye = $sumMontantPaye->total_montant_paye;
-                $totalMontantVente = $sumMontantPaye1->total_montant;
-                $totaux = $totalMontantPaye + $totalMontantVente;
-                // Calcul du pourcentage d'augmentation
-                $pourcentageAugmentation = 0;
-                if ($totalMontantPaye !== 0 && $totalMontantPaye !== null) {
-                    $pourcentageAugmentation = (($totalMontantVente - $totalMontantPaye) / abs($totalMontantPaye)) * 100;
-                }
+                // Requête pour obtenir les ventes par produit (y compris la quantité reçue de la table ligne_livraison)
+                    $sql = "SELECT p.name as product_name, 
+                    COALESCE(SUM(lv.quantite), 0) as total_quantity_sold,
+                    COALESCE(SUM(ll.quantite_recu), 0) as total_quantity_received
+                        FROM tbl_product p
+                        LEFT JOIN ligne_vente lv ON p.id = lv.id_produit
+                        LEFT JOIN ligne_livraison ll ON p.id = ll.id_produit
+                        GROUP BY p.id, p.name
+                        ORDER BY total_quantity_sold DESC
+                        LIMIT 5";
+                        $stmt = $bdd->prepare($sql);
+                        $stmt->execute();
+                        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        // Création des tableaux pour les données ApexCharts
+                        $categories = [];
+                        $dataSales = [];
+                        $dataReceived = [];
+                        foreach ($result as $row) {
+                            $categories[] = $row['product_name'];
+                            $dataSales[] = $row['total_quantity_sold'];
+                            $dataReceived[] = $row['total_quantity_received'];
+                        }
                 ?>
-            <div class="card-body">
-                <h5 class="card-title">Bilan des Ventes</h5>
-                <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="ps-3">
-                        <?php
-                       echo "<h6>" . number_format($totaux, 0, ',', ' ') . " F CFA</h6>";
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Top 5 des Produits les plus vendus</h5>
 
-                        // if ($pourcentageAugmentation !== null) {
-                        //     echo "<span class='text-success small pt-1 fw-bold'>" . number_format($pourcentageAugmentation, 2) . "%</span>";
-                        // } else {
-                        //     echo "<span class='text-muted small pt-1'>Pas de pourcentage d'augmentation disponible</span>";
-                        // }
-                        ?>
-                        <span class="text-muted small pt-2 ps-1">Vendues</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-     <!-- End Revenue Card -->
-        <?php
-        // Requête pour obtenir les ventes par produit (y compris la quantité reçue de la table ligne_livraison)
-              $sql = "SELECT p.name as product_name, 
-               COALESCE(SUM(lv.quantite), 0) as total_quantity_sold,
-               COALESCE(SUM(ll.quantite_recu), 0) as total_quantity_received
-                FROM tbl_product p
-                LEFT JOIN ligne_vente lv ON p.id = lv.id_produit
-                LEFT JOIN ligne_livraison ll ON p.id = ll.id_produit
-                GROUP BY p.id, p.name
-                ORDER BY total_quantity_sold DESC
-                LIMIT 5";
-                $stmt = $bdd->prepare($sql);
-                $stmt->execute();
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                // Création des tableaux pour les données ApexCharts
-                $categories = [];
-                $dataSales = [];
-                $dataReceived = [];
-                foreach ($result as $row) {
-                    $categories[] = $row['product_name'];
-                    $dataSales[] = $row['total_quantity_sold'];
-                    $dataReceived[] = $row['total_quantity_received'];
-                }
-        ?>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Top 5 des Produits les plus vendus</h5>
+                            <!-- Bar Chart -->
+                            <div id="topProductsChart"></div>
 
-                    <!-- Bar Chart -->
-                    <div id="topProductsChart"></div>
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            const topProductsChart = new ApexCharts(document.querySelector("#topProductsChart"), {
-                                series: [
-                                    {
-                                        name: 'Quantité Vendue',
-                                        data: <?= json_encode($dataSales); ?>,
-                                    },
-                                    {
-                                        name: 'Quantité Vendue par commande',
-                                        data: <?= json_encode($dataReceived); ?>,
-                                    }
-                                ],
-                                chart: {
-                                    height: 350,
-                                    type: 'bar',
-                                    toolbar: {
-                                        show: false
-                                    },
-                                },
-                                plotOptions: {
-                                    bar: {
-                                        horizontal: false,
-                                        columnWidth: '55%',
-                                        endingShape: 'rounded'
-                                    },
-                                },
-                                dataLabels: {
-                                    enabled: false
-                                },
-                                colors: ['#4154f1', '#2eca6a'], // Ajout de la deuxième couleur pour les données reçues
-                                fill: {
-                                    type: "gradient",
-                                    gradient: {
-                                        shadeIntensity: 1,
-                                        opacityFrom: 0.7,
-                                        opacityTo: 5,
-                                        stops: [0, 90, 100]
-                                    }
-                                },
-                                xaxis: {
-                                    categories: <?= json_encode($categories); ?>
-                                },
-                                tooltip: {
-                                    y: {
-                                        formatter: function(val) {
-                                            return val + " unités";
+                            <script>
+                                document.addEventListener("DOMContentLoaded", () => {
+                                    const topProductsChart = new ApexCharts(document.querySelector("#topProductsChart"), {
+                                        series: [
+                                            {
+                                                name: 'Quantité Vendue',
+                                                data: <?= json_encode($dataSales); ?>,
+                                            },
+                                            {
+                                                name: 'Quantité Vendue par commande',
+                                                data: <?= json_encode($dataReceived); ?>,
+                                            }
+                                        ],
+                                        chart: {
+                                            height: 350,
+                                            type: 'bar',
+                                            toolbar: {
+                                                show: false
+                                            },
+                                        },
+                                        plotOptions: {
+                                            bar: {
+                                                horizontal: false,
+                                                columnWidth: '55%',
+                                                endingShape: 'rounded'
+                                            },
+                                        },
+                                        dataLabels: {
+                                            enabled: false
+                                        },
+                                        colors: ['#4154f1', '#0eca6a'], // Ajout de la deuxième couleur pour les données reçues
+                                        fill: {
+                                            type: "gradient",
+                                            gradient: {
+                                                shadeIntensity: 1,
+                                                opacityFrom: 0.7,
+                                                opacityTo: 5,
+                                                stops: [0, 90, 100]
+                                            }
+                                        },
+                                        xaxis: {
+                                            categories: <?= json_encode($categories); ?>
+                                        },
+                                        tooltip: {
+                                            y: {
+                                                formatter: function(val) {
+                                                    return val + " unités";
+                                                }
+                                            }
                                         }
-                                    }
-                                }
-                            });
+                                    });
 
-                            topProductsChart.render();
-                        });
-                    </script>
-                    <!-- End Bar Chart -->
+                                    topProductsChart.render();
+                                });
+                            </script>
+                            <!-- End Bar Chart -->
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
   </section>
 </main> <!-- End #main -->
     <?php require_once ('partials/foot.php')?> <?php require_once ('partials/footer.php')?>

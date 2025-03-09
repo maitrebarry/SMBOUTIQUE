@@ -163,12 +163,12 @@
                 <div class="container">
                     <form action="" method="post">
                     <section class="section mt-2">
-                        <div class="row">
+                       <div class="row">                     
                             <div class="col-lg-8 col-md-10 col-sm-12 mb-4">
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <select class="form-control produit form-select p-4 w-100" name="produit" id="produit">
+                                            <select class="form-control produit form-select p-4 w-100" name="produit" id="produit" style="width: 100%; max-width: 100%;">
                                                 <option value="">Veuillez sélectionner un produit</option>
                                                 <?php foreach ($produits as $value) : ?>
                                                     <option value="<?= $value->id ?>">
@@ -178,38 +178,37 @@
                                             </select>
                                         </div>   
                                         <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-condensed">
-                                            <thead>
-                                            <tr>
-                                                <th>Produit</th>
-                                                <th>Quantité</th>
-                                                <th>Prix</th>
-                                                <th>Montant</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="ajout_tbody"></tbody>
-                                        </table>
+                                            <table class="table table-bordered table-striped table-condensed">
+                                                <thead>
+                                                <tr>
+                                                    <th>Produit</th>
+                                                    <th>Quantité</th>
+                                                    <th>Prix</th>
+                                                    <th>Montant</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="ajout_tbody"></tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="card">
-                                    <div class="card-body">
-                                        <div id="montant_total_section" class="row">
+                                <div class="card-body">
+                                    <div id="montant_total_section" class="row">
                                         <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
                                             <label for="">Montant total</label>
                                             <input type="number" name="montant_total" class="form-control montant_total" id="montant_total" value="<?=$montant_total ?>" readOnly>
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4" id="remise_section">
                                             <label for="">Rémise</label>
                                             <input type="number" value="" name="remise" class="form-control remise" id="remise">
                                         </div>
-                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                        <div class="col-lg-4 col-md-6 col-sm-12 mb-4" id="netpayer_section">
                                             <label for="">Net à payer</label>
                                             <input type="number" name="netpayer" class="form-control netpayer" id="netpayer" readOnly>
                                         </div>
-                                        </div>
-                                        <div id="montant_recu_section" class="row">
+                                    </div>
+                                    <div id="montant_recu_section" class="row">
                                         <div class="col-lg-6 col-md-6 col-sm-12 mb-4">
                                             <label for="">Montant reçu</label>
                                             <input type="number" name="montantrecu" class="form-control montantrecu" id="montantrecu">
@@ -218,33 +217,29 @@
                                             <label for="">Monnaie à rembourser</label>
                                             <input type="number" name="monnaierembourser" class="form-control monnaierembourser text-danger" id="monnaierembourser" readOnly>
                                         </div>
-                                        </div>
-                                   </div>
-                                </div>            
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-4 col-md-10 col-sm-12 mb-4">
                                 <div class="card text-left">
-                                <div class="card-body">
-                                    <div class="form-group mt-3">
-                                    <label>Référence <span class="text-danger">*</span></label>
-                                    <?php $reference_caisse = recuperation_fonction('reference_caisse', "caisse WHERE statut = 'on'", [], "ONE"); ?>
-                                    <input type="text" name="refe" id="refe" class="form-control" value="<?php echo $reference_caisse->reference_caisse; ?>" readonly>
+                                    <div class="card-body">
+                                        <div class="form-group mt-3">
+                                            <label>Référence <span class="text-danger">*</span></label>
+                                            <?php $reference_caisse = recuperation_fonction('reference_caisse', "caisse WHERE statut = 'on'", [], "ONE"); ?>
+                                            <input type="text" name="refe" id="refe" class="form-control" value="<?php echo $reference_caisse->reference_caisse; ?>" readonly>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label>Date <span class="text-danger">*</span></label>
+                                            <input type="datetime-local" name="dat" class="form-control" id="currentDateTime" required>
+                                        </div>
+                                        <div class="form-group mt-3">
+                                            <label for="">Client</label>
+                                            <input type="text" name="nom_client" class="form-control" id="nom_client">
+                                        </div>
                                     </div>
-                                    <div class="form-group mt-3">
-                                    <label>Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="dat" class="form-control" id="currentDateTime" required>
-                                    </div>
-                                    <div class="form-group mt-3">
-                                    <label for="">Client</label>
-                                    <input type="text" name="nom_client" class="form-control" id="nom_client">
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
-
-                       
-
                         <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 mt-3">
                             <button type="submit" name="passe" class="btn btn-primary form-control submit-modal confirm-button" data-bs-toggle="modal" data-bs-target="#basicModal">Valider</button>
@@ -460,13 +455,13 @@
         </script>
         <!-- pour le champ select -->
         <script>
-        $(document).ready(function() {
-            $('#produit').select2();
-            $('#produit').on('select2:select', function (e) {
-                var data = e.params.data;
-                $("#produit option[value='" + data.id + "']").remove();
+            $(document).ready(function() {
+                $('#produit').select2();
+                $('#produit').on('select2:select', function (e) {
+                    var data = e.params.data;
+                    $("#produit option[value='" + data.id + "']").remove();
+                });
             });
-        });
         </script>
         <script>
             $(document).ready(function() {
@@ -475,38 +470,33 @@
                 });
             });
         </script>
-        <script>
-            // Fonction pour afficher ou masquer les sections basées sur une condition
-function afficherMasquerChamps(condition) {
-    if (condition) {
-        $('#montant_total_section').removeClass('hidden');
-        $('#remise_section').removeClass('hidden');
-        $('#netpayer_section').removeClass('hidden');
-        $('#montant_recu_section').removeClass('hidden');
-    } else {
-        $('#montant_total_section').addClass('hidden');
-        $('#remise_section').addClass('hidden');
-        $('#netpayer_section').addClass('hidden');
-        $('#montant_recu_section').addClass('hidden');
-    }
-}
+       <script>
+            function afficherMasquerChamps(condition) {
+                if (condition) {
+                    $('#montant_total_section').removeClass('hidden');
+                    $('#remise_section').removeClass('hidden');
+                    $('#netpayer_section').removeClass('hidden');
+                    $('#montant_recu_section').removeClass('hidden');
+                } else {
+                    $('#montant_total_section').addClass('hidden');
+                    $('#remise_section').addClass('hidden');
+                    $('#netpayer_section').addClass('hidden');
+                    $('#montant_recu_section').addClass('hidden');
+                }
+            }
 
-// Exemple d'utilisation de la fonction
-$(document).ready(function() {
-    // Par exemple, pour afficher/masquer en fonction de la valeur d'un champ
-    $('#produit').change(function() {
-        var produit_id = $(this).val();
-        if (produit_id !== "") {
-            afficherMasquerChamps(true);
-        } else {
-            afficherMasquerChamps(false);
-        }
-    });
+            $(document).ready(function() {
+                $('#produit').change(function() {
+                    var produit_id = $(this).val();
+                    if (produit_id !== "") {
+                        afficherMasquerChamps(true);
+                    } else {
+                        afficherMasquerChamps(false);
+                    }
+                });
 
-    // Initialement masquer les champs
-    afficherMasquerChamps(false);
-});
-
+                afficherMasquerChamps(false);
+            });
         </script>
     </body>
 </html>

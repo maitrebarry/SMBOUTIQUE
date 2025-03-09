@@ -133,13 +133,18 @@
                                         </div>
                                     <?php endif; ?>
                                 </div>
-
-
-                                <div class="text-center">
-                                    <!-- <button type="submit" class="btn btn-info"  name="enregistrer">Enregistrer</button> -->
-                                    <button type="button"class="btn btn-info"  data-bs-toggle="modal" data-bs-target="#basicModal">Ajouter </button>
-                                    <?php require_once('partials/confirmerEnregistrement.php');?>
-                                    <a href="lsiteUtilisat_pert.php" class="btn btn-primary btn ">Liste des Utilisations/pertes </a>
+                                      <div class="row">
+                                        <div class="col-xl-6 col-md-10 col-xs-12 mt-3">
+                                            <div class="form-group">
+                                            <button type="button"class="btn btn-info form-control"  data-bs-toggle="modal" data-bs-target="#basicModal">Ajouter </button>
+                                                <?php require_once('partials/confirmerEnregistrement.php');?>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-md-10 col-xs-12 mt-3">
+                                            <div class="form-group">
+                                            <a href="lsiteUtilisat_pert.php" class="btn btn-primary btn form-control ">Liste des Utilisations/pertes </a>
+                                            </div>
+                                        </div>
                                 </div>
                             </form>
                         </div>

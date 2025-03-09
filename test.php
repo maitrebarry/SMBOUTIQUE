@@ -74,3 +74,70 @@ if (isset($_POST['username'])){
                             </div>
                         </div>  	 	 	
 	
+                         <div class="col-xxl-4 col-md-6">
+    <div class="card info-card revenue-card">
+      
+    <div class="card-header bg-primary text-white text-center">
+        <h5>Bilan des ventes</h5>
+    </div>
+    <div class="card-body d-flex justify-content-around mt-3">
+        <div class="text-center">
+            <p>Ventes journalières</p>
+            <i class="bi bi-camera"></i>
+            <p><a href="#" class="text-primary">Vente totale</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Créance total</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Montant en caisse</a></p>
+            <p>0,00</p>
+            <p>(F CFA)</p>
+            <p>09/03/2024</p>
+        </div>
+        <div class="text-center">
+            <p>Ventes mensuelles</p>
+            <i class="bi bi-camera"></i>
+            <p><a href="#" class="text-primary">Vente totale</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Créance total</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Montant en caisse</a></p>
+            <p>0,00</p>
+            <p>(F CFA)</p>
+            <p>03/2024</p>
+        </div>
+        <div class="text-center">
+            <p>Ventes annuelles</p>
+            <i class="bi bi-camera"></i>
+            <p><a href="#" class="text-primary">Vente totale</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Créance total</a></p>
+            <p>0,00</p>
+            <p><a href="#" class="text-primary">Montant en caisse</a></p>
+            <p>0,00</p>
+            <p>(F CFA)</p>
+            <p>2024</p>
+        </div>
+    </div>
+
+    </div>
+    </div>
+
+    maintenant attaquons le back-end voici par exemple un code pour l'un de mon backend: <?php
+                // Requête pour calculer la somme des montants payés dans la table paiement_client
+                $sumMontantPayeQuery = "SELECT SUM(montant_paye) AS total_montant_paye FROM paiement_client";
+                $sumMontantPayeResult = $bdd->query($sumMontantPayeQuery);
+                $sumMontantPaye = $sumMontantPayeResult->fetch(PDO::FETCH_OBJ);
+                // Requête pour calculer la somme des montants total dans la table vente
+                $sumMontantPayeQuery1 = "SELECT SUM(montant_total) AS total_montant FROM vente";
+                $sumMontantPayeResult1 = $bdd->query($sumMontantPayeQuery1);
+                $sumMontantPaye1 = $sumMontantPayeResult1->fetch(PDO::FETCH_OBJ);
+                // Totaux des montants payés
+                $totalMontantPaye = $sumMontantPaye->total_montant_paye;
+                $totalMontantVente = $sumMontantPaye1->total_montant;
+                $totaux = $totalMontantPaye + $totalMontantVente;
+                // Calcul du pourcentage d'augmentation
+                $pourcentageAugmentation = 0;
+                if ($totalMontantPaye !== 0 && $totalMontantPaye !== null) {
+                    $pourcentageAugmentation = (($totalMontantVente - $totalMontantPaye) / abs($totalMontantPaye)) * 100;
+                }
+                ?>

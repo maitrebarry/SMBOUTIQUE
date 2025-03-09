@@ -70,7 +70,7 @@
 									</a>
 								</div>
     						</div>
-    					</div>
+    					  </div>
                         <div class="card-body">
                             <!-- Ajout du formulaire de recherche -->
                             <form action="" method="POST" class="mb-3 " onsubmit="hideMainTable(event)">
